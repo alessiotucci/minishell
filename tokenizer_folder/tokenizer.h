@@ -6,8 +6,10 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:10:53 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/07 13:10:56 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/07 15:36:05 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#ifndef TOKENIZER_H
+# define TOKENIZER_H
+void	token();
