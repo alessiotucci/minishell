@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/08 11:54:39 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/08 13:40:48 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int ac, char *av[], char *envp[])
 	if (ac || av || envp)
 	ft_printf("ok");
 	lexer();
-	token();
+//	token();
 	parser();
 	try_builtin();
 	return (0);
