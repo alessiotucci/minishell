@@ -6,7 +6,7 @@
 #    By: atucci <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 09:05:05 by atucci            #+#    #+#              #
-#    Updated: 2023/11/07 15:37:39 by atucci           ###   ########.fr        #
+#    Updated: 2023/11/08 10:26:57 by atucci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,15 +15,18 @@
 NAME = minishell
 #--------------------------------------------------
 # This sets the variable SRC to a list of C source files that are needed to build the executable.
-SRC = ./path_to_your_source_files.c
-
+SRC = minishell.c \
+			builtin_folder/built_ins.c \
+			lexical_analysis_folder/lexical_analysis.c \
+			recursive_parsing_tree/recursive_parsing_tree.c \
+			tokenizer_folder/tokenizer.c \
 #--------------------------------------------------
 # This sets the variable OBJS to a list of object files that need to be built from the SRC files.
 OBJS = $(SRC:.c=.o)
 
 #--------------------------------------------------
 # This sets the variable HDRS to the path of the header file that is included in the project.
-HDRS = ./path_to_your_header_files.h
+HDRS = $(wildcard *.h) $(wildcard */*.h)
 
 #--------------------------------------------------
 # This sets the variable RM to the command that will be used to remove files.
@@ -48,12 +51,12 @@ RESET := \033[0m
 #--------------------------------------------------
 # Rule for compiling C source files into object files.
 .c.o:
-	${CC} -I ${HDRS} -c $< -o ${<:.c=.o}
+	${CC} -I ${HDRS} -c $<  ${<:.c=.o}
 
 #--------------------------------------------------
 # Rule for building the executable.
 $(NAME): $(OBJS)
-	@echo "$(GREEN)$(MIC_DROP_EMOJI)$(NAME) binary created successfully! $(MIC_DROP_EMOJI)$(RESET)"
+	@echo "$(GREEN)$(NAME) try to understand how the makefile works! $(RESET)"
 
 #--------------------------------------------------
 # Default target: building the executable when running 'make all'.
@@ -62,4 +65,21 @@ all: $(NAME)
 #--------------------------------------------------
 # Rule for cleaning up generated object files.
 clean:
+	$(MAKE) -C libft clean
+	${RM} $(OBJS)
+	@echo "$(YELLOW) let's clean up $(RESET)"
 
+#--------------------------------------------------
+# Rule for completely removing generated object files and the "fdf" executable.
+fclean: clean
+	@echo "$(YELLOW)Cleaning up $(NAME) binary...$(RESET)"
+	${RM} $(NAME)
+	$(MAKE) -C libft fclean
+
+#--------------------------------------------------
+# Rule for recompiling the project from scratch.
+re: fclean all
+
+#--------------------------------------------------
+# .PHONY targets to specify non-file targets.
+.PHONY: all clean fclean re
