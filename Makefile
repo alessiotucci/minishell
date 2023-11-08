@@ -6,41 +6,45 @@
 #    By: atucci <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 09:05:05 by atucci            #+#    #+#              #
-#    Updated: 2023/11/08 10:26:57 by atucci           ###   ########.fr        #
+#    Updated: 2023/11/08 12:15:10 by atucci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#--------------------------------------------------
-# This sets the variable NAME to the name of the executable file that we will build.
+#------------------------------------------------------------------------------
+# Setting the variable name to the name of the executable file
 NAME = minishell
-#--------------------------------------------------
-# This sets the variable SRC to a list of C source files that are needed to build the executable.
-SRC = minishell.c \
-			builtin_folder/built_ins.c \
-			lexical_analysis_folder/lexical_analysis.c \
-			recursive_parsing_tree/recursive_parsing_tree.c \
-			tokenizer_folder/tokenizer.c \
-#--------------------------------------------------
-# This sets the variable OBJS to a list of object files that need to be built from the SRC files.
+
+
+#------------------------------------------------------------------------------
+# Declaring all the sources file needed to build the "philo" executable
+SRC = ./minishell.c \
+	./builtin_folder/built_ins.c \
+	./lexical_analysis_folder/lexical_analysis.c \
+	./tokenizer_folder/tokenizer.c \
+	./recursive_parsing_tree/recursive_parsing_tree.c \
+
+#------------------------------------------------------------------------------
+# Setting the variables object to a list of object neede to build from the src
 OBJS = $(SRC:.c=.o)
 
-#--------------------------------------------------
-# This sets the variable HDRS to the path of the header file that is included in the project.
-HDRS = $(wildcard *.h) $(wildcard */*.h)
 
-#--------------------------------------------------
-# This sets the variable RM to the command that will be used to remove files.
-RM = rm -f
-
-#--------------------------------------------------
-# This sets the C compiler with specific warning flags.
-CC = gcc -Wall -Wextra -Werror
+#------------------------------------------------------------------------------
+# Setting the variable header to the path of the header file 
+HDRS = ./minishell.h $(wildcard */*.h)
 
 #--------------------------------------------------
 # This variable specifies the path to the libft library, which will be used in the project.
 LIBFT = libft/libft.a
 
-#--------------------------------------------------
+#------------------------------------------------------------------------------
+# Setting the var RM to remove them files
+RM = rm -f
+
+
+#------------------------------------------------------------------------------
+# This set the C compiler with the specific warning flags
+CC = gcc -Wall -Werror -Wextra
+
 # Color codes for echo commands to make the output more visually informative.
 GREEN := \033[1;32m
 CYAN := \033[1;36m
@@ -49,32 +53,28 @@ RED := \033[1;31m
 RESET := \033[0m
 
 #--------------------------------------------------
-# Rule for compiling C source files into object files.
-.c.o:
-	${CC} -I ${HDRS} -c $<  ${<:.c=.o}
-
-#--------------------------------------------------
-# Rule for building the executable.
+# Rule for building the "minishell" executable.
 $(NAME): $(OBJS)
-	@echo "$(GREEN)$(NAME) try to understand how the makefile works! $(RESET)"
+	@echo "$(CYAN)Building $(NAME)...$(RESET)"
+	$(MAKE) -C libft
+	${CC} -o $(NAME) $(OBJS) $(LIBFT)
+	@echo "$(GREEN) $(NAME)minishell  created successfully! $(RESET)"
 
 #--------------------------------------------------
-# Default target: building the executable when running 'make all'.
+# Default target: building the "philo" executable when running 'make all'.
 all: $(NAME)
 
 #--------------------------------------------------
 # Rule for cleaning up generated object files.
 clean:
-	$(MAKE) -C libft clean
+	@echo "$(YELLOW)Cleaning up object files...$(RESET)"
 	${RM} $(OBJS)
-	@echo "$(YELLOW) let's clean up $(RESET)"
 
 #--------------------------------------------------
-# Rule for completely removing generated object files and the "fdf" executable.
+# Rule for completely removing generated object files and the "philo" executable.
 fclean: clean
-	@echo "$(YELLOW)Cleaning up $(NAME) binary...$(RESET)"
+	@echo "$(YELLOW)Cleaning up $(NAME) executalbe binary...$(RESET)"
 	${RM} $(NAME)
-	$(MAKE) -C libft fclean
 
 #--------------------------------------------------
 # Rule for recompiling the project from scratch.

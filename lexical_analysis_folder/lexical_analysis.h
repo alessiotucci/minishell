@@ -6,11 +6,17 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:10:16 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/08 11:14:33 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/08 12:31:41 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef LEXICAL_ANALYSIS_H
+# define LEXICAL_ANALYSIS_H
+
 
 void	lexer1();
 void	lexer2();
 void	lexer3();
 
+
+#endif

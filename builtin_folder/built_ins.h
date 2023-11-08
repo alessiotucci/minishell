@@ -6,8 +6,19 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:09:57 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/07 13:09:59 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/08 12:34:24 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef BUILT_INS_H
+# define BUILT_INS_H
 
+
+void	try_builtin();
+void	builtin1();
+void	builtin2();
+void	builtin3();
+
+
+
+#endif
