@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/09 09:05:21 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/09 11:45:43 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(int ac, char *av[], char *envp[])
 
 	count = 1;
 	if (ac || av || envp)
+		ft_printf("lets start");
 	while (av[count])
 	{
 		ft_printf("argoument [%d], %s\t\t", count, av[count]);

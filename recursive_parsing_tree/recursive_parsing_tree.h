@@ -6,15 +6,13 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:10:33 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/08 13:42:12 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/09 11:42:56 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../minishell.h"
 
-# include "../minishell.h"
-
-void	parser();
-
-void	parser1();
-void	parser2();
-void	parser3();
+void	parser(void);
+void	parser1(void);
+void	parser2(void);
+void	parser3(void);

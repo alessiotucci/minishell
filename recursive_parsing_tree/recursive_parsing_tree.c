@@ -6,14 +6,14 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:44 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/09 08:35:25 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/09 11:42:31 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "recursive_parsing_tree.h"
 
-void	parser()
+void	parser(void)
 {
 	ft_printf("inside the recursive parsing tree folder\n");
 	parser1();

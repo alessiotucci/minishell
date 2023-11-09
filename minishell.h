@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/08 11:48:44 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/09 11:46:00 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # include "recursive_parsing_tree/recursive_parsing_tree.h"
 # include "tokenizer_folder/tokenizer.h"
 
-void	token();
-void	parser();
-void	lexer();
-void	try_builtin();
+void	token(void);
+void	parser(void);
+void	lexer(void);
+void	try_builtin(void);
 
 #endif

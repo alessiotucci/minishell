@@ -6,16 +6,13 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:10:16 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/08 13:40:12 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/09 11:41:34 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../minishell.h"
 
-# include "../minishell.h"
-
-void	lexer();
-void	lexer1();
-void	lexer2();
-void	lexer3();
-
-
+void	lexer(void);
+void	lexer1(void);
+void	lexer2(void);
+void	lexer3(void);

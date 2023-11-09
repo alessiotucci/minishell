@@ -6,14 +6,13 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:10:53 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/09 08:35:47 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/09 11:33:55 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../minishell.h"
+#include "../minishell.h"
 
-void	token();
-
-void	token1();
-void	token2();
-void	token3();
+void	token(void);
+void	token1(void);
+void	token2(void);
+void	token3(void);
