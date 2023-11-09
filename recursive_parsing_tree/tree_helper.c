@@ -6,9 +6,13 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:37:25 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/08 12:42:18 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/09 08:35:23 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../minishell.h"
+#include "recursive_parsing_tree.h"
+
 
 void	parser1()
 {

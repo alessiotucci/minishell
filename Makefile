@@ -6,7 +6,7 @@
 #    By: atucci <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 09:05:05 by atucci            #+#    #+#              #
-#    Updated: 2023/11/08 12:15:10 by atucci           ###   ########.fr        #
+#    Updated: 2023/11/09 08:34:11 by atucci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,13 @@ NAME = minishell
 # Declaring all the sources file needed to build the "philo" executable
 SRC = ./minishell.c \
 	./builtin_folder/built_ins.c \
+	./builtin_folder/builtin_helper.c \
 	./lexical_analysis_folder/lexical_analysis.c \
+	./lexical_analysis_folder/lexer_helper.c \
 	./tokenizer_folder/tokenizer.c \
+	./tokenizer_folder/token_helper.c \
 	./recursive_parsing_tree/recursive_parsing_tree.c \
+	./recursive_parsing_tree/tree_helper.c \
 
 #------------------------------------------------------------------------------
 # Setting the variables object to a list of object neede to build from the src
