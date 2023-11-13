@@ -1,37 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   test.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/13 13:18:36 by atucci           ###   ########.fr       */
+/*   Created: 2023/11/11 15:08:13 by atucci            #+#    #+#             */
+/*   Updated: 2023/11/11 15:30:31 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-int	main(int ac, char *av[], char *envp[])
+typedef enum s_token_type
 {
-	int		count;
-	char	*input;
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE,
+	INPUT_REDIRECTION,
+	OUTPUT_REDIRECTION,
+	HERE_DOCUMENT,
+	OUTPUT_REDIRECTION_APPEND,
+	PIPE,
+	ENV_VAR,
+	EXIT_STATUS,
+	CTRL_C,
+	CTRL_D,
+	CTRL_BACKSLASH,
+	ECHO,
+	CD,
+	PWD,
+	EXPORT,
+	UNSET,
+	ENV,
+	EXIT,
+	LOGICAL_AND,
+	LOGICAL_OR,
+	WILDCARD
+}	t_token_type;
 
-	count = 1;
-	if (ac || av || envp)
-		ft_printf("lets start");
-	while (av[count])
-	{
-		ft_printf("argoument [%d], %s\t\t", count, av[count]);
-		count++;
-	}
-	while (1)
-	{
-	lexer();
-	token();
-	parser();
-	try_builtin();
-	input = readline("miniHell>");
-	ft_printf("the input %s\n", input);
-	}
-}
+typedef struct s_token
+{
+	token_type	type;
+	char		*value;
+	int			priority;
+}	t_token;

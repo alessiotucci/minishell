@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/09 14:45:36 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/13 13:19:56 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include "lexical_analysis_folder/lexical_analysis.h"
 # include "recursive_parsing_tree/recursive_parsing_tree.h"
 # include "tokenizer_folder/tokenizer.h"
+# include <string.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 typedef enum e_tokens
 {
