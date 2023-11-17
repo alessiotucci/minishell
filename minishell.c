@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/13 13:18:36 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/17 16:25:46 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int ac, char *av[], char *envp[])
 
 	count = 1;
 	if (ac || av || envp)
-		ft_printf("lets start");
+		ft_printf("\n");
 	while (av[count])
 	{
 		ft_printf("argoument [%d], %s\t\t", count, av[count]);
@@ -32,6 +32,7 @@ int	main(int ac, char *av[], char *envp[])
 	parser();
 	try_builtin();
 	input = readline("miniHell>");
+	if (input != NULL)
 	ft_printf("the input %s\n", input);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:37:03 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/09 11:36:36 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/17 16:14:13 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 
 void	builtin1(void)
 {
-	ft_printf("built_in 1\n");
+	return ;
 }
 
 void	builtin2(void)
 {
-	ft_printf("built_in 2\n");
+	return ;
 }
 
 void	builtin3(void)
 {
-	ft_printf("built_in 3\n");
+	return ;
 }

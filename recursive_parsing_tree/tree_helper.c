@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:37:25 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/09 11:42:20 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/17 16:15:01 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 
 void	parser1(void)
 {
-	ft_printf("parser 1\n");
+	return ;
 }
 
 void	parser2(void)
 {
-	ft_printf("parser 2\n");
+	return ;
 }
 
 void	parser3(void)
 {
-	ft_printf("parser 3\n");
+	return ;
 }

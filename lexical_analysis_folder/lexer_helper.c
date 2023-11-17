@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:37:59 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/17 11:21:15 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/17 16:11:51 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 
 void	lexer1(void)
 {
-	ft_printf("lexer 1\n");
+	return ;
 }
 
 void	lexer2(void)
 {
-	ft_printf("lexer 2\n");
+	return ;
 }
 
 void	lexer3(void)
 {
-	ft_printf("lexer 3\n");
+	return ;
 }
 
 int	my_strcmp(const char *str1, const char *str2)

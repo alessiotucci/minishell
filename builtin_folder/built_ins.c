@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:13:21 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/09 11:35:41 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/17 16:23:10 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 void	try_builtin(void)
 {
-	ft_printf("inside the builtin function folder\n");
 	builtin1();
 	builtin2();
 	builtin3();

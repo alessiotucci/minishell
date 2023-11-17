@@ -6,7 +6,7 @@
 #    By: atucci <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 09:05:05 by atucci            #+#    #+#              #
-#    Updated: 2023/11/09 08:46:35 by atucci           ###   ########.fr        #
+#    Updated: 2023/11/17 16:18:20 by atucci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,10 @@
 NAME = minishell
 
 
+#this was supposed to be the line to make everything	# $(wildcard *.c) $(wildcard */*.c)
 #------------------------------------------------------------------------------
 # Declaring all the sources file needed to build the "philo" executable
-SRC = $(wildcard *.c) $(wildcard */*.c)
-#	./minishell.c \
+SRC = ./minishell.c \
 	./builtin_folder/built_ins.c \
 	./builtin_folder/builtin_helper.c \
 	./lexical_analysis_folder/lexical_analysis.c \
@@ -62,7 +62,7 @@ RESET := \033[0m
 $(NAME): $(OBJS)
 	@echo "$(CYAN)Building $(NAME)...$(RESET)"
 	$(MAKE) -C libft
-	${CC} -o $(NAME) $(OBJS) $(LIBFT)
+	${CC} -o $(NAME) $(OBJS) $(LIBFT) -lreadline
 	@echo "$(GREEN) $(NAME)minishell  created successfully! $(RESET)"
 
 #--------------------------------------------------

@@ -93,5 +93,3 @@ This is a detailed 30-day work plan for the Minishell project. It includes addit
 | 23 - 25 | **Signal Handling**: Handle signals like `SIGINT` (Ctrl+C) and `SIGTSTP` (Ctrl+Z). This will involve writing signal handler functions. | GitHub |
 | 26 - 28 | **Error Handling and Testing**: Implement error handling to make your shell robust. Test your shell thoroughly to ensure it works as expected. | GitHub |
 | 29 - 30 | **Documentation and Cleanup**: Document your code thoroughly, explaining how each part works. Clean up your code, removing unnecessary parts and improving readability. Prepare for project submission. | Stack Overflow |
-
-Remember, building a shell from scratch is a complex task that requires a good understanding of various concepts in operating systems and programming in C. Don't hesitate to seek help if you're stuck, and make sure to take breaks to avoid burnout. Good luck! 😊

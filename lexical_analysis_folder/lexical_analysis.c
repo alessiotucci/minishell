@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/09 11:41:00 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/17 16:11:54 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 void	lexer(void)
 {
-	ft_printf("inside the lexical analysis\n");
 	lexer1();
 	lexer2();
 	lexer3();

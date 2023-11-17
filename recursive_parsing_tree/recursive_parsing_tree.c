@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:44 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/09 11:42:31 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/17 16:22:41 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 void	parser(void)
 {
-	ft_printf("inside the recursive parsing tree folder\n");
 	parser1();
 	parser2();
 	parser3();
