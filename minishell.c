@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/17 16:25:46 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/18 11:01:30 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ int	main(int ac, char *av[], char *envp[])
 	try_builtin();
 	input = readline("miniHell>");
 	if (input != NULL)
-	ft_printf("the input %s\n", input);
+	ft_printf("%s\n", input);
 	}
 }
