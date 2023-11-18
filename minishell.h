@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/13 13:19:56 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/18 13:01:59 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef enum e_tokens
 
 void	token(void);
 void	parser(void);
-void	lexer(void);
+int		lexer(char *string);
 void	try_builtin(void);
 
 #endif

@@ -6,16 +6,19 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:37:59 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/17 16:11:51 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/18 13:10:19 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "lexical_analysis.h"
 
-void	lexer1(void)
+int	lexer1(char *param)
 {
-	return ;
+	if (param)
+		return (1);
+	else
+		return (0);
 }
 
 void	lexer2(void)
