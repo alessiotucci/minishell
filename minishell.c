@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/19 15:06:36 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/19 18:45:29 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	handle_signal(void)
 {
 	signal(SIGINT, handle_ctrl_c); 
 	signal(SIGQUIT, handle_ctrl_backlash); 
-
 }
 
 int	main(int ac, char *av[], char *envp[])
