@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/18 13:01:04 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/19 14:00:22 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int ac, char *av[], char *envp[])
 		ft_printf("\n");
 	while (1)
 	{
-	input = readline("miniHell>");
+	input = readline("minishell%");
 	lexer(input);
 //	token();
 //	parser();
