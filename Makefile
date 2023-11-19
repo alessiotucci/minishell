@@ -6,7 +6,7 @@
 #    By: atucci <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 09:05:05 by atucci            #+#    #+#              #
-#    Updated: 2023/11/17 16:18:20 by atucci           ###   ########.fr        #
+#    Updated: 2023/11/19 15:09:53 by atucci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ NAME = minishell
 #------------------------------------------------------------------------------
 # Declaring all the sources file needed to build the "philo" executable
 SRC = ./minishell.c \
+	./signals.c \
 	./builtin_folder/built_ins.c \
 	./builtin_folder/builtin_helper.c \
 	./lexical_analysis_folder/lexical_analysis.c \
