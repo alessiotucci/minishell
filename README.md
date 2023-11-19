@@ -3,32 +3,44 @@
 ## I have to get familiar with all these new function
 
 
-| Function | Prototype | Library | Description |
-| --- | --- | --- | --- |
-| readline | `char *readline(const char *prompt);` | readline/readline.h | Reads a line from the terminal and returns it. |
-| rl_clear_history | `void rl_clear_history(void);` | readline/history.h | Clears the history list by freeing the memory of each element. |
-| rl_on_new_line | `int rl_on_new_line(void);` | readline/readline.h | Tells the update routines that we have moved onto a new line. |
-| rl_replace_line | `int rl_replace_line(const char *text, int clear_undo);` | readline/readline.h | Replaces the contents of rl_line_buffer with text. |
-| rl_redisplay | `void rl_redisplay(void);` | readline/readline.h | Redraws the current line. |
-| add_history | `void add_history(const char *string);` | readline/history.h | Adds string to the history list. |
-| access 	| `int access(const char *pathname, int mode);` 	| unistd.h 	| Checks if the calling process can access the file pathname. |
-| getcwd 	        | `char *getcwd(char *buf, size_t size);` 	        | unistd.h 	    |Gets the current working directory.|
-| chdir 	        | `int chdir(const char *path);` 	                | unistd.h 	    |Changes the current working directory.|
-| stat 	            | `int stat(const char *pathname, struct stat *statbuf);` 	| sys/stat.h 	|Gets the status of the file pointed to by pathname.|
-| lstat 	        | `int lstat(const char *pathname, struct stat *statbuf);` 	| sys/stat.h 	|Like stat(), but if pathname is a symbolic link, then it returns information about the link itself, not the file that it refers to.|
-| fstat 	        | `int fstat(int fd, struct stat *statbuf);` 	        | sys/stat.h 	|Is identical to stat(), except that the file about which information is to be retrieved is specified by the file descriptor fd.|
-| unlink 	        | `int unlink(const char *pathname);` 	                | unistd.h 	    |Deletes a name from the filesystem.|
-| execve 	        | `int execve(const char *filename, char *const argv[], char *const envp[]);` 	| unistd.h 	|Executes the program pointed to by filename. filename must be either a binary executable, or a script starting with a line of the form "#! interpreter [arg]".|
-| dup 	            | `int dup(int oldfd);` 	                            | unistd.h 	    |Creates a copy of the file descriptor oldfd.|
-| dup2 	            | `int dup2(int oldfd, int newfd);` 	                | unistd.h 	    |Duplicates one file descriptor, making them aliases, and then deleting the old file descriptor. It makes newfd be the copy of oldfd, closing newfd first if necessary.|
-| pipe 	            | `int pipe(int pipefd[2]);` 	                        | unistd.h 	    |Creates a pipe, a unidirectional data channel that can be used for interprocess communication.|
-| opendir 	        | `DIR *opendir(const char *name);` 	                | dirent.h 	    |Opens a directory stream corresponding to the directory name, and returns a pointer to the directory stream. The stream is positioned at the first entry in the directory.|
-| readdir 	        | `struct dirent *readdir(DIR *dirp);` 	                | dirent.h 	    |Returns a pointer to a dirent structure representing the next directory entry in the directory stream pointed to by dirp. It returns NULL on reaching the end of the directory stream or if an error occurred.|
-| closedir 	    | `int closedir(DIR *dirp);` 	                        | dirent.h 	    |Closes the directory stream associated with dirp. A successful call to closedir() also closes the underlying file descriptor associated with dirp.|
-| strerror 	    | `char *strerror(int errnum);` 	                    | string.h 	    |Returns a pointer to a string that describes the error code passed in the argument errnum.|
-| perror   	    | `void perror(const char *s);`   	                    | stdio.h   	    |Prints a descriptive error message to stderr. First (if s is not NULL and *s is not '\0'), the argument string s is printed, followed by a colon and a blank. Then an error message corresponding to the current value of errno and a new-line.|
-| isatty   	    | `int isatty(int fd);`   	                            | unistd.h   	    |Tests whether fd is an open file descriptor referring to a terminal.|
-| ttyname  	    | `char *ttyname(int fd);`   	                        | unistd.h   	    |Returns a pointer to a string which is the null-terminated filename of the terminal associated with fd (i.e., its pathname in /dev).|
+| Function | Prototype                                     | Library            |                                    Description |
+| ---------------- | ------------------------------------- | -------------------| ---------------------------------------------- |
+| readline         | `char *readline(const char *prompt);` | readline/readline.h| Reads a line from the terminal and returns it. |
+| rl_clear_history | `void rl_clear_history(void);`        | readline/history.h | Clears the history list by freeing the memory of each element. |
+| rl_on_new_line   | `int rl_on_new_line(void);`           | readline/readline.h| Tells the update routines that we have moved onto a new line. |
+| rl_replace_line  | `int rl_replace_line(const char *text, int clear_undo);`   | readline/readline.h | Replaces the contents of rl_line_buffer with text. |
+| rl_redisplay     | `void rl_redisplay(void);`            | readline/readline.h| Redraws the current line. |
+| add_history      | `void add_history(const char *string);`| readline/history.h| Adds string to the history list. |
+
+---
+<br>
+
+| Function | Prototype                                     | Library            |                                    Description |
+| ---------------- | ------------------------------------- | -------------------| ---------------------------------------------- |
+| access 	         | `int access(const char *pathname, int mode);` 	| unistd.h 	| Checks if the calling process can access the file pathname. |
+| getcwd 	         | `char *getcwd(char *buf, size_t size);`| unistd.h 	        |Gets the current working directory.|
+| chdir 	         | `int chdir(const char *path);` 	      | unistd.h 	        |Changes the current working directory.|
+| stat 	           | `int stat(const char *pathname, struct stat *statbuf);` 	  | sys/stat.h 	|Gets the status of the file pointed to by pathname.|
+| lstat 	         | `int lstat(const char *pathname, struct stat *statbuf);` 	| sys/stat.h 	|Like stat(), but if pathname is a symbolic link, then it returns information about the link itself, not the file that it refers to.|
+| fstat 	         | `int fstat(int fd, struct stat *statbuf);` | sys/stat.h 	  |Is identical to stat(), except that the file about which information is to be retrieved is specified by the file descriptor fd.|
+| unlink 	         | `int unlink(const char *pathname);` 	      | unistd.h 	    |Deletes a name from the filesystem.|
+
+---
+<br>
+
+| Function | Prototype                                     | Library            |                                    Description |
+| ---------------- | ------------------------------------- | -------------------| ---------------------------------------------- |
+| execve 	         | `int execve(const char *filename, char *const argv[], char *const envp[]);` 	| unistd.h 	|Executes the program pointed to by filename. filename must be either a binary executable, or a script starting with a line of the form "#! interpreter [arg]".|
+| dup 	           | `int dup(int oldfd);` 	                    | unistd.h 	    |Creates a copy of the file descriptor oldfd.|
+| dup2 	           | `int dup2(int oldfd, int newfd);` 	        | unistd.h 	    |Duplicates one file descriptor, making them aliases, and then deleting the old file descriptor. It makes newfd be the copy of oldfd, closing newfd first if necessary.|
+| pipe 	           | `int pipe(int pipefd[2]);` 	              | unistd.h 	    |Creates a pipe, a unidirectional data channel that can be used for interprocess communication.|
+| opendir 	       | `DIR *opendir(const char *name);` 	        | dirent.h 	    |Opens a directory stream corresponding to the directory name, and returns a pointer to the directory stream. The stream is positioned at the first entry in the directory.|
+| readdir 	       | `struct dirent *readdir(DIR *dirp);` 	    | dirent.h 	    |Returns a pointer to a dirent structure representing the next directory entry in the directory stream pointed to by dirp. It returns NULL on reaching the end of the directory stream or if an error occurred.|
+| closedir 	       | `int closedir(DIR *dirp);` 	              | dirent.h 	    |Closes the directory stream associated with dirp. A successful call to closedir() also closes the underlying file descriptor associated with dirp.|
+| strerror 	       | `char *strerror(int errnum);` 	            | string.h 	    |Returns a pointer to a string that describes the error code passed in the argument errnum.|
+| perror   	       | `void perror(const char *s);`   	          | stdio.h   	  |Prints a descriptive error message to stderr. First (if s is not NULL and *s is not '\0'), the argument string s is printed, followed by a colon and a blank. Then an error message corresponding to the current value of errno and a new-line.|
+| isatty   	       | `int isatty(int fd);`   	                  | unistd.h   	  |Tests whether fd is an open file descriptor referring to a terminal.|
+| ttyname  	       | `char *ttyname(int fd);`   	              | unistd.h   	  |Returns a pointer to a string which is the null-terminated filename of the terminal associated with fd (i.e., its pathname in /dev).|
 
 ---
 <br>
