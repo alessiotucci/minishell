@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/19 17:30:22 by atucci           ###   ########.fr       */
+/*   Updated: 2023/11/21 15:13:17 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 
 int	lexer(char *string)
 {
-	(void)string;
-	return (1);
+	char **line_of_commands;
+	int i = 0;
+
+	line_of_commands = ft_split(string, ' ');
+	while (line_of_commands[i])
+	{
+	ft_printf("commmand[%d]\t%s\n", i, line_of_commands[i]);
+	i++;
+	}
+	return (0);
 }
