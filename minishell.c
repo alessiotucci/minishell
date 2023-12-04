@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/19 18:45:29 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/04 12:35:21 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int ac, char *av[], char *envp[])
 	while (1)
 	{
 	handle_signal();
-	input = readline("minishell%");
+	input = readline("minishell% ");
 	if (lexer(input) == 1)
 		return (1);// what we need to return for syntax error? 
 	//	token();
