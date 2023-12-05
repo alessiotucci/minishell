@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/19 15:09:04 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/05 14:54:24 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,24 @@ typedef enum e_tokens
 	T_EOF,
 	T_ERROR
 }	t_tokens;
+
+typedef enum e_type_of_tok
+{
+	T_COMMAND,
+	T_FLAG,
+	T_BUILTIN,
+	T_PIPES,
+	T_REDIRECTION,
+	T_LOGIC_OPERATOR
+}	t_type_of_tok;
+
+typedef struct s_list_of_tok
+{
+	t_type_of_tok			type;
+	struct s_list_of_tok	*next;
+	struct s_list_of_tok	*previous;
+	int						index;
+}	t_list_of_tok;
 
 void	token(void);
 void	parser(void);
