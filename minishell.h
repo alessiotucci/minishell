@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/05 14:54:24 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/06 10:32:53 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,6 @@
 # define BG_YELLOW       "\033[43m"
 # define BG_RED          "\033[41m"
 
-typedef enum e_tokens
-{
-	T_WORD,
-	T_BAR,
-	T_AMP,
-	T_SEMI,
-	T_GT,
-	T_GTGT,
-	T_LT,
-	T_NL,
-	T_EOF,
-	T_ERROR
-}	t_tokens;
-
 typedef enum e_type_of_tok
 {
 	T_COMMAND,
@@ -69,6 +55,7 @@ typedef enum e_type_of_tok
 
 typedef struct s_list_of_tok
 {
+	char					*command_as_string;
 	t_type_of_tok			type;
 	struct s_list_of_tok	*next;
 	struct s_list_of_tok	*previous;

@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/06 10:02:55 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/06 10:46:56 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int	lexer(char *string)
 		exit(0);
 	// create a node of the list?
 	// create a function that takes the node, the commands[i], and create the list.
-	ft_printf("[%d]\t%s\n", i, line_of_commands[i]);
-	create_list_of_tok(token_head, line_of_commands[i]);
+	create_list_of_tok(&token_head, line_of_commands[i]);
 	i++;
 	}
 	// a nice function that prints the list of tokens? 

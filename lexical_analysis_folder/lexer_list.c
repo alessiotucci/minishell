@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/06 10:05:55 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/06 10:46:56 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,34 @@
 /*This function takes a node and a strings, performs several check 
  * then create the node with the fields initialized if needed, we will go 
  * from there with further implementation*/
-
-void	create_list_of_tok(t_list **head, char *spitted_cmd)
+static void	print_list_tokens(t_list_of_tok **head)
 {
-	t_list	*new_node;
-	t_list	*current;
+	t_list_of_tok	*current;
+	current = *head;
+	while (current->next != NULL)
+	{
+	// print some stuff;
+	current = current->next;
+	}
+}
+void	create_list_of_tok(t_list_of_tok **head, char *spitted_cmd)
+{
+	t_list_of_tok	*new_node;
+	t_list_of_tok	*current;
+	int				index;
 
-	new_node = (t_list *)malloc(sizeof(t_list));
+	index = 0;
+	new_node = (t_list_of_tok *)malloc(sizeof(t_list_of_tok));
 	if (new_node == NULL)
 	{
 		printf("Error with malloc");
 		exit(1);
 	}
+	new_node->command_as_string = spitted_cmd;
 	if (*head == NULL)
+	{
 		*head = new_node;
+	}
 	else
 	{
 		current = *head;
@@ -37,5 +51,5 @@ void	create_list_of_tok(t_list **head, char *spitted_cmd)
 			current = current->next;
 		current->next = new_node;
 	}
-	printf("new node with line %s\n", spitted_cmd);
+	print_list_tokens(head);
 }
