@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:10:16 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/05 15:00:04 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/06 09:37:59 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,4 @@ int	is_redirection(char *str);
 int	is_operation(char *str);
 
 /*Starting working on the parsing*/
-void	create_list_of_tok()
+void	create_list_of_tok();
