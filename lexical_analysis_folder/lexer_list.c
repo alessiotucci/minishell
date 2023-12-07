@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/07 09:56:42 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/07 10:23:40 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ static void	print_list_tokens(t_list_of_tok **head)
 	current = *head;
 	while (current != NULL)
 	{
-	printf("\n|-------------------|\n");
-	printf("| cmd as char : %s|\n", current->command_as_string);
-	printf("|type |\n");//	t_type_of_tok			type;
-	printf("|next|\n"); //struct s_list_of_tok	*next;
-	printf("|previous|\n");// struct s_list_of_tok	*previous;
-	printf("| index       :  %d  |\n", current->index);
-	printf("|-------------------|\n\n");
+	printf("\n|--------------------|\n");
+	printf("|CMD %s|\n", current->command_as_string);
+	printf("|TYPE |\n");//	t_type_of_tok			type;
+	printf("|NEXT %p |\n", current->next); //struct s_list_of_tok	*next;
+	printf("|PREV %p |\n", current->previous);// struct s_list_of_tok	*previous;
+	printf("|INDEX \t %d \t|\n", current->index);
+	printf("|--------------------|\n\n");
 	current = current->next;
 	}
 }
@@ -57,6 +57,7 @@ void	create_list_of_tok(t_list_of_tok **head, char *spitted_cmd)
 		while (current->next != NULL)
 			current = current->next;
 		current->next = new_node;
+		new_node->previous = current;
 		new_node->index = current->index + 1;
 	}
 //	index++;
