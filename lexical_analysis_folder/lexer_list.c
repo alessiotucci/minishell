@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/06 12:25:33 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/07 09:56:42 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	print_list_tokens(t_list_of_tok **head)
 {
 	t_list_of_tok	*current;
 	current = *head;
-	while (current->next != NULL)
+	while (current != NULL)
 	{
 	printf("\n|-------------------|\n");
 	printf("| cmd as char : %s|\n", current->command_as_string);
@@ -37,7 +37,7 @@ void	create_list_of_tok(t_list_of_tok **head, char *spitted_cmd)
 	t_list_of_tok	*new_node;
 	t_list_of_tok	*current;
 
-	static int index = 0;
+//	static int index = 0;
 	new_node = (t_list_of_tok *)malloc(sizeof(t_list_of_tok));
 	if (new_node == NULL)
 	{
@@ -45,16 +45,20 @@ void	create_list_of_tok(t_list_of_tok **head, char *spitted_cmd)
 		exit(1);
 	}
 	new_node->command_as_string = spitted_cmd;
-	new_node->index = index;
+	//new_node->index = index;
 	if (*head == NULL)
+	{
 		*head = new_node;
+		new_node->index = 0;
+	}
 	else
 	{
 		current = *head;
 		while (current->next != NULL)
 			current = current->next;
 		current->next = new_node;
+		new_node->index = current->index + 1;
 	}
-	index++;
+//	index++;
 	print_list_tokens(head);
 }
