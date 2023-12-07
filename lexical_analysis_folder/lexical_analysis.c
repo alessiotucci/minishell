@@ -6,20 +6,20 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/06 10:46:56 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/07 14:25:05 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include "lexical_analysis.h"
 
 int	lexer(char *string)
 {
 	char **line_of_commands;
 	int i = 0;
-	t_list	*token_head;
+	t_list_of_tok	*token_head;
 
 	token_head = NULL;
+	print_list_tokens(&token_head);
 	line_of_commands = ft_split(string, ' ');
 	while (line_of_commands[i])
 	{

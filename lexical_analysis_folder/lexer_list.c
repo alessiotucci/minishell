@@ -6,17 +6,17 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/07 10:58:43 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/07 14:25:19 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include "lexical_analysis.h"
 
 /*This function takes a node and a strings, performs several check 
  * then create the node with the fields initialized if needed, we will go 
  * from there with further implementation*/
-static void	print_list_tokens(t_list_of_tok **head)
+
+void	print_list_tokens(t_list_of_tok **head)
 {
 	t_list_of_tok	*current;
 	current = *head;
@@ -24,11 +24,11 @@ static void	print_list_tokens(t_list_of_tok **head)
 	{
 	printf("\n|--------------------|\n");
 	printf("|ADDS %p |\n", current);// struct s_list_of_tok	*previous;
-	printf("|CMD %s|\n", current->command_as_string);
-	printf("|TYPE |\n");//	t_type_of_tok			type;
-	printf("|PREV %p |\n", current->previous);// struct s_list_of_tok	*previous;
-	printf("|NEXT %p |\n", current->next); //struct s_list_of_tok	*next;
-	printf("|INDEX \t %d \t|\n", current->index);
+	printf("|CMD %s\n", current->command_as_string);
+	printf("|TYPE \n");//	t_type_of_tok			type;
+	printf("|PREV %p \n", current->previous);// struct s_list_of_tok	*previous;
+	printf("|NEXT %p \n", current->next); //struct s_list_of_tok	*next;
+	printf("|INDEX %d\n", current->index);
 	printf("|--------------------|\n\n");
 	current = current->next;
 	}
@@ -44,7 +44,7 @@ void	create_list_of_tok(t_list_of_tok **head, char *spitted_cmd)
 		printf("Error with malloc");
 		exit(1);
 	}
-	new_node->command_as_string = spitted_cmd;
+	new_node->command_as_string = ft_strdup(spitted_cmd); // remember to free ?
 	new_node->next = NULL;
 	if (*head == NULL)
 	{

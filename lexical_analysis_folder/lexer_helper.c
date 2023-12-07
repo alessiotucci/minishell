@@ -6,12 +6,11 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:37:59 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/19 17:28:33 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/07 14:25:16 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include "lexical_analysis.h"
 
 int	my_strcmp(const char *str1, const char *str2)
 {
