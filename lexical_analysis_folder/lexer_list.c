@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/07 14:25:19 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/07 14:34:41 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,5 @@ void	create_list_of_tok(t_list_of_tok **head, char *spitted_cmd)
 		new_node->index = current->index + 1;
 	}
 //	index++;
-	print_list_tokens(head);
+//	print_list_tokens(head);
 }
