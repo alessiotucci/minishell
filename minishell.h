@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/08 21:01:49 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/08 21:06:05 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		my_strcmp(const char *str1, const char *str2);
 int		is_file_reader(char *str);
 int		is_file_writer(char *str);
 int		is_file_appender(char *str);
-int		is_inline_input(char *str);
+int		is_delimiter(char *str);
 int		is_pipe(char *str);
 
 /*Starting working on the parsing*/
