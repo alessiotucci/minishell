@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/08 21:56:53 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/08 22:09:32 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef enum e_type_of_tok
 	T_REDIR_OUT, // <
 	T_REDIR_APP, // >>
 	T_REDIR_DELIMER, // << 
-	T_LOGIC_OPERATOR // && or || 
+	T_LOGIC_OPERAR // && or || 
 }	t_type_of_tok;
 
 typedef struct s_list_of_tok
@@ -76,7 +76,7 @@ int		is_delimiter(char *str);
 int		is_pipe(char *str);
 int		is_logical_op(char *str);
 int		is_dollar(char *str);
-
+int		is_builtin(char *str);
 /*Starting working on the parsing*/
 void			create_list_of_tok(t_list_of_tok **head, char *spitted_cmd);
 void			print_list_tokens(t_list_of_tok **head);

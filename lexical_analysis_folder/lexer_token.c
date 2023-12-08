@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 19:50:51 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/08 21:58:22 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/08 22:10:06 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ t_type_of_tok	type_of_token(char *spitted)
 	else if (is_dollar(spitted))
 		return (T_DOLLAR);
 	else if (is_logical_op(spitted))
-		return (T_LOGIC_OPERATOR);
+		return (T_LOGIC_OPERAR);
+	else if (is_builtin(spitted))
+		return (T_BUILTIN);
 	else
 		return (T_COMMAND);
 }
