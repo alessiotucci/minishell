@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/08 19:57:27 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/08 21:01:49 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,11 @@ typedef enum e_type_of_tok
 	T_FLAG,
 	T_BUILTIN,
 	T_PIPES,
-	T_REDIRECTION,
+//	T_REDIRECTION,
+	T_REDIR_IN, // >
+	T_REDIR_OUT, // <
+	T_REDIR_APP, // >>
+	T_REDIR_DELIMER, // << 
 	T_LOGIC_OPERATOR
 }	t_type_of_tok;
 
@@ -74,9 +78,9 @@ int		is_pipe(char *str);
 /*Starting working on the parsing*/
 void			create_list_of_tok(t_list_of_tok **head, char *spitted_cmd);
 void			print_list_tokens(t_list_of_tok **head);
-void			type_of_token(char *spitted);
+//void			type_of_token(char *spitted);
 
-//t_type_of_tok	type_of_token(char *spitted);
+t_type_of_tok	type_of_token(char *spitted);
 
 void	token(void);
 void	parser(void);

@@ -6,15 +6,26 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 19:50:51 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/08 19:57:10 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/08 21:03:06 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 
-void	type_of_token(char *spitted)
+t_type_of_tok	type_of_token(char *spitted)
 {
-	printf("this %s\n", spitted);
-	return ;
+//	printf("this %s\n", spitted);
+	if (is_pipe(spitted))
+		return (T_PIPES);
+	else if (is_file_reader(spitted))
+		return (T_REDIR_IN);
+	else if (is_file_writer(spitted))
+		return (T_REDIR_OUT);
+	else if (is_inline_input(spitted))
+		return (T_REDIR_DELIMER);
+	else if (is_file_appender(spitted))
+		return (T_REDIR_APP);
+	else
+		return (T_COMMAND);
 }
