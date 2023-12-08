@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:37:59 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/07 14:25:16 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/08 19:46:02 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,76 +27,55 @@ int	my_strcmp(const char *str1, const char *str2)
 	}
 	return (0);
 }
-
-/* The is_operation function checks if the string str is an operator.
-It returns (-1) if str is a single pipe '|' or a double pipe '||'
-or double ampersand '&&'.
-It returns (1) if str starts with a double pipe '||', double ampersand '&&',
-or a single pipe followed by a space '| '. It returns (0) otherwise.
+int	is_pipe(char *str)
+{
+	if(my_strcmp(str, "|") == 0)
+		return (1);
+	else
+		return (0);
+}
+/*
+ < : “File Reader”, since it reads input from a file.
 */
-
-int	is_operation(char *str)
+int	is_file_reader(char *str)
 {
-	if (my_strcmp(str, "|") == 0)
-		return (-1);
-	if (my_strcmp(str, "||") == 0 || my_strcmp(str, "&&") == 0)
-		return (-1);
-	if (ft_strncmp(str, "||", 2) == 0
-		|| ft_strncmp(str, "&&", 2) == 0
-		|| str[0] == '|')
+	if (my_strcmp(str, "<") == 0)
 		return (1);
-	return (0);
+	else
+		return (0);
+	
 }
 
-/*The is_redirection function checks if the str is a redirection operator.
-It returns (-1) if str is a single '<' or '>' or a double '<<' or '>>'.
-It returns (1) if str starts with a double '<<' or '>>', or a single '<' or '>'
-followed by a space.
-It returns (0) otherwise.
+/* 
+ > : “File Writer”, as it writes output to a file.
  */
-int	is_redirection(char *str)
+int	is_file_writer(char *str)
 {
-	if (my_strcmp(str, "<") == 0 || my_strcmp(str, ">") == 0)
-		return (-1);
-	if (my_strcmp(str, "<<") == 0 || my_strcmp(str, ">>") == 0)
-		return (-1);
-	if (ft_strncmp(str, "<<", 2) == 0
-		|| ft_strncmp(str, ">>", 2) == 0
-		|| str[0] == '<'
-		|| str[0] == '>')
+	if (my_strcmp(str, ">") == 0)
 		return (1);
-	return (0);
+	else
+		return (0);
 }
 
-/* The is_single_char_operator function checks if the string str starts with a
-single operator or redirection character followed by a space.
- * It returns (1) if str starts with '| ', '& ', '< ', or '> '.
- * It returns (0) otherwise.
- */
-int	is_single_char_operator(char *str)
+/*
+ >> : “File Appender”, because it appends output to a file.
+*/
+int	is_file_appender(char *str)
 {
-	if (str[1] == ' '
-		&& (str[0] == '|'
-			|| str[0] == '&'
-			|| str[0] == '<'
-			|| str[0] == '>'))
+	if (my_strcmp(str, ">>") == 0)
 		return (1);
-	return (0);
+	else
+		return (0);
 }
 
-/*The is_double_char_operator function checks if the string
-starts with a double
-operator or redirection character.
-It returns (1) if str starts with '||', '&&', '<<', or '>>'.
-It returns (0) otherwise.
- */
-int	is_double_char_operator(char *str)
+/*
+ << : “Inline Input”, as it provides inline input to a command.
+*/
+int	is_inline_input(char *str)
 {
-	if (ft_strncmp(str, "||", 2) == 0
-		|| ft_strncmp(str, "&&", 2) == 0
-		|| ft_strncmp(str, "<<", 2) == 0
-		|| ft_strncmp(str, ">>", 2) == 0)
+	if (my_strcmp(str, "<<") == 0)
 		return (1);
-	return (0);
+	else
+		return (0);
 }
 

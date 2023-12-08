@@ -6,7 +6,7 @@
 #    By: atucci <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 09:05:05 by atucci            #+#    #+#              #
-#    Updated: 2023/12/06 10:04:42 by atucci           ###   ########.fr        #
+#    Updated: 2023/12/08 19:54:53 by atucci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC = ./minishell.c \
 	./lexical_analysis_folder/lexical_analysis.c \
 	./lexical_analysis_folder/lexer_helper.c \
 	./lexical_analysis_folder/lexer_list.c \
+	./lexical_analysis_folder/lexer_token.c \
 	./tokenizer_folder/tokenizer.c \
 	./tokenizer_folder/token_helper.c \
 	./recursive_parsing_tree/recursive_parsing_tree.c \

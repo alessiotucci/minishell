@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/07 14:24:55 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/08 19:57:27 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,18 @@ typedef struct s_list_of_tok
 /*lexer part alright*/
 int		lexer1(char *param);
 int		my_strcmp(const char *str1, const char *str2);
-int	is_double_char_operator(char *str);
-int	is_single_char_operator(char *str);
-int	is_redirection(char *str);
-int	is_operation(char *str);
+int		is_file_reader(char *str);
+int		is_file_writer(char *str);
+int		is_file_appender(char *str);
+int		is_inline_input(char *str);
+int		is_pipe(char *str);
 
 /*Starting working on the parsing*/
-void	create_list_of_tok(t_list_of_tok **head, char *spitted_cmd);
-void	print_list_tokens(t_list_of_tok **head);
+void			create_list_of_tok(t_list_of_tok **head, char *spitted_cmd);
+void			print_list_tokens(t_list_of_tok **head);
+void			type_of_token(char *spitted);
 
-
+//t_type_of_tok	type_of_token(char *spitted);
 
 void	token(void);
 void	parser(void);
