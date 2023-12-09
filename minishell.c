@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/04 12:35:21 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/09 17:08:42 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int ac, char *av[], char *envp[])
 	//	token();
 //	parser();
 //	try_builtin();
-	if (input != NULL)
-	ft_printf("%s\n", input);
+//	if (input != NULL)
+//	ft_printf("%s\n", input);
 	}
 }
