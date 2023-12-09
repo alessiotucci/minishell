@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/08 22:09:32 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/09 16:54:23 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,10 @@ void			create_list_of_tok(t_list_of_tok **head, char *spitted_cmd);
 void			print_list_tokens(t_list_of_tok **head);
 //void			type_of_token(char *spitted);
 
-t_type_of_tok	type_of_token(char *spitted);
+// pork around
+char	*replace_me(char *str, char quote, char replacement, char me);
+
+ t_type_of_tok	type_of_token(char *spitted);
 
 void	token(void);
 void	parser(void);

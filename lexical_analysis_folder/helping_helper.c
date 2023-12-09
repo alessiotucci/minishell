@@ -6,12 +6,30 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 21:50:00 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/08 23:09:47 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/09 17:01:07 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include "stdbool.h"
 
+char	*replace_me(char *str, char quote, char replacement, char me)
+{
+	int	i;
+	bool inside_quote;
+
+	i = 0;
+	inside_quote = false;
+	while (str[i])
+	{
+		if (str[i] == quote)
+			inside_quote = !inside_quote;
+		if (inside_quote && str[i] == me)
+			str[i] = replacement;
+	i++;
+	}
+	return (str);
+}
 int	is_logical_op(char *str)
 {
 	if ((my_strcmp(str, "&&") == 0) || (my_strcmp(str, "||") == 0))

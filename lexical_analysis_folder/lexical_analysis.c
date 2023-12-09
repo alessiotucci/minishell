@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/08 18:17:15 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/09 17:01:20 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ int	lexer(char *string)
 	char **line_of_commands;
 	int i = 0;
 	t_list_of_tok	*token_head;
+	char *new_string;
 
 	token_head = NULL;
+	// scan for " " or ' ' or ( ) 
+	new_string = replace_me(string, '"', '\t', ' ');
 	line_of_commands = ft_split(string, ' ');
 	while (line_of_commands[i])
 	{
