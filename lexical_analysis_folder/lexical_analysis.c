@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/09 20:07:36 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/09 23:37:06 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	lexer(char *string)
 	line_of_commands = ft_split(string, ' ');
 	while (line_of_commands[i])
 	{
+	printf("%s%s%s\t", RED, line_of_commands[i], RESET); // fuck it im done!
 	line_of_commands[i] = replace_me(line_of_commands[i], '"', ' ', '\t');
 	line_of_commands[i] = replace_me(line_of_commands[i], 39, ' ', '\t');
 	if (my_strcmp(line_of_commands[i], "exit") == 0)

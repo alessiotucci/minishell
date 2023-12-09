@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:47:07 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/09 15:08:20 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/09 23:21:29 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void print_list_tokens(t_list_of_tok **head)
 		printf("\n|--------------------|\n");
 		printf("|ADDS %p |\n", current);
 		printf("|String %s\n", current->command_as_string);
-		printf("|TYPE %s%s%s\n", colors[current->type], names[current->type], RESET);
+		printf("|TYPE %d,  %s%s%s\n",current->type, colors[current->type], names[current->type], RESET);
 		printf("|PREV %p \n", current->previous);
 		printf("|NEXT %p \n", current->next);
 		printf("|INDEX %d\n", current->index);
