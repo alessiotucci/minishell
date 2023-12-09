@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 21:50:00 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/09 17:01:07 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/09 19:29:07 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 char	*replace_me(char *str, char quote, char replacement, char me)
 {
-	int	i;
-	bool inside_quote;
+	int		i;
+	bool	inside_quote;
 
 	i = 0;
 	inside_quote = false;
@@ -26,10 +26,11 @@ char	*replace_me(char *str, char quote, char replacement, char me)
 			inside_quote = !inside_quote;
 		if (inside_quote && str[i] == me)
 			str[i] = replacement;
-	i++;
+		i++;
 	}
 	return (str);
 }
+
 int	is_logical_op(char *str)
 {
 	if ((my_strcmp(str, "&&") == 0) || (my_strcmp(str, "||") == 0))
@@ -45,6 +46,7 @@ int	is_flag(char *str)
 	else
 		return (0);
 }
+
 int	is_dollar(char *str)
 {
 	if (my_strcmp(str, "$") == 0)
@@ -55,14 +57,14 @@ int	is_dollar(char *str)
 
 int	is_builtin(char *str)
 {
-	if(my_strcmp(str, "echo") == 0
+	if (my_strcmp(str, "echo") == 0
 		|| my_strcmp(str, "cd") == 0
 		|| my_strcmp(str, "pwd") == 0
 		|| my_strcmp(str, "export") == 0
 		|| my_strcmp(str, "unset") == 0
 		|| my_strcmp(str, "env") == 0)
 		//|| my_strcmp(str, "exit") == 0
-			return (1);
+		return (1);
 	else
 		return (0);
 }

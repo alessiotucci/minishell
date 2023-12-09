@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/09 16:54:23 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/09 19:45:26 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void			print_list_tokens(t_list_of_tok **head);
 
 // pork around
 char	*replace_me(char *str, char quote, char replacement, char me);
+char	*add_spaces_around_parentheses(char *command);
 
  t_type_of_tok	type_of_token(char *spitted);
 
