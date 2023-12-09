@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 21:50:00 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/08 22:09:10 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/08 23:09:47 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ int	is_logical_op(char *str)
 		return (0);
 }
 
+int	is_flag(char *str)
+{
+	if (str[0] == '-')
+		return (1);
+	else
+		return (0);
+}
 int	is_dollar(char *str)
 {
 	if (my_strcmp(str, "$") == 0)

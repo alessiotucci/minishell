@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/08 21:04:21 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/09 14:50:09 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,7 @@
  * then create the node with the fields initialized if needed, we will go 
  * from there with further implementation*/
 
-void	print_list_tokens(t_list_of_tok **head)
-{
-	t_list_of_tok	*current;
-	current = *head;
-	while (current != NULL)
-	{
-	printf("\n|--------------------|\n");
-	printf("|ADDS %p |\n", current);// struct s_list_of_tok	*previous;
-	printf("|CMD %s\n", current->command_as_string);
-	printf("|TYPE %d\n", current->type);//	t_type_of_tok			type;
-	printf("|PREV %p \n", current->previous);// struct s_list_of_tok	*previous;
-	printf("|NEXT %p \n", current->next); //struct s_list_of_tok	*next;
-	printf("|INDEX %d\n", current->index);
-	printf("|--------------------|\n\n");
-	current = current->next;
-	}
-}
+
 void	create_list_of_tok(t_list_of_tok **head, char *spitted_cmd)
 {
 	t_list_of_tok	*new_node;

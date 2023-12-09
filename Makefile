@@ -6,7 +6,7 @@
 #    By: atucci <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 09:05:05 by atucci            #+#    #+#              #
-#    Updated: 2023/12/08 21:50:31 by atucci           ###   ########.fr        #
+#    Updated: 2023/12/09 14:49:53 by atucci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC = ./minishell.c \
 	./tokenizer_folder/token_helper.c \
 	./recursive_parsing_tree/recursive_parsing_tree.c \
 	./recursive_parsing_tree/tree_helper.c \
+	./printf_for_debug/debug.c # this is just for debugging
 
 #------------------------------------------------------------------------------
 # Setting the variables object to a list of object neede to build from the src
