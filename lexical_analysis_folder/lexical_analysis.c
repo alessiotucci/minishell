@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/09 23:37:06 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/11 08:42:49 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	lexer(char *string)
 	new_string = replace_me(string, 39, '\t', ' ');
 	new_string = add_spaces_around_parentheses(string);
 	printf("new string {%s}\n", new_string); // the bug is here. to do fix
-	line_of_commands = ft_split(string, ' ');
+	line_of_commands = ft_split(new_string, ' ');
 	while (line_of_commands[i])
 	{
 	printf("%s%s%s\t", RED, line_of_commands[i], RESET); // fuck it im done!
