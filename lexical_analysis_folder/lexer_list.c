@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/09 14:50:09 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/11 10:19:55 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 /*This function takes a node and a strings, performs several check 
  * then create the node with the fields initialized if needed, we will go 
  * from there with further implementation*/
-
 
 void	create_list_of_tok(t_list_of_tok **head, char *spitted_cmd)
 {
@@ -28,16 +27,13 @@ void	create_list_of_tok(t_list_of_tok **head, char *spitted_cmd)
 		printf("Error with malloc");
 		exit(1);
 	}
-	new_node->command_as_string = ft_strdup(spitted_cmd); // remember to free ?
-	// I need to set the enums here ?
+	new_node->command_as_string = ft_strdup(spitted_cmd);
 	new_node->type = type_of_token(spitted_cmd);
-	//type_of_token(spitted_cmd);
 	new_node->next = NULL;
 	if (*head == NULL)
 	{
 		*head = new_node;
 		new_node->previous = NULL;
-		//new_node->
 		new_node->index = 0;
 	}
 	else

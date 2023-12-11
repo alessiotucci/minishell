@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:37:59 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/08 21:06:19 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/11 10:18:37 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	my_strcmp(const char *str1, const char *str2)
 	size_t	count;
 
 	count = 0;
-	while (str1[count] != '\0'|| str2[count] != '\0')
+	while (str1[count] != '\0' || str2[count] != '\0')
 	{
 		if (str1[count] > str2[count])
 			return (1);
@@ -27,13 +27,15 @@ int	my_strcmp(const char *str1, const char *str2)
 	}
 	return (0);
 }
+
 int	is_pipe(char *str)
 {
-	if(my_strcmp(str, "|") == 0)
+	if (my_strcmp(str, "|") == 0)
 		return (1);
 	else
 		return (0);
 }
+
 /*
  < : “File Reader”, since it reads input from a file.
 */
@@ -43,7 +45,6 @@ int	is_file_reader(char *str)
 		return (1);
 	else
 		return (0);
-	
 }
 
 /* 
@@ -78,4 +79,3 @@ int	is_delimiter(char *str)
 	else
 		return (0);
 }
-
