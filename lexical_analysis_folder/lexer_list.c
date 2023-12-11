@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/11 10:19:55 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/11 13:21:48 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 /*This function takes a node and a strings, performs several check 
  * then create the node with the fields initialized if needed, we will go 
- * from there with further implementation*/
+ * from there with further implementation
+*/
 
 void	create_list_of_tok(t_list_of_tok **head, char *spitted_cmd)
 {

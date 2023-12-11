@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 15:02:56 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/19 17:25:09 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/11 13:27:13 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,26 @@ void	handle_ctrl_c(int sig)
 	(void)sig;
 		printf("handling signales with ctrl-c\n");
 	printf("\n");
+	exit(0);
 }
-/**/
-void	handle_ctrl_d(void)
+/*here it goes into segfault*/
+void	handle_ctrl_d(int sig)
 {
+	(void)sig;
 	printf("handling an other signals\n");
+	exit(0);
 }
 /**/
 void	handle_ctrl_backlash(int sig)
 {
 	(void)sig;
 		printf("handling signal with ctrl-boh \n");
+		exit(0);
 }
 
 /*
 		TO DO 
- 	* include the global variable for exit code
- 	* use the rl_replace_line, and rl_on_new_line
-	* use the rl_redisplay function.
- *
- *
- *
- * */
+		* include the global variable for exit code
+		* use the rl_replace_line, and rl_on_new_line
+		* use the rl_redisplay function.
+*/

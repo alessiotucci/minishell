@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/09 19:45:26 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/11 13:26:00 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int		lexer(char *string);
 void	try_builtin(void);
 // function to handle signals
 void	handle_ctrl_c(int sig);
-void	handle_ctrl_d(void);
+void	handle_ctrl_d(int sig);
 void	handle_ctrl_backlash(int sig);
 
 #endif

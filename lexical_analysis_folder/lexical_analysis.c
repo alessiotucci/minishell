@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/11 11:06:27 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/11 13:20:48 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ static int	free_split(char **tab)
 	count = 0;
 	while (tab[count])
 	{
-		free(tab[count++]); // Free each individual string in the array.
+		free(tab[count]);
+		count++;
 	}
-	free(tab); // Free the array itself.
+	free(tab);
 	return (0);
 }
+
 static void	free_list(t_list_of_tok **head)
 {
 	t_list_of_tok *current;
@@ -33,7 +35,7 @@ static void	free_list(t_list_of_tok **head)
 	while (current != NULL)
 	{
 		next_node = current->next;
-		free(current->command_as_string);
+//		free(current->command_as_string); DO I NEED TO USE STRDUP (?)
 		free(current);
 		current = next_node;
 	}
