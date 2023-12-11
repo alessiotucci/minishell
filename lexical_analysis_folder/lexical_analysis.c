@@ -6,11 +6,39 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/11 10:23:08 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/11 11:06:27 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static int	free_split(char **tab)
+{
+	int	count;
+
+	count = 0;
+	while (tab[count])
+	{
+		free(tab[count++]); // Free each individual string in the array.
+	}
+	free(tab); // Free the array itself.
+	return (0);
+}
+static void	free_list(t_list_of_tok **head)
+{
+	t_list_of_tok *current;
+	t_list_of_tok *next_node;
+
+	current = *head;
+	while (current != NULL)
+	{
+		next_node = current->next;
+		free(current->command_as_string);
+		free(current);
+		current = next_node;
+	}
+	*head = NULL;
+}
 /**/
 static int	handling_errors(char *input)
 {
@@ -72,6 +100,8 @@ int	lexer(char *string)
 		create_list_of_tok(&token_head, line_of_commands[i]);
 		i++;
 	}
+	free_split(line_of_commands);
 	print_list_tokens(&token_head);
+	free_list(&token_head);
 	return (0);
 }
