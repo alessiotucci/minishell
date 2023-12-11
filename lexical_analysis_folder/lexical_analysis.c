@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/11 13:28:53 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/11 14:03:59 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	free_list(t_list_of_tok **head)
 	while (current != NULL)
 	{
 		next_node = current->next;
-//		free(current->command_as_string); DO I NEED TO USE STRDUP (?)
+//		free(current->command_as_string);//  DO I NEED TO USE STRDUP (?)
 		free(current);
 		current = next_node;
 	}
@@ -89,6 +89,8 @@ int	lexer(char *string)
 		printf("something wrong\n");
 		exit(0);
 	}
+	if (check_parentheses(string))
+		return (ft_printf("bad parentheses\n"));
 	new_string = replace_me(string, '"', '\t', ' ');
 	new_string = replace_me(string, 39, '\t', ' ');
 	new_string = add_spaces_around_parentheses(string);
@@ -102,8 +104,8 @@ int	lexer(char *string)
 		create_list_of_tok(&token_head, line_of_commands[i]);
 		i++;
 	}
-	free_split(line_of_commands);
 	print_list_tokens(&token_head);
+	free_split(line_of_commands);
 	free_list(&token_head);
 	return (0);
 }

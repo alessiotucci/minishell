@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 21:50:00 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/11 11:00:35 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/11 13:47:37 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ int	is_builtin(char *str)
 		|| my_strcmp(str, "pwd") == 0
 		|| my_strcmp(str, "export") == 0
 		|| my_strcmp(str, "unset") == 0
-		|| my_strcmp(str, "env") == 0)
-		//|| my_strcmp(str, "exit") == 0
+		|| my_strcmp(str, "env") == 0
+		|| my_strcmp(str, "exit") == 0)
 		return (1);
 	else
 		return (0);

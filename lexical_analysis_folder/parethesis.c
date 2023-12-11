@@ -6,11 +6,42 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 19:29:51 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/09 19:41:37 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/11 13:38:42 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	check_parentheses(char* str)
+{
+	int count = 0;
+	while (*str != '\0')
+	{
+	if (*str == '(')
+	{
+		count++;
+	}
+	else if (*str == ')')
+	{
+		if (count == 0)
+		{
+			return -1; // unbalanced
+		}
+		count--;
+	}
+		str++;
+	}
+	if (count == 0)
+		return (0);
+	else
+		return (-1);
+	// return count == 0 ? 0 : -1; // 0 if balanced
+}
+
+void	count_parentheses(void)
+{
+	return ;
+}
 
 char	*add_spaces_around_parentheses(char *command)
 {

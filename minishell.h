@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/11 13:26:00 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/11 13:59:55 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int		is_delimiter(char *str);
 int		is_pipe(char *str);
 int		is_logical_op(char *str);
 int		is_dollar(char *str);
+int		is_flag(char *str);
 int		is_builtin(char *str);
 /*Starting working on the parsing*/
 void			create_list_of_tok(t_list_of_tok **head, char *spitted_cmd);
@@ -85,6 +86,8 @@ void			print_list_tokens(t_list_of_tok **head);
 // pork around
 char	*replace_me(char *str, char quote, char replacement, char me);
 char	*add_spaces_around_parentheses(char *command);
+// fucking parentheses
+int	check_parentheses(char* str);
 
  t_type_of_tok	type_of_token(char *spitted);
 
