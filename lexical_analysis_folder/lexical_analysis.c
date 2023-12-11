@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/11 08:50:46 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/11 09:44:13 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,12 @@ int	lexer(char *string)
 	// add spaces before parethensis
 	// scan for " " or ' ' 
 	new_string = replace_me(string, '"', '\t', ' ');
+	printf("%s\n", new_string);
+	if (new_string != NULL) // check for null
 	new_string = replace_me(string, 39, '\t', ' ');
+	printf("%s\n", new_string);
+	if (new_string == NULL)
+		return (1); // check for null
 	new_string = add_spaces_around_parentheses(string);
 	line_of_commands = ft_split(new_string, ' ');
 	while (line_of_commands[i])
