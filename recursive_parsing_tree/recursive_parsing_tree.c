@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:44 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/14 20:28:47 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/14 20:56:39 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static t_tree_node	*create_tree(t_list_of_tok **head)
 	t_list_of_tok	*current;
 	t_tree_node		*root;
 
+	printf("%s (-)%s\n", RED, RESET);
 	high_priority = *head;
 	current = (*head)->next;
 	if (head == NULL || *head == NULL)
@@ -41,8 +42,7 @@ static t_tree_node	*create_tree(t_list_of_tok **head)
 		current = current->next;
 	}
 	// Print the highest priority token
-	printf("%s\n", high_priority->command_as_string);
-//	print_node(high_priority);
+	printf("%d\n", high_priority->priority_lev);
 	root = create_node(high_priority);
 	// Print tabs for each priority level
 	for (int i = 0; i < high_priority->priority_lev; i++)
@@ -62,7 +62,6 @@ static t_tree_node	*create_tree(t_list_of_tok **head)
 
 void	recursive_tree_builder(t_list_of_tok **head)
 {
-	printf("%s recursive tree builder%s\n", RED, RESET);
 	create_tree(head);
 	parser1();
 	parser2();
