@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/14 17:45:56 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/14 20:27:51 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,6 @@
 # define BG_YELLOW       "\033[43m"
 # define BG_RED          "\033[41m"
 
-typedef struct s_tree_node
-{
-	char				*command;
-	int					priority;
-	struct s_tree_node	*left;
-	struct s_tree_node	*right;
-}	t_tree_node;
-
 
 typedef enum e_type_of_tok
 {
@@ -75,6 +67,20 @@ typedef struct s_list_of_tok
 	int						priority_lev;
 }	t_list_of_tok;
 
+
+typedef struct s_tree_node
+{
+	char				*command_as_string;
+	t_list_of_tok		*token; // this is a fix (?)
+	int					priority_lev;
+	struct s_tree_node	*left;
+	struct s_tree_node	*right;
+	struct s_tree_node	*parent;
+}	t_tree_node;
+
+
+
+
 /*lexer part alright*/
 int		lexer1(char *param);
 int		my_strcmp(const char *str1, const char *str2);
@@ -91,6 +97,7 @@ int		is_parent(char *str);
 /*Starting working on the parsing*/
 t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *spitted_cmd);
 void			print_list_tokens(t_list_of_tok **head);
+void			print_node(t_list_of_tok *node);
 //void			type_of_token(char *spitted);
 
 // pork around
