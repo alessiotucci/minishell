@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/14 17:19:10 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/14 17:45:56 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@
 # define BG_CYAN         "\033[46m"
 # define BG_YELLOW       "\033[43m"
 # define BG_RED          "\033[41m"
+
+typedef struct s_tree_node
+{
+	char				*command;
+	int					priority;
+	struct s_tree_node	*left;
+	struct s_tree_node	*right;
+}	t_tree_node;
 
 
 typedef enum e_type_of_tok
@@ -95,11 +103,13 @@ int	check_parentheses(char* str);
 void	priority_level(t_list_of_tok **head, t_list_of_tok *tail);
 
 // function for the tree it seems 
+void	recursive_tree_builder(t_list_of_tok **head);
 void	parser(void);
 void	parser1(void);
 void	parser2(void);
 void	parser3(void);
- t_type_of_tok	type_of_token(char *spitted);
+// yet an other function 
+t_type_of_tok	type_of_token(char *spitted);
 
 void	token(void);
 void	parser(void);
