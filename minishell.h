@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/11 14:15:44 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/14 11:36:07 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int		is_flag(char *str);
 int		is_builtin(char *str);
 int		is_parent(char *str);
 /*Starting working on the parsing*/
-void			create_list_of_tok(t_list_of_tok **head, char *spitted_cmd);
+t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *spitted_cmd);
 void			print_list_tokens(t_list_of_tok **head);
 //void			type_of_token(char *spitted);
 
@@ -91,6 +91,8 @@ char	*replace_me(char *str, char quote, char replacement, char me);
 char	*add_spaces_around_parentheses(char *command);
 // fucking parentheses
 int	check_parentheses(char* str);
+// level of priority
+void	priority_level(t_list_of_tok **head, t_list_of_tok *tail);
 
  t_type_of_tok	type_of_token(char *spitted);
 

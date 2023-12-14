@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/14 11:06:25 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/14 11:32:42 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * from there with further implementation
 */
 
-void	create_list_of_tok(t_list_of_tok **head, char *spitted_cmd)
+t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *spitted_cmd)
 {
 	t_list_of_tok	*new_node;
 	t_list_of_tok	*current;
@@ -47,4 +47,6 @@ void	create_list_of_tok(t_list_of_tok **head, char *spitted_cmd)
 		new_node->previous = current;
 		new_node->index = current->index + 1;
 	}
+	// return the tail of the list :)
+	return (new_node);
 }

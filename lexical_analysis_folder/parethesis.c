@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 19:29:51 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/11 13:38:42 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/14 16:40:20 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	check_parentheses(char* str)
 	{
 		if (count == 0)
 		{
-			return -1; // unbalanced
+			return (-1); // unbalanced
 		}
 		count--;
 	}
@@ -37,9 +37,25 @@ int	check_parentheses(char* str)
 		return (-1);
 	// return count == 0 ? 0 : -1; // 0 if balanced
 }
-
-void	count_parentheses(void)
+/*this function will be used to assign priority inside the parenthesis*/
+void	priority_level(t_list_of_tok **head, t_list_of_tok *tail)
 {
+	t_list_of_tok	*current;
+	int				priority;
+
+	priority = 0;
+	current = *head;
+	printf("***inside the priority levels***\n");
+	printf("first node is %s\n last node is %s\n", current->command_as_string, tail->command_as_string);
+	while (current != NULL)
+	{
+		if (my_strcmp(current->command_as_string, "(") == 0)
+			priority++;
+		else if (my_strcmp(current->command_as_string, ")") == 0)
+			priority--;
+		current->priority_lev = priority;
+		current = current->next;
+	}
 	return ;
 }
 

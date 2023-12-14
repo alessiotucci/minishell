@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/11 18:42:28 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/14 11:37:33 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	lexer(char *string)
 	int				i;
 	t_list_of_tok	*token_head;
 	char			*new_string;
+	t_list_of_tok	*token_tail;
 
 	i = 0;
 	token_head = NULL;
@@ -99,11 +100,10 @@ int	lexer(char *string)
 	{
 		line_of_commands[i] = replace_me(line_of_commands[i], '"', ' ', '\t');
 		line_of_commands[i] = replace_me(line_of_commands[i], 39, ' ', '\t');
-//		if (my_strcmp(line_of_commands[i], "exit") == 0)
-//			exit(0);
-		create_list_of_tok(&token_head, line_of_commands[i]);
+		token_tail = create_list_of_tok(&token_head, line_of_commands[i]);
 		i++;
 	}
+	priority_level(&token_head,token_tail); // head and tails;
 	print_list_tokens(&token_head);
 	free_split(line_of_commands);
 	free_list(&token_head);
