@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/14 11:36:07 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/14 17:19:10 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 # include "libft/libft.h"
 # include "builtin_folder/built_ins.h"
-# include "recursive_parsing_tree/recursive_parsing_tree.h"
 # include "tokenizer_folder/tokenizer.h"
 # include <unistd.h> // check for the libraris are allowed
 # include <stdlib.h>
@@ -91,15 +90,22 @@ char	*replace_me(char *str, char quote, char replacement, char me);
 char	*add_spaces_around_parentheses(char *command);
 // fucking parentheses
 int	check_parentheses(char* str);
+
 // level of priority
 void	priority_level(t_list_of_tok **head, t_list_of_tok *tail);
 
+// function for the tree it seems 
+void	parser(void);
+void	parser1(void);
+void	parser2(void);
+void	parser3(void);
  t_type_of_tok	type_of_token(char *spitted);
 
 void	token(void);
 void	parser(void);
 int		lexer(char *string);
 void	try_builtin(void);
+
 // function to handle signals
 void	handle_ctrl_c(int sig);
 void	handle_ctrl_d(int sig);
