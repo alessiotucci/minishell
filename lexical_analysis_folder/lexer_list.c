@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/11 14:04:19 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/14 11:06:25 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	create_list_of_tok(t_list_of_tok **head, char *spitted_cmd)
 	}
 	new_node->command_as_string = spitted_cmd; // ft_strdup(spitted_cmd);
 	new_node->type = type_of_token(spitted_cmd);
+	new_node->priority_lev = 0; // for now ok? 
 	new_node->next = NULL;
 	if (*head == NULL)
 	{

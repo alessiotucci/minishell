@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 19:50:51 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/11 13:55:35 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/11 14:12:10 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_type_of_tok	type_of_token(char *spitted)
 {
 	if (is_pipe(spitted))
 		return (T_PIPES);
+	else if (is_parent(spitted))
+		return (T_PARENT);
 	else if (is_flag(spitted))
 		return (T_FLAG);
 	else if (is_file_reader(spitted))

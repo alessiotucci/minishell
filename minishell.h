@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/11 13:59:55 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/11 14:15:44 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef enum e_type_of_tok
 	T_COMMAND,
 	T_FLAG,
 	T_BUILTIN,
+	T_PARENT, // ( OR )
 	T_DOLLAR, // $
 	T_PIPES, // | 
 	T_REDIR_IN, // >
@@ -64,6 +65,7 @@ typedef struct s_list_of_tok
 	struct s_list_of_tok	*next;
 	struct s_list_of_tok	*previous;
 	int						index;
+	int						priority_lev;
 }	t_list_of_tok;
 
 /*lexer part alright*/
@@ -78,6 +80,7 @@ int		is_logical_op(char *str);
 int		is_dollar(char *str);
 int		is_flag(char *str);
 int		is_builtin(char *str);
+int		is_parent(char *str);
 /*Starting working on the parsing*/
 void			create_list_of_tok(t_list_of_tok **head, char *spitted_cmd);
 void			print_list_tokens(t_list_of_tok **head);
