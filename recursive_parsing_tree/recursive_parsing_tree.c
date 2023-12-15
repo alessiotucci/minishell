@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:44 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/15 15:17:53 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/15 15:41:04 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,22 @@ static t_tree_node	*create_tree(t_list_of_tok **head)
 	t_list_of_tok	*current;
 	t_tree_node		*root;
 
-	printf("%s (-)%s\n", RED, RESET);
+	if (head == NULL || *head == NULL)
+	return (NULL);
 	high_priority = *head;
 	current = (*head)->next;
-	if (head == NULL || *head == NULL)
-		return (NULL);
 	while (current != NULL)
 	{
 		if (current->priority_lev > high_priority->priority_lev)
 			high_priority = current;
 		current = current->next;
 	}
-	// Print the highest priority token
-	printf(":%s\n", high_priority->command_as_string);
-	root = create_node(high_priority);
+		root = create_node(high_priority);
 	// Print tabs for each priority level
 	for (int i = 0; i < high_priority->priority_lev; i++) // for NORMINETTE!
 		printf("\t");
+	// Print the highest priority token
+	printf("%s\n", high_priority->command_as_string);
 	if (high_priority->previous != NULL)
 	{
 		high_priority->previous->next = NULL;
@@ -55,7 +54,7 @@ static t_tree_node	*create_tree(t_list_of_tok **head)
 	if (high_priority->next != NULL)
 	{
 		high_priority->next->previous = NULL;
-		root->left = create_tree(&high_priority->next);
+		root->right = create_tree(&high_priority->next);
 	}
 	return (root);
 }
