@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:44 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/14 20:56:39 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/15 12:52:01 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_tree_node	*create_tree(t_list_of_tok **head)
 	printf("%d\n", high_priority->priority_lev);
 	root = create_node(high_priority);
 	// Print tabs for each priority level
-	for (int i = 0; i < high_priority->priority_lev; i++)
+	for (int i = 0; i < high_priority->priority_lev; i++) // for NORMINETTE!
 		printf("\t");
 	if (high_priority->previous != NULL)
 	{
