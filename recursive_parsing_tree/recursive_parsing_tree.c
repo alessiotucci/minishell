@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:44 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/15 12:52:01 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/15 15:17:53 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static t_tree_node	*create_tree(t_list_of_tok **head)
 		current = current->next;
 	}
 	// Print the highest priority token
-	printf("%d\n", high_priority->priority_lev);
+	printf(":%s\n", high_priority->command_as_string);
 	root = create_node(high_priority);
 	// Print tabs for each priority level
 	for (int i = 0; i < high_priority->priority_lev; i++) // for NORMINETTE!

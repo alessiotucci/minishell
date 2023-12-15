@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/14 20:27:51 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/15 15:01:23 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char	*add_spaces_around_parentheses(char *command);
 int	check_parentheses(char* str);
 
 // level of priority
-void	priority_level(t_list_of_tok **head, t_list_of_tok *tail);
+void	priority_level(t_list_of_tok **head);
 
 // function for the tree it seems 
 void	recursive_tree_builder(t_list_of_tok **head);

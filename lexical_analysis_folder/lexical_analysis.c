@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/14 20:19:52 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/15 15:17:28 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,11 @@ int	lexer(char *string)
 		token_tail = create_list_of_tok(&token_head, line_of_commands[i]);
 		i++;
 	}
-	priority_level(&token_head,token_tail); // head and tails;
+	priority_level(&token_head);
 	print_list_tokens(&token_head);
-	free_split(line_of_commands);
 	// call the tree maker function ?
 	recursive_tree_builder(&token_head);
 	free_list(&token_head);
+	free_split(line_of_commands);
 	return (0);
 }

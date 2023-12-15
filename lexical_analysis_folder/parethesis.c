@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 19:29:51 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/14 17:00:11 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/15 15:01:02 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,13 @@ int	check_parentheses(char* str)
 	// return count == 0 ? 0 : -1; // 0 if balanced
 }
 /*this function will be used to assign priority inside the parenthesis*/
-void	priority_level(t_list_of_tok **head, t_list_of_tok *tail)
+void	priority_level(t_list_of_tok **head)
 {
 	t_list_of_tok	*current;
 	int				priority;
 
 	priority = 0;
 	current = *head;
-	printf("***inside the priority levels***\n");
-	printf("first node is %s\n last node is %s\n", current->command_as_string, tail->command_as_string);
 	while (current != NULL)
 	{
 		if (my_strcmp(current->command_as_string, "(") == 0)
