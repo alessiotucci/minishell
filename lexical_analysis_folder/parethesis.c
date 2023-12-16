@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 19:29:51 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/15 15:01:02 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/16 17:36:17 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*add_spaces_around_parentheses(char *command)
 
 	i = 0;
 	j = 0;
-	length = strlen(command);
+	length = ft_strlen(command);
 	new_command = malloc(length * 2 + 1);
 	while (command[i] != '\0')
 	{
