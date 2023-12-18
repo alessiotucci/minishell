@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 15:35:45 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/17 18:21:52 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/18 08:32:39 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ typedef struct list_node
 {
 	int					priority_level; // Priority level of the command
 	char				*cmd_as_string; // Command as a string
-	struct list_node	*next; // Pointer to the next node in the list
-	struct list_node	*prev; // Pointer to the previous node in the list
+	struct list_node	*next;
+	struct list_node	*prev;
 }	list_node;
 
 // Define a structure for tree nodes
@@ -27,8 +27,8 @@ typedef struct tree_node
 {
 	int					priority_level; // Priority level of the command
 	char				*cmd_as_string; // Command as a string
-	struct tree_node	*left; // Pointer to the left child node
-	struct tree_node	*right; // Pointer to the right child node
+	struct tree_node	*left;
+	struct tree_node	*right;
 }	tree_node;
 
 // Function to create a new tree node
@@ -37,10 +37,10 @@ tree_node*	createtree_node(int priority_level, char *string)
 	tree_node *new_node;
 
 	new_node = (tree_node*)malloc(sizeof(tree_node)); // Allocate memory for the new node
-	new_node->cmd_as_string = string; // Assign the command string to the new node
-	new_node->priority_level = priority_level; // Assign the priority level to the new node
-	new_node->left = NULL; // Initialize the left child pointer to NULL
-	new_node->right = NULL; // Initialize the right child pointer to NULL
+	new_node->cmd_as_string = string;
+	new_node->priority_level = priority_level;
+	new_node->left = NULL;
+	new_node->right = NULL;
 	return (new_node); // Return the new node
 }
 
@@ -65,22 +65,22 @@ tree_node*	create_tree_list(list_node *head)
 	curr_node = head; // Reset the current node to the head of the list
 	while (curr_node != high_priority) // Traverse the list until the highest priority node
 	{
-		list_node *new_node = (list_node*)malloc(sizeof(list_node)); // Allocate memory for a new list node
-		new_node->cmd_as_string = curr_node->cmd_as_string; // Assign the command string to the new node
-		new_node->priority_level = curr_node->priority_level; // Assign the priority level to the new node
-		new_node->next = head1; // Insert the new node at the beginning of the first sublist
-		head1 = new_node; // Update the head of the first sublist
-		curr_node = curr_node->next; // Move to the next node
+		list_node *new_node = (list_node*)malloc(sizeof(list_node));
+		new_node->cmd_as_string = curr_node->cmd_as_string;
+		new_node->priority_level = curr_node->priority_level;
+		new_node->next = head1;
+		head1 = new_node;
+		curr_node = curr_node->next;
 	}
 	curr_node = high_priority->next; // Set the current node to the node after the highest priority node
 	while (curr_node != NULL) // Traverse the rest of the list
 	{
-		list_node *new_node = (list_node*)malloc(sizeof(list_node)); // Allocate memory for a new list node
-		new_node->cmd_as_string = curr_node->cmd_as_string; // Assign the command string to the new node
-		new_node->priority_level = curr_node->priority_level; // Assign the priority level to the new node
-		new_node->next = head2; // Insert the new node at the beginning of the second sublist
-		head2 = new_node; // Update the head of the second sublist
-		curr_node = curr_node->next; // Move to the next node
+		list_node *new_node = (list_node*)malloc(sizeof(list_node));
+		new_node->cmd_as_string = curr_node->cmd_as_string;
+		new_node->priority_level = curr_node->priority_level;
+		new_node->next = head2;
+		head2 = new_node;
+		curr_node = curr_node->next;
 	}
 	root->left = create_tree_list(head1); // Recursively create the left subtree from the first sublist
 	root->right = create_tree_list(head2); // Recursively create the right subtree from the second sublist
