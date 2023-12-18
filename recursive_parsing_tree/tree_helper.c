@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:37:25 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/18 11:58:04 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/18 15:07:26 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,13 @@ int	print_tree(t_tree_node *root, int depth)
 	if (root == NULL)
 	{
 		print_tabs(depth);
-		return (printf("---<empty>---\n"));
+		return (printf("null"));
 	}
-	//printf("check for segvault\n");
 	print_tabs(depth);
-	printf("value: %s\n", root->token->command_as_string);
-	printf("LEFT\n");
+	printf("\t[ %s ]\n", root->token->command_as_string);
+	printf("LEFT:");
 	print_tree(root->left, depth + 1);
-	printf("RIGHT\n");
+	printf("\tRIGHT: ");
 	print_tree(root->right, depth + 1);
 	return (0);
 }

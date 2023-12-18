@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:44 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/18 11:56:03 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/18 15:05:09 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ void	recursive_tree_builder(t_list_of_tok **head)
 	t_tree_node	*root;
 
 	root = create_tree(*head);
-	printf("I am ready to print the tree of address [%p]\n", root);
+	printf("%sI am ready to print the tree of address%s\n", GREEN, RESET);
 	print_tree(root, 0);
+	printf("\n");
 	parser2();
 	parser3();
 	return ;
