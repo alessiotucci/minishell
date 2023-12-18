@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/17 14:02:06 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/18 09:48:05 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,9 @@ void	parser3(void);
 // yet an other function 
 t_type_of_tok	type_of_token(char *spitted);
 
-void	token(void);
+t_list_of_tok	*create_node(int level, char *spitted_cmd);
+
+ void	token(void);
 void	parser(void);
 int		lexer(char *string);
 void	try_builtin(void);

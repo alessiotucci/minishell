@@ -6,63 +6,63 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:44 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/15 19:52:37 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/18 11:56:03 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static t_tree_node *create_node(t_list_of_tok *token)
+static t_tree_node *create_tree_node(t_list_of_tok *token)
 {
-	t_tree_node	*node;
+	t_tree_node	*new_node;
 
-	node = (t_tree_node *)malloc(sizeof(t_tree_node));
-	if (node == NULL)
-		exit(2); // YOU should handle the error in a better way than this...
-	node->token = token;
-	node->left = NULL;
-	node->right = NULL;
-	return (node);
+	new_node = (t_tree_node *)malloc(sizeof(t_tree_node));
+	new_node->token = token;
+	new_node->priority_lev = token->priority_lev;
+	new_node->left = NULL;
+	new_node->right = NULL;
+	return (new_node);
 }
-static t_tree_node	*create_tree(t_list_of_tok **head)
+
+/* Helper function to create a sublist from start to end */
+static t_list_of_tok*	create_sublist(t_list_of_tok *start, t_list_of_tok *end)
+{
+	t_list_of_tok	*head;
+	t_list_of_tok	*new_node;
+	head = NULL;
+	while (start != end) // this doesnt compile
+	{
+		new_node = create_node(start->priority_lev, start->command_as_string);// define this function, not compiling
+		new_node->next = head;
+		head = new_node;
+		start = start->next;
+	}
+	return head;
+}
+
+static t_tree_node	*create_tree(t_list_of_tok *head)
 {
 	t_list_of_tok	*high_priority;
-	t_list_of_tok	*current;
+	t_list_of_tok	*curr_node;
 	t_tree_node		*root;
+	t_list_of_tok	*head1;
+	t_list_of_tok	*head2;
 
-	if (head == NULL || *head == NULL)
-	return (NULL);
-	high_priority = *head;
-	current = (*head)->next;
-	while (current != NULL)
-	{
-		if (current->priority_lev > high_priority->priority_lev)
-			high_priority = current;
-		current = current->next;
-	}
-	if (high_priority == NULL)
-	{
-		printf("high priority is null\n");
+	if (head == NULL)
 		return (NULL);
-	}
-	root = create_node(high_priority);
-	// Print tabs for each priority level
-	for (int i = 0; i < high_priority->priority_lev; i++) // for NORMINETTE!
-		printf("\t");
-	// Print the highest priority token //
-//	if (high_priority->type != T_PARENT)
-//	print_node(high_priority);
-	printf("%s\n", high_priority->command_as_string);
-	if (high_priority->previous != NULL)
+	high_priority = head;
+	curr_node = head;
+	while (curr_node != NULL) // LET'S START WITH THE cYcle
 	{
-		high_priority->previous->next = NULL;
-		root->left = create_tree(head);
+		if (curr_node->priority_lev > high_priority->priority_lev)
+			high_priority = curr_node;
+		curr_node = curr_node->next;
 	}
-	if (high_priority->next != NULL)
-	{
-		high_priority->next->previous = NULL;
-		root->right = create_tree(&high_priority->next);
-	}
+	root = create_tree_node(high_priority);
+	head1 = create_sublist(head, high_priority);
+	head2 = create_sublist(high_priority->next, NULL);
+	root->left = create_tree(head1);
+	root->right = create_tree(head2);
 	return (root);
 }
 
@@ -70,8 +70,9 @@ void	recursive_tree_builder(t_list_of_tok **head)
 {
 	t_tree_node	*root;
 
-	root = create_tree(head);
-//	print_tree(root, 0);
+	root = create_tree(*head);
+	printf("I am ready to print the tree of address [%p]\n", root);
+	print_tree(root, 0);
 	parser2();
 	parser3();
 	return ;
