@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:37:25 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/18 15:07:26 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/18 15:57:55 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ int	print_tree(t_tree_node *root, int depth)
 	return (0);
 }
 
-void	parser2(void)
+void	tree_maker2(void)
 {
 	return ;
 }
 
-void	parser3(void)
+void	tree_maker3(void)
 {
 	return ;
 }

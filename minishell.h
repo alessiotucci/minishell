@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/18 09:48:05 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/19 08:52:23 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 # include "libft/libft.h"
 # include "builtin_folder/built_ins.h"
-# include "executor_folder/tokenizer.h"
+# include "executor_folder/executor.h"
 # include <unistd.h> // check for the libraris are allowed
 # include <stdlib.h>
 # include <fcntl.h>
@@ -113,8 +113,8 @@ void	priority_level(t_list_of_tok **head);
 void	recursive_tree_builder(t_list_of_tok **head);
 void	parser(void);
 int		print_tree(t_tree_node *root, int level);
-void	parser2(void);
-void	parser3(void);
+void	tree_maker2(void);
+void	tree_maker3(void);
 // yet an other function 
 t_type_of_tok	type_of_token(char *spitted);
 

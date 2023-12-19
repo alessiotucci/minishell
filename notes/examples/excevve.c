@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 15:59:54 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/17 19:02:48 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/19 09:16:56 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <readline/readline.h>
 #include <string.h>
+#include "../../minishell.h"
 
 int main(int ac, char *av[], char **env)
 {
@@ -25,7 +26,7 @@ int main(int ac, char *av[], char **env)
 
 	while (1)
 	{
-		input = readline("minishell ");
+		input = readline(RED"miniHell "RESET);
 		command = malloc(strlen("/bin/") + strlen(input) + 1);  // allocate memory for the command
 		strcpy(command, "/bin/");  // copy "/bin/" to command
 		strcat(command, input);  // append input to command

@@ -1,18 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.h                                        :+:      :+:    :+:   */
+/*   token_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 13:10:53 by atucci            #+#    #+#             */
-/*   Updated: 2023/11/09 11:33:55 by atucci           ###   ########.fr       */
+/*   Created: 2023/11/08 12:38:22 by atucci            #+#    #+#             */
+/*   Updated: 2023/12/19 08:54:04 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "executor.h"
 #include "../minishell.h"
 
-void	token(void);
-void	token1(void);
-void	token2(void);
-void	token3(void);
+void	executor1(void)
+{
+	return ;
+}
+
+void	executor2(void)
+{
+	return ;
+}
+
+void	executor3(void)
+{
+	return ;
+}
