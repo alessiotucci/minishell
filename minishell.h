@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/19 08:52:23 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/21 12:17:45 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void			print_node(t_list_of_tok *node);
 
 // pork around
 char	*replace_me(char *str, char quote, char replacement, char me);
-char	*add_spaces_around_parentheses(char *command);
+char	*add_spaces_around_symbols(char *command);
 // fucking parentheses
 int	check_parentheses(char* str);
 

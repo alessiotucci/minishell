@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/18 09:32:53 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/21 12:17:03 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,15 +94,16 @@ int	lexer(char *string)
 		return (ft_printf("bad parentheses\n"));
 	new_string = replace_me(string, '"', '\t', ' ');
 	new_string = replace_me(string, 39, '\t', ' ');
-	new_string = add_spaces_around_parentheses(string);
+	new_string = add_spaces_around_symbols(string);
 	line_of_commands = ft_split(new_string, ' ');
-	while (line_of_commands[i])
+	while (line_of_commands[i]) // I need to perform additional_check here?
 	{
 		line_of_commands[i] = replace_me(line_of_commands[i], '"', ' ', '\t');
 		line_of_commands[i] = replace_me(line_of_commands[i], 39, ' ', '\t');
 		token_tail = create_list_of_tok(&token_head, line_of_commands[i]);
 		i++;
 	}
+	// redirection_wo_spaces(&token_head);
 	priority_level(&token_head);
 	print_list_tokens(&token_head);
 	// call the tree maker function ?
