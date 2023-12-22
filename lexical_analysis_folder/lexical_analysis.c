@@ -98,7 +98,6 @@ int	lexer(char *string)
 	line_of_commands = ft_split(new_string, ' ');
 	while (line_of_commands[i]) // I need to perform additional_check here?
 	{
-		printf(" lexer ok, inside the while loops\n");
 		line_of_commands[i] = replace_me(line_of_commands[i], '"', ' ', '\t');
 		line_of_commands[i] = replace_me(line_of_commands[i], 39, ' ', '\t');
 		/*token_tail =*/ create_list_of_tok(&token_head, line_of_commands[i]);
