@@ -68,10 +68,8 @@ static t_tree_node	*create_tree(t_list_of_tok *head)
 
 void	recursive_tree_builder(t_list_of_tok **head)
 {
-	t_tree_node	*root;
-
-	root = create_tree(*head);
-//	print_tree(root, 0);
+	t_tree_node	*root = create_tree(*head);
+	print_tree(root, 0);
 	printf("\n");
 	tree_maker2();
 	tree_maker3();

@@ -20,10 +20,10 @@ static void	handle_signal(void)
 
 int	main(int ac, char *av[], char *envp[])
 {
-	int		count;
+//	int		count;
 	char	*input;
 
-	count = 1;
+//	count = 1;
 	if (ac || av || envp)
 		ft_printf("\n");
 	while (1)
