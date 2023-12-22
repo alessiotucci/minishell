@@ -82,7 +82,6 @@ int	lexer(char *string)
 	t_list_of_tok	*token_head;
 	char			*new_string;
 //	t_list_of_tok	*token_tail;
-
 	i = 0;
 	token_head = NULL;
 	if (handling_errors(string) == 1)
@@ -99,9 +98,10 @@ int	lexer(char *string)
 	line_of_commands = ft_split(new_string, ' ');
 	while (line_of_commands[i]) // I need to perform additional_check here?
 	{
+		printf(" lexer ok, inside the while loops\n");
 		line_of_commands[i] = replace_me(line_of_commands[i], '"', ' ', '\t');
 		line_of_commands[i] = replace_me(line_of_commands[i], 39, ' ', '\t');
-		//token_tail = create_list_of_tok(&token_head, line_of_commands[i]);
+		/*token_tail =*/ create_list_of_tok(&token_head, line_of_commands[i]);
 		i++;
 	}
 	// redirection_wo_spaces(&token_head);
