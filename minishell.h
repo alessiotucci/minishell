@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/21 12:17:45 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/23 12:13:14 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ typedef enum e_type_of_tok
 
 typedef struct s_list_of_tok
 {
+	int						fd;
+	char					*useful;
 	char					*command_as_string;
 	t_type_of_tok			type;
 	struct s_list_of_tok	*next;
@@ -70,6 +72,8 @@ typedef struct s_list_of_tok
 
 typedef struct s_tree_node
 {
+	int					fd;
+	char				*useful;
 	char				*command_as_string;
 	t_list_of_tok		*token; // this is a fix (?)
 	int					priority_lev;
