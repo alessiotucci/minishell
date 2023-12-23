@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/21 12:17:03 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/23 14:46:44 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,9 @@ static int	handling_errors(char *input)
 /*Static function to perform some cleaning in the input*/
 static void	cleaning_input(char *input)
 {
-	//char	*cleaned;
-	(void)input;
-	return ;
-	//cleaned = replace_me(input, '"', '\t', ' ');
+	char	*cleaned;
+
+	cleaned = replace_me(input, '"', '\t', ' ');
 }
 
 /*The main function of the lexer, we use split and get the command line*/
@@ -81,7 +80,8 @@ int	lexer(char *string)
 	int				i;
 	t_list_of_tok	*token_head;
 	char			*new_string;
-//	t_list_of_tok	*token_tail;
+	t_list_of_tok	*token_tail;
+
 	i = 0;
 	token_head = NULL;
 	if (handling_errors(string) == 1)
@@ -100,7 +100,7 @@ int	lexer(char *string)
 	{
 		line_of_commands[i] = replace_me(line_of_commands[i], '"', ' ', '\t');
 		line_of_commands[i] = replace_me(line_of_commands[i], 39, ' ', '\t');
-		/*token_tail =*/ create_list_of_tok(&token_head, line_of_commands[i]);
+		token_tail = create_list_of_tok(&token_head, line_of_commands[i]);
 		i++;
 	}
 	// redirection_wo_spaces(&token_head);
