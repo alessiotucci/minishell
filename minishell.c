@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/23 14:44:46 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/23 17:22:31 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int ac, char *av[], char *envp[])
 	while (1)
 	{
 	handle_signal();
-	input = readline("minishell% ");
+	input = readline(RED"minishell% "RESET);
 	add_history(input);
 	if (input == NULL)
 		return (0 * write(1, "\n", 1));
