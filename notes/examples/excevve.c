@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 15:59:54 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/19 09:16:56 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/23 12:37:33 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,17 @@ int main(int ac, char *av[], char **env)
 	{
 		input = readline(RED"miniHell "RESET);
 		command = malloc(strlen("/bin/") + strlen(input) + 1);  // allocate memory for the command
-		strcpy(command, "/bin/");  // copy "/bin/" to command
-		strcat(command, input);  // append input to command
-		//printf("command [%s]\n", command);
+		strcpy(command, "/bin/");// copy "/bin/" to command
+		strcat(command, input);// append input to command
 		char *args[] = {command, NULL};
 		if (fork() == 0)
 		{
 			execve(command, args, env);
-			perror("execve");   // execve returns only on error
+			perror("execve");// execve returns only on error
 			exit(EXIT_FAILURE);
 		}
 		else
-			wait(NULL);  // parent waits for the child to finish
+			wait(NULL);// parent waits for the child to finish
 		free(input);
 		free(command);
 	}
