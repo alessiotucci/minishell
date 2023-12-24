@@ -15,6 +15,8 @@
 ---
 <br>
 
+# Useful function 
+
 | Function | Prototype                                     | Library            |                                    Description |
 | ---------------- | ------------------------------------- | -------------------| ---------------------------------------------- |
 | access 	         | `int access(const char *pathname, int mode);` 	| unistd.h 	| Checks if the calling process can access the file pathname. |
@@ -27,6 +29,8 @@
 
 ---
 <br>
+
+# Useful function 
 
 | Function | Prototype                                     | Library            |                                    Description |
 | ---------------- | ------------------------------------- | -------------------| ---------------------------------------------- |
@@ -47,6 +51,8 @@
 
 # Function used in get_next_line and other projects
 
+## I won't go too much into details for those function since we already used them in our 42 project 
+
 | Function | Prototype | Library | des   | 
 | ---------| --------- | ------- |-------|
 | ``printf`` | `int printf(const char *format, ...);` | stdio.h | Prints formatted output to stdout. |
@@ -61,7 +67,7 @@
 <br>
 
 # Function used in pipex and Philospher Bonus 
-
+## I wish I had enough time to push my philosopher with them Bonus done, but unluckly I needed to hurry up. For this reason most of those function are new to me.
 | Function | Prototype | Library | Description |
 | --- | --- | --- | --- |
 | fork 	| `pid_t fork(void);` 	| unistd.h 	|Creates a new process by duplicating the existing process. The new process is called a child process.|
@@ -74,6 +80,7 @@
 <br>
 
 # Function used in Minitalks 
+## I won't go too much into details for those function since we already used them in our 42 project 
 
 | Function | Prototype | Library | Description |
 | --- | --- | --- | --- |
