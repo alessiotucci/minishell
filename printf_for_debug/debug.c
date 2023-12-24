@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:47:07 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/15 15:48:35 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/24 17:25:34 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ const char *names[] =
 	"Redirection out",
 	"Redirection appender",
 	"Redirection delimiter",
-	"Logical Operator"
+	"Logical Operator",
+	"Command Arguments"
 };
 
 const char *colors[] =
@@ -38,7 +39,8 @@ const char *colors[] =
 	BG_GREEN,
 	BG_CYAN,
 	BG_YELLOW,
-	BG_RED
+	BG_RED,
+	BLUE
 };
 
 void	print_node(t_list_of_tok *node)
@@ -50,6 +52,8 @@ void	print_node(t_list_of_tok *node)
 	printf("|TYPE %d,  %s%s%s\n", node->type, colors[node->type], names[node->type], RESET);
 	printf("|PREV %p \n",node->previous);
 	printf("|NEXT %p \n",node->next);
+	if (node->next != NULL)
+	printf("|NEXT-Type %d,  %s%s%s \n",node->next->type, colors[node->next->type], names[node->next->type], RESET);
 	printf("|INDEX %d\n", node->index);
 	printf("|--------------------|\n\n");
 }

@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/18 11:30:50 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/24 17:46:32 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ t_list_of_tok *create_list_of_tok(t_list_of_tok **head, char *spitted_cmd)
 		current->next = new_node;
 		new_node->previous = current;
 		new_node->index = current->index + 1;
+		if (current->type == T_COMMAND || current->type == T_FLAG)
+		new_node->type = T_COMMAND_ARGS;
 	}
 	return (new_node);
 }
