@@ -6,11 +6,10 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:38:22 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/19 08:54:04 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/24 15:01:31 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
 #include "../minishell.h"
 
 void	executor1(void)

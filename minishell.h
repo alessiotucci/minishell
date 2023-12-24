@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/24 10:51:44 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/24 15:02:45 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 # include "libft/libft.h"
 # include "builtin_folder/built_ins.h"
-# include "executor_folder/executor.h"
 # include <unistd.h> // check for the libraris are allowed
 # include <stdlib.h>
 # include <fcntl.h>
@@ -124,11 +123,18 @@ t_type_of_tok	type_of_token(char *spitted);
 
 t_list_of_tok	*create_node(int level, char *spitted_cmd);
 
- void	token(void);
+void	token(void);
 void	parser(void);
-int		lexer(char *string);
+int		lexer(char *string, char **envp);
 void	try_builtin(void);
+/* function for the executor */
 
+void	executor(t_list_of_tok **head, char **envp);
+char	*find_path_env(char **env);
+void	executor2(void);
+void	executor3(void);
+
+/**/
 // function to handle signals
 void	handle_ctrl_c(int sig);
 void	handle_ctrl_d(int sig);

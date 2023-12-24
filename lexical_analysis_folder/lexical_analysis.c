@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/23 14:46:44 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/24 15:00:44 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	cleaning_input(char *input)
 }
 
 /*The main function of the lexer, we use split and get the command line*/
-int	lexer(char *string)
+int	lexer(char *string, char **env)
 {
 	char			**line_of_commands;
 	int				i;
@@ -108,6 +108,8 @@ int	lexer(char *string)
 	print_list_tokens(&token_head);
 	// call the tree maker function ?
 	recursive_tree_builder(&token_head);
+	// here we are free everything
+	executor(&token_head, env);
 	free_list(&token_head);
 	free_split(line_of_commands);
 	return (0);

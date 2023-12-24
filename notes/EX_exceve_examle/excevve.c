@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 15:59:54 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/24 14:10:09 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/24 14:45:55 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int main(int ac, char *av[], char **env)
 			strcpy(possible_command, directs[i]);
 			strcat(possible_command, "/");
 			strcat(possible_command, input_parts[0]);
-			//printf("input_parts[0]: %s\n directs[%d]: %s\n", input_parts[0], i, directs[i]);
 			if (access(possible_command, X_OK) == 0)// Check if the command is executable
 			{
 				command = possible_command;
@@ -70,15 +69,14 @@ int main(int ac, char *av[], char **env)
 		//char **args = ft_split(command, ' ');
 		if (fork() == 0)
 		{
-//			printf("%sINSIDE CHILD PROCESS\n%s", YELLOW, RESET);
-			// int execve(const char *path, char *const argv[], char *const envp[]);
-//			printf("const char *path: %s\n", command);
+			//int execve(const char *path, char *const argv[], char *const envp[])
+			//printf("command:[%s]\ninput_parts[0]:%s\nenv[0]:%s\n", command, input_parts[0], env[0]);
 			execve(command, input_parts, env);
-			perror("execve");// execve returns only on error
+			perror("execve");
 			exit(EXIT_FAILURE);
 		}
 		else
-			wait(NULL);// parent waits for the child to finish
+			wait(NULL);
 		free(input);
 		free(command);
 		free(input_parts);

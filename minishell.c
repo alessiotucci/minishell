@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/23 17:22:31 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/24 15:00:55 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,11 @@ int	main(int ac, char *av[], char *envp[])
 	add_history(input);
 	if (input == NULL)
 		return (0 * write(1, "\n", 1));
-	if (input != NULL && lexer(input) == 1)
+	if (input != NULL && lexer(input, envp) == 1)
 		return (1);
 	// what we need to return for syntax error? 
 	//	token();
-//	parser();
-//	try_builtin();
-//	if (input != NULL)
-//	ft_printf("%s\n", input);
+	//	parser();
+	//	try_builtin();
 	}
 }
