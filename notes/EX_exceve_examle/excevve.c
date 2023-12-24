@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 15:59:54 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/24 14:03:14 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/24 14:10:09 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,15 @@ int main(int ac, char *av[], char **env)
 	char	*path = NULL;
 	char	**directs;
 	// Find the PATH in the env array
-	for (int i = 0; env[i] != NULL; i++)
+	int i = 0;
+	while (env[i] != NULL)
 	{
 		if (strncmp(env[i], "PATH=", 5) == 0)
 		{
 			path = env[i] + 5; // Skip the "PATH=" part
 			break;
 		}
+	i++;
 	}
 	//printf("Path: (%s%s%s)\n", GREEN, path, RESET);
 	directs = ft_split(path, ':');
@@ -42,7 +44,8 @@ int main(int ac, char *av[], char **env)
 		input = readline(RED"miniHell "RESET);
 		char **input_parts = ft_split(input, ' ');
 		command = NULL;
-		for (int i = 0; directs[i] != NULL; i++)
+		i = 0;
+		while (directs[i] != NULL)
 		{
 			char *possible_command = malloc(strlen(directs[i]) + strlen(input_parts[0]) + 2); // +2 for the '/' and '\0'
 			strcpy(possible_command, directs[i]);
@@ -55,6 +58,7 @@ int main(int ac, char *av[], char **env)
 				break;
 			}
 			free(possible_command);
+		i++;
 		}
 		if (command == NULL)
 		{
