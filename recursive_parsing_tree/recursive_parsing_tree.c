@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:44 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/22 16:48:53 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/24 10:52:12 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,14 @@ static t_tree_node	*create_tree(t_list_of_tok *head)
 	return (root);
 }
 
-void	recursive_tree_builder(t_list_of_tok **head)
+t_list_of_tok	**recursive_tree_builder(t_list_of_tok **head)
 {
+	printf("%s***Starting with the tree***%s\n\n", GREEN, RESET);
 	t_tree_node	*root = create_tree(*head);
-	print_tree(root, 0);
+//	print_tree(root, 0);
 	printf("\n");
 	tree_maker2();
 	tree_maker3();
-	return ;
+	printf("%s***Finish with the tree***%s\n\n", GREEN, RESET);
+	return (head);
 }

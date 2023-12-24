@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/23 12:13:14 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/24 10:51:44 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	check_parentheses(char* str);
 void	priority_level(t_list_of_tok **head);
 
 // function for the tree it seems 
-void	recursive_tree_builder(t_list_of_tok **head);
+t_list_of_tok	**recursive_tree_builder(t_list_of_tok **head);
 void	parser(void);
 int		print_tree(t_tree_node *root, int level);
 void	tree_maker2(void);
