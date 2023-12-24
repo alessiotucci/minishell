@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/24 15:02:45 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/24 15:20:46 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	try_builtin(void);
 /* function for the executor */
 
 void	executor(t_list_of_tok **head, char **envp);
-char	*find_path_env(char **env);
+char	**find_path_env(char **env);
 void	executor2(void);
 void	executor3(void);
 
