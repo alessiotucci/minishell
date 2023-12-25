@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/24 17:51:48 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/25 09:54:46 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ typedef enum e_type_of_tok
 
 typedef struct s_list_of_tok
 {
-	int						fd;
-	char					*useful;
+	int						fd_redirect;
+	char					*useful_namer;
 	char					*command_as_string;
 	t_type_of_tok			type;
 	struct s_list_of_tok	*next;

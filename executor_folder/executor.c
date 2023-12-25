@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/25 08:31:50 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/25 10:07:28 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,34 @@ t_list_of_tok	*find_command_in_list(t_list_of_tok **head)
 	}
 	return (NULL);
 }
+
+void	find_pipe_redirect(t_list_of_tok *nod)
+{
+	t_list_of_tok	*iterator;
+	printf("%scheck for pipes or redirection %s\n", RED, RESET);
+	iterator = nod;
+	while (iterator != NULL)
+	{
+		// Check if the current node is a pipe or redirection operator
+		if (iterator->type == T_PIPES || iterator->type == T_REDIR_OUT || iterator->type == T_REDIR_APP)
+		{
+			if (iterator->next == NULL)
+			{
+				printf("Syntax error: unexpected end of command\n");
+				exit(0); //return ;
+			}
+			// Save the type of operator in the current node
+			iterator->type = iterator->next->type;
+			// Save the filename or command in the current node
+			iterator->useful_namer = strdup(iterator->next->command_as_string);
+			// Skip the next node as we've already processed it
+			iterator->next = iterator->next->next;
+		}
+		iterator = iterator->next;
+	}
+	return ;
+}
+
 void	executor(t_list_of_tok **head, char **envp)
 {
 	int		i;
@@ -51,8 +79,10 @@ void	executor(t_list_of_tok **head, char **envp)
 	char	**directs;
 	char	*command = NULL;
 	char	*possible_command;
-	
+
 	t_list_of_tok *current = find_command_in_list(head);
+	// I need to check for pipes and redirections
+	find_pipe_redirect(current);
 	if (current == NULL)
 	{
 		printf("there is no command in the string sadly\n");
