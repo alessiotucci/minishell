@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:38:22 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/24 18:03:50 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/25 10:38:02 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char **argv_for_exceve(t_list_of_tok **head)
 	while (current != NULL)
 	{
 		// Check if the type of the node is related to a command
-		if (current->type == T_COMMAND || current->type == T_BUILTIN || current->type == T_COMMAND_ARGS)
+		if (current->type == T_COMMAND || current->type == T_BUILTIN || current->type == T_COMMAND_ARGS || current->type == T_FLAG)
 		{
 			argv[i] = ft_strdup(current->command_as_string); // duplicate the string
 			if (!argv[i])

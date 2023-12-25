@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/25 10:07:28 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/25 10:39:42 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	find_pipe_redirect(t_list_of_tok *nod)
 			if (iterator->next == NULL)
 			{
 				printf("Syntax error: unexpected end of command\n");
-				exit(0); //return ;
+				return ;
 			}
 			// Save the type of operator in the current node
 			iterator->type = iterator->next->type;
