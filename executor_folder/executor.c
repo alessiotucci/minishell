@@ -45,11 +45,8 @@ t_list_of_tok	*find_command_in_list(t_list_of_tok **head)
 	return (NULL);
 }
 
-void	find_pipe_redirect(t_list_of_tok *nod)
+char *find_pipe_redirect(t_list_of_tok *iterator)
 {
-	t_list_of_tok	*iterator;
-	printf("%scheck for pipes or redirection %s\n", RED, RESET);
-	iterator = nod;
 	while (iterator != NULL)
 	{
 		// Check if the current node is a pipe or redirection operator
@@ -58,19 +55,40 @@ void	find_pipe_redirect(t_list_of_tok *nod)
 			if (iterator->next == NULL)
 			{
 				printf("Syntax error: unexpected end of command\n");
-				return ;
+				return (NULL);
 			}
-			// Save the type of operator in the current node
-			iterator->type = iterator->next->type;
+			//iterator->type = iterator->next->type; Save the type of operator in the current node
 			// Save the filename or command in the current node
-			iterator->useful_namer = strdup(iterator->next->command_as_string);
-			// Skip the next node as we've already processed it
-			iterator->next = iterator->next->next;
-		}
+			iterator->useful_namer = ft_strdup(iterator->next->command_as_string);
+			return (iterator->useful_namer);
+		}/*
+			iterator->next = iterator->next->next;// Skip the next node as we've already processed it
+		} */
 		iterator = iterator->next;
 	}
-	return ;
+	return (NULL);
 }
+
+/*this function has just being copy and pasted form bing so I need to recheck */
+void redirect_output(t_list_of_tok *current)
+{
+	if (current->useful_namer != NULL)
+	{
+		int fd = open(current->useful_namer, O_WRONLY | O_CREAT, 0666);
+		if (fd == -1)
+		{
+			perror("open");
+			exit(EXIT_FAILURE);
+		}
+		if (dup2(fd, STDOUT_FILENO) == -1)
+		{
+			perror("dup2");
+			exit(EXIT_FAILURE);
+		}
+		close(fd);
+	}
+}
+
 
 void	executor(t_list_of_tok **head, char **envp)
 {
@@ -82,7 +100,8 @@ void	executor(t_list_of_tok **head, char **envp)
 
 	t_list_of_tok *current = find_command_in_list(head);
 	// I need to check for pipes and redirections
-	find_pipe_redirect(current);
+	current->useful_namer = find_pipe_redirect(current);
+	printf("FILE TO OPEN | COMMAND TO TAKE: %s%s%s\n", YELLOW, current->useful_namer, RESET);
 	if (current == NULL)
 	{
 		printf("there is no command in the string sadly\n");
@@ -110,6 +129,8 @@ void	executor(t_list_of_tok **head, char **envp)
 /*                                                                           */
 		if (fork() == 0)
 		{
+			// bing suggest to perform the function call here
+			redirect_output(current);
 			execve(command, test, envp);
 			perror("execve");// execve returns only on error
 			exit(EXIT_FAILURE);

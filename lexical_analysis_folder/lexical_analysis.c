@@ -71,6 +71,7 @@ static void	cleaning_input(char *input)
 	char	*cleaned;
 
 	cleaned = replace_me(input, '"', '\t', ' ');
+	printf("%s\n", cleaned);
 }
 
 /*The main function of the lexer, we use split and get the command line*/
@@ -101,6 +102,7 @@ int	lexer(char *string, char **env)
 		line_of_commands[i] = replace_me(line_of_commands[i], '"', ' ', '\t');
 		line_of_commands[i] = replace_me(line_of_commands[i], 39, ' ', '\t');
 		token_tail = create_list_of_tok(&token_head, line_of_commands[i]);
+		printf(" the last node is %s\n", token_tail->command_as_string);
 		i++;
 	}
 	// redirection_wo_spaces(&token_head);

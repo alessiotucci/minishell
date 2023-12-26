@@ -1,0 +1,23 @@
+total 1672
+drwxrwxr-x 2 atucci atucci    4096 Dec 26 12:23 builtin_enrico_2
+drwxrwxr-x 2 atucci atucci    4096 Dec 26 13:34 builtin_folder
+drwxrwxr-x 2 atucci atucci    4096 Dec 26 13:43 executor_folder
+-rw-rw-r-- 1 atucci atucci       0 Dec 26 13:43 file_di_test
+drwxrwxr-x 2 atucci atucci    4096 Dec 26 13:34 lexical_analysis_folder
+drwxrwxr-x 2 atucci atucci    4096 Dec 26 12:26 libft
+-rw-rw-r-- 1 atucci atucci    4381 Dec 26 12:23 Makefile
+-rwxrwxr-x 1 atucci atucci   37008 Dec 26 13:43 minishell
+-rw-rw-r-- 1 atucci atucci    1465 Dec 26 12:23 minishell.c
+-rw-rw-r-- 1 atucci atucci    4212 Dec 26 12:23 minishell.h
+-rw-rw-r-- 1 atucci atucci    2328 Dec 26 13:34 minishell.o
+-rw-rw-r-- 1 atucci atucci 1568599 Dec 22 17:26 minishellSubject.pdf
+drwxrwxr-x 3 atucci atucci    4096 Dec 26 12:23 notes
+drwxrwxr-x 5 atucci atucci    4096 Dec 22 17:26 other_people_workFcarlucc
+-rw-rw-r-- 1 atucci atucci      58 Dec 22 17:26 output.txt
+drwxrwxr-x 2 atucci atucci    4096 Dec 26 13:34 printf_for_debug
+-rw-rw-r-- 1 atucci atucci   11355 Dec 26 12:23 readme.md
+-rw-rw-r-- 1 atucci atucci   11355 Dec 26 12:23 README.md
+drwxrwxr-x 2 atucci atucci    4096 Dec 26 13:34 recursive_parsing_tree
+-rw-rw-r-- 1 atucci atucci    1697 Dec 22 17:26 signals.c
+-rw-rw-r-- 1 atucci atucci    2128 Dec 26 13:34 signals.o
+-rw-rw-r-- 1 atucci atucci    1289 Nov 17 15:03 test.h
