@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/25 09:54:46 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/26 16:15:18 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@
 # define BG_CYAN         "\033[46m"
 # define BG_YELLOW       "\033[43m"
 # define BG_RED          "\033[41m"
+/* Define the flag for open redirection*/
+#define OVERWRITE_FLAGS (O_WRONLY | O_CREAT | O_TRUNC)
+#define APPEND_FLAGS (O_WRONLY | O_CREAT | O_APPEND)
+
 
 
 typedef enum e_type_of_tok
@@ -60,7 +64,7 @@ typedef enum e_type_of_tok
 typedef struct s_list_of_tok
 {
 	int						fd_redirect;
-	char					*useful_namer;
+	char					*file_name;
 	char					*command_as_string;
 	t_type_of_tok			type;
 	struct s_list_of_tok	*next;

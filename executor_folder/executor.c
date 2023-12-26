@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/25 10:39:42 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/26 16:22:25 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ char *find_pipe_redirect(t_list_of_tok *iterator)
 			}
 			//iterator->type = iterator->next->type; Save the type of operator in the current node
 			// Save the filename or command in the current node
-			iterator->useful_namer = ft_strdup(iterator->next->command_as_string);
-			return (iterator->useful_namer);
+			iterator->file_name = ft_strdup(iterator->next->command_as_string);
+			return (iterator->file_name);
 		}/*
 			iterator->next = iterator->next->next;// Skip the next node as we've already processed it
 		} */
@@ -70,11 +70,24 @@ char *find_pipe_redirect(t_list_of_tok *iterator)
 }
 
 /*this function has just being copy and pasted form bing so I need to recheck */
-void redirect_output(t_list_of_tok *current)
+void redirect_output(t_list_of_tok *current, t_type_of_tok type)
 {
-	if (current->useful_namer != NULL)
+	int	fd;
+	(void)type;
+	if (current->file_name != NULL)
 	{
-		int fd = open(current->useful_namer, O_WRONLY | O_CREAT, 0666);
+		if (type == T_REDIR_OUT)
+		{
+			fd = open(current->file_name, OVERWRITE_FLAGS, 0666);
+			printf("%susing overwrite flags: %s",BG_GREEN, BG_RESET);
+		}
+		else if (type == T_REDIR_APP)
+		{
+			fd = open(current->file_name, APPEND_FLAGS, 0666);
+			printf("%susing append flags: %s",BG_CYAN, BG_RESET);
+		}
+		else
+			return ;
 		if (fd == -1)
 		{
 			perror("open");
@@ -99,14 +112,15 @@ void	executor(t_list_of_tok **head, char **envp)
 	char	*possible_command;
 
 	t_list_of_tok *current = find_command_in_list(head);
-	// I need to check for pipes and redirections
-	current->useful_namer = find_pipe_redirect(current);
-	printf("FILE TO OPEN | COMMAND TO TAKE: %s%s%s\n", YELLOW, current->useful_namer, RESET);
 	if (current == NULL)
 	{
 		printf("there is no command in the string sadly\n");
 		return ;
 	}
+	// I need to check for pipes and redirections
+	current->file_name = find_pipe_redirect(current);
+	printf("FILE TO OPEN | COMMAND TO TAKE: %s%s%s\n", YELLOW, current->file_name, RESET);
+	
 	i = 0;
 	directs = find_path_env(envp);
 	while (directs[i] != NULL)
@@ -130,7 +144,8 @@ void	executor(t_list_of_tok **head, char **envp)
 		if (fork() == 0)
 		{
 			// bing suggest to perform the function call here
-			redirect_output(current);
+			if (current->file_name != NULL)
+				redirect_output(current, current->next->type);
 			execve(command, test, envp);
 			perror("execve");// execve returns only on error
 			exit(EXIT_FAILURE);
