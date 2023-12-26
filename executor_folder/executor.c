@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/26 16:22:25 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/26 16:52:40 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char *find_pipe_redirect(t_list_of_tok *iterator)
 	while (iterator != NULL)
 	{
 		// Check if the current node is a pipe or redirection operator
-		if (iterator->type == T_PIPES || iterator->type == T_REDIR_OUT || iterator->type == T_REDIR_APP)
+		if (iterator->type == T_PIPES || iterator->type == T_REDIR_OUT || iterator->type == T_REDIR_APP || iterator->type == T_REDIR_IN)
 		{
 			if (iterator->next == NULL)
 			{
@@ -69,11 +69,31 @@ char *find_pipe_redirect(t_list_of_tok *iterator)
 	return (NULL);
 }
 
+/*this function will handle the case where the input is redirect instead of the output*/
+void	redirect_input(char *file_name)
+{
+	int	fd;
+
+	fd = open(file_name, O_RDONLY);
+	printf("redirect_input function, fd: [%d]\n", fd);
+	if (fd == -1)
+	{
+		perror("open");
+		return ;
+	}
+	if (dup2(fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2");
+		return ;
+	}
+	close(fd);
+	return ;
+}
+
 /*this function has just being copy and pasted form bing so I need to recheck */
 void redirect_output(t_list_of_tok *current, t_type_of_tok type)
 {
-	int	fd;
-	(void)type;
+	int	fd = 0; // to silence the warning 
 	if (current->file_name != NULL)
 	{
 		if (type == T_REDIR_OUT)
@@ -86,8 +106,8 @@ void redirect_output(t_list_of_tok *current, t_type_of_tok type)
 			fd = open(current->file_name, APPEND_FLAGS, 0666);
 			printf("%susing append flags: %s",BG_CYAN, BG_RESET);
 		}
-		else
-			return ;
+		else if (type == T_REDIR_IN)
+			redirect_input(current->file_name);
 		if (fd == -1)
 		{
 			perror("open");

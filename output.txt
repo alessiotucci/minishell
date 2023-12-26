@@ -1,3 +1,0 @@
-Start
-ls: /nonexistent: No such file or directory
-Failure
