@@ -6,7 +6,7 @@
 #    By: atucci <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 09:05:05 by atucci            #+#    #+#              #
-#    Updated: 2023/12/24 15:03:28 by atucci           ###   ########.fr        #
+#    Updated: 2023/12/26 14:49:40 by atucci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,7 +101,7 @@ re: fclean all
 # Rule for deleting the hidden files generated
 cleanhidden:
 	@echo "$(YELLOW) Listing hidden files:"
-	@find . \( -name ".DS_Store" -o -name ".*.swp" -name "a.out" \) -type f -print
+	@find . \( -name ".DS_Store" -o -name ".*.swp" -o -name ".*.swo" -o -name "a.out" \) -type f -print
 	@echo "$(RESET)$(RED) Deleting hidden files: $(RESET)"
-	@find . \( -name ".DS_Store" -o -name ".*.swp" -name "a.out" \) -type f -delete
+	@find . \( -name ".DS_Store" -o -name ".*.swp" -o -name ".*.swo" -o -name "a.out" \) -type f -delete
 
