@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/27 11:28:14 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/27 20:15:32 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int	lexer(char *string, char **env)
 	{
 		line_of_commands[i] = replace_me(line_of_commands[i], '"', ' ', '\t');
 		line_of_commands[i] = replace_me(line_of_commands[i], 39, ' ', '\t');
+		valid_wildcard(line_of_commands[i]);
 		create_list_of_tok(&token_head, line_of_commands[i]);
 		i++;
 	}
