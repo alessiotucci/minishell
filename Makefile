@@ -6,7 +6,7 @@
 #    By: atucci <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 09:05:05 by atucci            #+#    #+#              #
-#    Updated: 2023/12/27 09:37:15 by atucci           ###   ########.fr        #
+#    Updated: 2023/12/27 16:55:50 by atucci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC = ./minishell.c \
 	./executor_folder/exec_files.c \
 	./recursive_parsing_tree/recursive_parsing_tree.c \
 	./recursive_parsing_tree/tree_helper.c \
+	./wildcard_bonus/wildcard.c \
 	./printf_for_debug/debug.c # this is just for debugging
 
 #------------------------------------------------------------------------------
