@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/27 08:46:54 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/27 09:07:38 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,22 +68,17 @@ char *find_pipe_redirect(t_list_of_tok *iterator)
 	}
 	return (NULL);
 }
-/* this fuction handle the redirection process 
+/* this fuction handle the redirection process */
 void	redirection_process(t_list_of_tok *current, t_type_of_tok type)
 {
 	if (type == T_REDIR_IN)
-	{
-		printf("calling the input redirection %s\n", current->file_name);
 		redirect_input(current->file_name);
-	}
-	else
-	{
-		printf("calling the output redirection %s\n", current->file_name);
+	else if (type == T_REDIR_OUT || type == T_REDIR_APP)
 		redirect_output(current, type);
-	}
-	return ;
+	else
+		printf("WEIRD CASE IDK\n");
 }
-*/
+
 void	executor(t_list_of_tok **head, char **envp)
 {
 	int		i;
@@ -124,11 +119,8 @@ void	executor(t_list_of_tok **head, char **envp)
 /*                                                                           */
 		if (fork() == 0)
 		{
-			if (current->file_name != NULL) // the issue is here !!!
-			{
-				redirect_output(current, current->next->type);
-				printf("\n\n\n");
-			}
+			if (current->file_name != NULL)
+				redirection_process(current, current->next->type);
 			execve(command, test, envp);
 			perror("execve");// execve returns only on error
 			exit(EXIT_FAILURE);
