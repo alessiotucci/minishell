@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/27 10:45:07 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/27 11:13:57 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,9 @@ void find_pipe_redirecty(t_list_of_tok *head)
 /* this fuction handle the redirection process */
 void	redirection_process(t_list_of_tok *current, t_type_of_tok type)
 {
-	if (type == T_FLAG)
+	if (type == T_FLAG || type == T_COMMAND_ARGS)
 		redirection_process(current->next, current->next->type);
 		// handle the case if there is a flag
-	print_node(current);
 	if (type == T_REDIR_IN)
 	{
 		printf("redirect the input\n");
@@ -121,8 +120,10 @@ void	redirection_process(t_list_of_tok *current, t_type_of_tok type)
 	else if (type == T_HERE_DOC)
 		printf("handling HERE_DOC case\n");
 	else
+	{
 		printf("%sthere might be a issue [%s]%s\n", RED, current->command_as_string, RESET);
-
+		print_node(current);
+	}
 }
 
 void	executor(t_list_of_tok **head, char **envp)
