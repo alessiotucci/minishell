@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 19:50:51 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/24 17:46:47 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/27 09:12:28 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_type_of_tok	type_of_token(char *spitted)
 	else if (is_file_writer(spitted))
 		return (T_REDIR_OUT);
 	else if (is_delimiter(spitted))
-		return (T_REDIR_DELIMER);
+		return (T_HERE_DOC);
 	else if (is_file_appender(spitted))
 		return (T_REDIR_APP);
 	else if (is_dollar(spitted))

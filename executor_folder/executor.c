@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/27 09:07:38 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/27 09:10:34 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,15 @@ void	redirection_process(t_list_of_tok *current, t_type_of_tok type)
 		redirect_input(current->file_name);
 	else if (type == T_REDIR_OUT || type == T_REDIR_APP)
 		redirect_output(current, type);
-	else
+	else if (type == T_PIPES)
 		printf("WEIRD CASE IDK\n");
+	else if (type == T_PIPES)
+		printf("WEIRD CASE IDK\n");
+	else if (type == T_PIPES)
+		printf("WEIRD CASE IDK\n");
+	else if (type == T_PIPES)
+		printf("WEIRD CASE IDK\n");
+
 }
 
 void	executor(t_list_of_tok **head, char **envp)

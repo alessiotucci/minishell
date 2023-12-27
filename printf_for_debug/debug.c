@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:47:07 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/25 10:26:51 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/27 09:13:15 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ const char *names[] =
 	"Redirection in",
 	"Redirection out",
 	"Redirection appender",
-	"Redirection delimiter",
+	"Here Documents",
 	"Logical Operator",
 	"Command Arguments"
 };

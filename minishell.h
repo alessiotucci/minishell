@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/26 16:57:27 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/27 09:11:17 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef enum e_type_of_tok
 	T_REDIR_IN, // >
 	T_REDIR_OUT, // <
 	T_REDIR_APP, // >>
-	T_REDIR_DELIMER, // << 
+	T_HERE_DOC, // << 
 	T_LOGIC_OPERAR,// && or || 
 	T_COMMAND_ARGS
 }	t_type_of_tok;
