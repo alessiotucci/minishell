@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 09:14:57 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/27 09:02:49 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/27 12:59:47 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,43 @@ void	redirect_input(char *file_name)
 	close(fd);
 	return ;
 }
+/* this function handles the here_doc */
+void	here_document(char *delimiter)
+{
+	char	buffer[1024]; // copy from bing
+	char	file_name[] = "heredoc";
+	int		temp_fd;
+	int		new_fd;
+	size_t	bytes_read;
 
+	temp_fd = open(file_name, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR); // Create a temporary file.
+	if (temp_fd == -1)
+	{
+		perror("open");
+		return ;
+	}
+	while ((bytes_read = read(STDIN_FILENO, buffer, sizeof(buffer) -1)) > 0)
+	{
+		buffer[bytes_read] = '\0';
+		if (my_strcmp(buffer, delimiter) == 0)
+			break ;
+		write(temp_fd, buffer, bytes_read);
+	}
+	new_fd = open(file_name, O_RDONLY);
+	if (new_fd == -1)
+	{
+		perror("open");
+		return ;
+	}
+	if (dup2(new_fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2");
+		return ;
+	}
+	close(temp_fd);
+	close(new_fd);
+	unlink(file_name);
+}
 /*this function check if the type of redirection is either > or >> and behave */
 void	redirect_output(t_list_of_tok *current, t_type_of_tok type)
 {

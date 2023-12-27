@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/27 11:13:57 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/27 12:31:53 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,10 @@ void	redirection_process(t_list_of_tok *current, t_type_of_tok type)
 	else if (type == T_PIPES)
 		printf("handling PIPES case\n");
 	else if (type == T_HERE_DOC)
+	{
 		printf("handling HERE_DOC case\n");
+		here_document(current->file_name);
+	}
 	else
 	{
 		printf("%sthere might be a issue [%s]%s\n", RED, current->command_as_string, RESET);
