@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/24 15:00:44 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/27 09:30:58 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	lexer(char *string, char **env)
 	int				i;
 	t_list_of_tok	*token_head;
 	char			*new_string;
-	t_list_of_tok	*token_tail;
 
 	i = 0;
 	token_head = NULL;
@@ -101,16 +100,13 @@ int	lexer(char *string, char **env)
 	{
 		line_of_commands[i] = replace_me(line_of_commands[i], '"', ' ', '\t');
 		line_of_commands[i] = replace_me(line_of_commands[i], 39, ' ', '\t');
-		token_tail = create_list_of_tok(&token_head, line_of_commands[i]);
-		printf(" the last node is %s\n", token_tail->command_as_string);
+		create_list_of_tok(&token_head, line_of_commands[i]);
 		i++;
 	}
 	// redirection_wo_spaces(&token_head);
 	priority_level(&token_head);
-	print_list_tokens(&token_head);
-	// call the tree maker function ?
-	recursive_tree_builder(&token_head);
-	// here we are free everything
+	//print_list_tokens(&token_head);
+	//recursive_tree_builder(&token_head);
 	executor(&token_head, env);
 	free_list(&token_head);
 	free_split(line_of_commands);
