@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:37:59 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/11 14:14:11 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/27 09:15:40 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	is_file_appender(char *str)
 /*
  << : “Inline Input”, as it provides inline input to a command.
 */
-int	is_delimiter(char *str)
+int	is_here_doc(char *str)
 {
 	if (my_strcmp(str, "<<") == 0)
 		return (1);
