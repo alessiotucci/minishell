@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/26 20:44:42 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/27 08:46:54 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ void	executor(t_list_of_tok **head, char **envp)
 /*                                                                           */
 		if (fork() == 0)
 		{
-			// bing suggest to perform the function call here
 			if (current->file_name != NULL) // the issue is here !!!
 			{
 				redirect_output(current, current->next->type);
