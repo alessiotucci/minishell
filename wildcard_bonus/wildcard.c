@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:53:12 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/28 17:47:20 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/28 18:03:08 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ char	**expansion_wildcard(char *wildcard)
 	char			**matrix;
 	int				max_matrix;
 	int				count;
-	printf("expanision of wildcard, %s\n", wildcard);
+
 	count = 0;
 	max_matrix = count_matches(wildcard); // check for negative -1
-	printf("%sfound %d matches%s\n",BG_RED, max_matrix, BG_RESET);
+	//printf("%sfound %d matches%s\n",BG_RED, max_matrix, BG_RESET);
 	if (max_matrix < 1)
 		return (perror("no match wildcards"), NULL);
 	matrix = malloc(sizeof(char *) * max_matrix + 1); // check for malloc failure
@@ -101,7 +101,7 @@ char	**expansion_wildcard(char *wildcard)
 	{
 		if (find_matches(wildcard, entry->d_name) == 0)
 		{
-			printf("\n%sfound a match! %s %s%s\n",BG_YELLOW, wildcard, entry->d_name, BG_RESET);
+			//printf("\n%sfound a match! %s %s%s\n",BG_YELLOW, wildcard, entry->d_name, BG_RESET);
 			matrix[count] = ft_strdup(entry->d_name);
 			count++;
 		}
