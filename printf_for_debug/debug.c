@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:47:07 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/27 09:31:09 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/28 12:48:46 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,3 +67,16 @@ void	print_list_tokens(t_list_of_tok **head)
 		current = current->next;
 	}
 }
+
+void print_string_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i] != NULL)
+	{
+		printf("%s\n", array[i]);
+		i++;
+	}
+}
+

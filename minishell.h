@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/28 09:04:03 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/28 11:09:15 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <dirent.h>
 
 /* Define color macros */
 # define BLUE    "\033[1;34m"
@@ -153,5 +154,7 @@ void	handle_ctrl_d(int sig);
 void	handle_ctrl_backlash(int sig);
 /*function to handle the * wildcards */
 int		valid_wildcard(const char *str);
-void	expansion_wildcard();
+char		**expansion_wildcard(char *wildcard);
+/* utils function */
+void	print_string_array(char **array);
 #endif
