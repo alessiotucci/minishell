@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/28 12:50:02 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/28 13:31:17 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ t_list_of_tok *node_for_wildcard(int level, char *spitted_cmd)
 	t_list_of_tok	*head = NULL;
 	i = 0;
 	expanded = expansion_wildcard(spitted_cmd);
-	printf("%s\n", expanded[i]);
+	if (expanded == NULL)
+	{
+		printf("I need to handle better these cases\n");
+		return (create_node(level, "failure"));
+	}
 	while (expanded[i])
 	{
 	// create node ok?

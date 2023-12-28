@@ -6,11 +6,25 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 15:08:41 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/28 15:11:34 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/28 15:14:32 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*my_strchr(char *str, int cherry)
+{
+	size_t	count;
+
+	count = 0;
+	while (str[count])
+	{
+		if (str[count] == (char)cherry)
+			return (&str[count]);
+		count++;
+	}
+	return (NULL);
+}
 
 int	my_strcmp(const char *str1, const char *str2)
 {

@@ -6,43 +6,43 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:53:12 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/28 12:52:54 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/28 16:36:31 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/*this function actively look for matches with the wildcards*/
 static int	find_matches(char *wildcard, char *name)
 {
-	int		name_len;
-	int		wildcard_len;
-	char	*suffix;
 	char	*prefix;
-	int		suffix_len;
-	int		prefix_len;
-	int		result;
-
-	wildcard_len = ft_strlen(wildcard);
-	name_len = ft_strlen(name);
+	char	*suffix;
+	char	*asterix;
 	if (wildcard[0] == '*')
 	{
-		suffix = wildcard + 1; // skip the '*'
-		suffix_len = wildcard_len - 1;
-		if (suffix_len > name_len)
-			return (-1); // name is too short to match the suffix
-		return my_strcmp(name + name_len - suffix_len, suffix);
+		prefix = NULL;
+		suffix = &wildcard[1];
 	}
-	else// if (wildcard[wildcard_len - 1] == '*')
+	else if (wildcard[ft_strlen(wildcard) - 1] == '*')
 	{
-		prefix = strndup(wildcard, wildcard_len - 1); // copy the string without the '*'
-		prefix_len = wildcard_len - 1;
-		if (prefix_len > name_len)
-			return(free(prefix), -1);
-		result = ft_strncmp(name, prefix, prefix_len);
-		return (free(prefix),result);
+		suffix = NULL;
+		wildcard[ft_strlen(wildcard) -1] = '\0';
+		prefix = wildcard;
 	}
+	else
+	{
+		asterix = my_strchr(wildcard, '*');
+		*asterix = '\0';
+		prefix = wildcard;
+		suffix = asterix + 1;
+	}
+	if (prefix != NULL && ft_strncmp(name, prefix, ft_strlen(prefix)) != 0)
+		return (1);
+	if (suffix != NULL && my_strcmp(name + ft_strlen(name) - ft_strlen(suffix), suffix) != 0)
+		return (1);
+	return (0);
 }
-
+/* function to know how many match we find, wildcard = *.txt | ft_* | ft_*.txt */
 static int	count_matches(char *wildcard)
 {
 	DIR				*directory;
@@ -53,9 +53,11 @@ static int	count_matches(char *wildcard)
 	if (directory == NULL)
 		return (perror("Error opening directory"), -1);
 	count = 0;
+	printf("counting matches,WILDCARD:%s\n", wildcard);
 	entry = readdir(directory);
 	while (entry != NULL)
 	{
+		printf("%ssegvault coming%s, count check: [%d]\n", RED, RESET, count);
 		if (find_matches(wildcard, entry->d_name) == 0) // match found
 			count++;
 		entry = readdir(directory);
@@ -73,12 +75,13 @@ char	**expansion_wildcard(char *wildcard)
 	char			**matrix;
 	int				max_matrix;
 	int				count;
-	printf("expanision of wildcard\n");
+	printf("expanision of wildcard, %s\n", wildcard);
 	count = 0;
 	max_matrix = count_matches(wildcard); // check for negative -1
+	printf("found %d matches\n", max_matrix);
 	if (max_matrix < 1)
 		return (perror("no match wildcards"), NULL);
-	matrix = malloc(sizeof(char *) * max_matrix); // check for malloc failure
+	matrix = malloc(sizeof(char *) * max_matrix + 1); // check for malloc failure
 	directory = opendir(".");
 	if (directory == NULL)
 		return (perror("Error opening directory"), NULL);
@@ -87,11 +90,13 @@ char	**expansion_wildcard(char *wildcard)
 	{
 		if (find_matches(wildcard, entry->d_name) == 0)
 		{
+			printf("\nfound a match between %s, and %s\n", wildcard, entry->d_name);
 			matrix[count] = ft_strdup(entry->d_name);
 			count++;
 		}
 		entry = readdir(directory);
 	}
+	matrix[count] = NULL; //fixed?
 	if (closedir(directory) == -1)
 		return (perror("Error closing directory"), NULL);
 	return (matrix);
@@ -99,12 +104,15 @@ char	**expansion_wildcard(char *wildcard)
 /* this function check wheter a wildcard is valid or not */
 int	valid_wildcard(const char *str)
 {
-	int	len;
+	int	i;
 
-	len = ft_strlen(str);
-	if (str[0] == '*' || str[len - 1] == '*')
-		return(printf("%sis valid wildcard\n%s", GREEN, RESET));
-	else
-		return (0);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '*')
+			return(printf("%sis valid wildcard\n%s", GREEN, RESET));
+		i++;
+	}
+	return (0);
 }
 
