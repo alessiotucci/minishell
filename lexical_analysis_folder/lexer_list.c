@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/27 09:31:00 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/28 09:07:58 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@
  * from there with further implementation
 */
 
+/* Helper function to expland wildcard and create a node for each */
+void	expansion_wildcard()
+{
 
+}
 
 /* Helper function to create a new node */
 t_list_of_tok *create_node(int level, char *spitted_cmd)
@@ -45,6 +49,8 @@ t_list_of_tok *create_list_of_tok(t_list_of_tok **head, char *spitted_cmd)
 	t_list_of_tok *new_node;
 	t_list_of_tok *current;
 
+//	if (valid_wildcard(spitted_cmd))
+//		new_node = expansion_wildcard();
 	new_node = create_node(0, spitted_cmd);
 	if (*head == NULL)
 		*head = new_node;

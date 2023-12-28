@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/27 20:14:58 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/28 09:04:03 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,6 @@ void	handle_ctrl_c(int sig);
 void	handle_ctrl_d(int sig);
 void	handle_ctrl_backlash(int sig);
 /*function to handle the * wildcards */
-void	valid_wildcard(const char *str);
-
+int		valid_wildcard(const char *str);
+void	expansion_wildcard();
 #endif
