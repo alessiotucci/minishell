@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:53:12 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/28 16:36:31 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/28 17:13:21 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,25 @@ static int	find_matches(char *wildcard, char *name)
 	else
 	{
 		asterix = my_strchr(wildcard, '*');
-		*asterix = '\0';
-		prefix = wildcard;
-		suffix = asterix + 1;
+		if (asterix != NULL)
+		{
+			*asterix = '\0';
+			prefix = wildcard;
+			suffix = asterix + 1;
+		}
+		else
+		{
+			// Handle the case where there is no '*' in the wildcard
+			// For example, you could set prefix and suffix to NULL
+			prefix = NULL;
+			suffix = NULL;
+		}
 	}
+	printf("prefix:%s, suffix:%s\n", prefix, suffix);
 	if (prefix != NULL && ft_strncmp(name, prefix, ft_strlen(prefix)) != 0)
-		return (1);
+		return (printf("My dear, comparing: %s, with %s)", name, prefix));
 	if (suffix != NULL && my_strcmp(name + ft_strlen(name) - ft_strlen(suffix), suffix) != 0)
-		return (1);
+		return (printf("the comparison between %s and [%s]\n", name + ft_strlen(name) - ft_strlen(suffix), suffix));
 	return (0);
 }
 /* function to know how many match we find, wildcard = *.txt | ft_* | ft_*.txt */
@@ -53,11 +64,9 @@ static int	count_matches(char *wildcard)
 	if (directory == NULL)
 		return (perror("Error opening directory"), -1);
 	count = 0;
-	printf("counting matches,WILDCARD:%s\n", wildcard);
 	entry = readdir(directory);
 	while (entry != NULL)
 	{
-		printf("%ssegvault coming%s, count check: [%d]\n", RED, RESET, count);
 		if (find_matches(wildcard, entry->d_name) == 0) // match found
 			count++;
 		entry = readdir(directory);
@@ -78,7 +87,7 @@ char	**expansion_wildcard(char *wildcard)
 	printf("expanision of wildcard, %s\n", wildcard);
 	count = 0;
 	max_matrix = count_matches(wildcard); // check for negative -1
-	printf("found %d matches\n", max_matrix);
+	printf("%sfound %d matches%s\n",BG_RED, max_matrix, BG_RESET);
 	if (max_matrix < 1)
 		return (perror("no match wildcards"), NULL);
 	matrix = malloc(sizeof(char *) * max_matrix + 1); // check for malloc failure
@@ -90,7 +99,7 @@ char	**expansion_wildcard(char *wildcard)
 	{
 		if (find_matches(wildcard, entry->d_name) == 0)
 		{
-			printf("\nfound a match between %s, and %s\n", wildcard, entry->d_name);
+			printf("\n%sfound a match! %s %s%s\n",BG_YELLOW, wildcard, entry->d_name, BG_RESET);
 			matrix[count] = ft_strdup(entry->d_name);
 			count++;
 		}
