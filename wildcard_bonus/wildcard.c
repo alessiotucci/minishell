@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:53:12 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/28 17:13:21 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/28 17:47:20 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ static int	find_matches(char *wildcard, char *name)
 		prefix = NULL;
 		suffix = &wildcard[1];
 	}
-	else if (wildcard[ft_strlen(wildcard) - 1] == '*')
+	/*else if (wildcard[ft_strlen(wildcard) - 1] == '*')
 	{
 		suffix = NULL;
 		wildcard[ft_strlen(wildcard) -1] = '\0';
 		prefix = wildcard;
-	}
+	}*/
 	else
 	{
 		asterix = my_strchr(wildcard, '*');
@@ -42,15 +42,17 @@ static int	find_matches(char *wildcard, char *name)
 		{
 			// Handle the case where there is no '*' in the wildcard
 			// For example, you could set prefix and suffix to NULL
-			prefix = NULL;
-			suffix = NULL;
+			prefix = wildcard;
+			suffix = "";
 		}
 	}
-	printf("prefix:%s, suffix:%s\n", prefix, suffix);
+//	printf("prefix:%s, suffix:%s\n", prefix, suffix);
 	if (prefix != NULL && ft_strncmp(name, prefix, ft_strlen(prefix)) != 0)
-		return (printf("My dear, comparing: %s, with %s)", name, prefix));
+//		return (printf("My dear, comparing: %s, with %s)", name, prefix));
+		return (1);
 	if (suffix != NULL && my_strcmp(name + ft_strlen(name) - ft_strlen(suffix), suffix) != 0)
-		return (printf("the comparison between %s and [%s]\n", name + ft_strlen(name) - ft_strlen(suffix), suffix));
+//		return (printf("the comparison between %s and [%s]\n", name + ft_strlen(name) - ft_strlen(suffix), suffix));
+		return (1);
 	return (0);
 }
 /* function to know how many match we find, wildcard = *.txt | ft_* | ft_*.txt */
