@@ -10,25 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-void minishell_env(t_data *data) {
-    t_vlst *current = data->envp_lst;
-
-    while (current != NULL) {
-        ft_putstr_fd(current->var_name, STDOUT_FILENO);
-        ft_putchar_fd('=', STDOUT_FILENO);
-        ft_putendl_fd(current->var_value, STDOUT_FILENO);
-        current = current->next;
+void minishell_env(char *args[]) {
+    // If no arguments provided, print the current environment variables
+    if (args[1] == NULL) {
+        extern char **environ;
+        for (char **env = environ; *env != NULL; env++) {
+            printf("%s\n", *env);
+        }
+    } else {
+        fprintf(stderr, "minishell_env: Too many arguments\n");
     }
 }
 
-//main_trial
-int main() 
-{
-    // Supponiamo che tu abbia già inizializzato e popolato la lista delle variabili d'ambiente (data->envp_lst)
-    
-    minishell_env(data);
+int main(int argc, char *argv[]) {
+    minishell_env(argv);
 
     return 0;
 }
+

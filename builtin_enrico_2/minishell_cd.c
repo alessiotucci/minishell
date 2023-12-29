@@ -20,6 +20,8 @@ void minishell_cd(char *directory) {
         return;
     }
 
+    printf("Changing directory to: %s\n", directory);
+
     // Verifica se il percorso esiste
     if (access(directory, F_OK) != 0) {
         perror("cd");
@@ -29,6 +31,8 @@ void minishell_cd(char *directory) {
     // Cambia la directory corrente
     if (chdir(directory) != 0) {
         perror("cd");
+    } else {
+        printf("Directory change successful!\n");
     }
 }
 
@@ -43,3 +47,4 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
+
