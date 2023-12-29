@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/29 16:45:22 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/29 19:32:25 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	executor(t_list_of_tok **head, char **envp)
 	t_list_of_tok *current = find_command_in_list(head);
 	if (current == NULL)
 	{
-		printf("there is no command in the string sadly\n");
+//		printf("there is no command in the string sadly\n");
 		return ;
 	}
 	// I need to check for pipes and redirections

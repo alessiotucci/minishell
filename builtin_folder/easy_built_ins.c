@@ -6,11 +6,11 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:33:57 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/29 16:57:41 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/29 19:37:08 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "..minishell.h"
+#include "../minishell.h"
 
 void	minishell_pwd(void)
 {
@@ -30,7 +30,7 @@ void	minishell_cd(char *directory)
 		fprintf(stderr, "cd: missing argument\n");
 		return ;
 	}
-	printf("Changing directory to: %s\n", directory);
+	printf("Changing directory to: %s%s%s\n",YELLOW, directory, RESET);
 	if (access(directory, F_OK) != 0)
 	{
 		perror("cd");
@@ -39,7 +39,7 @@ void	minishell_cd(char *directory)
 	if (chdir(directory) != 0)
 		perror("cd");
 	else
-		printf("Directory change successful!\n");
+		printf("%sDirectory change successful!%s\n", GREEN, RESET);
 }
 
 void	minishell_echo(char *args[])
