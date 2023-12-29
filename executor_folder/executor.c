@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/27 12:31:53 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/29 16:45:22 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ t_list_of_tok	*find_command_in_list(t_list_of_tok **head)
 	current = *head;
 	while (current != NULL)
 	{
-		if (current->type == T_COMMAND || current->type == T_BUILTIN)
+		if (current->type == T_COMMAND)// || current->type == T_BUILTIN)
 			return (current);
+		if (current->type == T_BUILTIN)
+			which_built_in(current);
 		current = current->next;
 	}
 	return (NULL);

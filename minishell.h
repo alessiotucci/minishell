@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/28 15:20:14 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/29 17:00:09 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,12 @@ void	token(void);
 void	parser(void);
 int		lexer(char *string, char **envp);
 void	try_builtin(void);
+/* build in functions */
+void	minishell_pwd(void);
+void	minishell_cd(char *directory);
+void	minishell_echo(char *args[]);
+void	minishell_export(char *args[]);
+void	minishell_env(char *args[])
 /* function for the executor */
 
 void	executor(t_list_of_tok **head, char **envp);

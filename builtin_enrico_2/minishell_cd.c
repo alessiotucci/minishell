@@ -6,7 +6,7 @@
 /*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 18:19:57 by enricogiral       #+#    #+#             */
-/*   Updated: 2023/12/17 15:44:20 by enricogiral      ###   ########.fr       */
+/*   Updated: 2023/12/29 15:59:58 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void minishell_cd(char *directory) {
+void minishell_cd(char *directory)
+{
     if (directory == NULL) {
         fprintf(stderr, "cd: missing argument\n");
         return;
@@ -23,15 +24,19 @@ void minishell_cd(char *directory) {
     printf("Changing directory to: %s\n", directory);
 
     // Verifica se il percorso esiste
-    if (access(directory, F_OK) != 0) {
+    if (access(directory, F_OK) != 0)
+	{
         perror("cd");
         return;
     }
 
     // Cambia la directory corrente
-    if (chdir(directory) != 0) {
+    if (chdir(directory) != 0)
+	{
         perror("cd");
-    } else {
+    }
+	else
+	{
         printf("Directory change successful!\n");
     }
 }
