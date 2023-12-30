@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/30 13:15:58 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/30 18:00:09 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,21 @@
  * then create the node with the fields initialized if needed, we will go 
  * from there with further implementation
 */
+static t_list_of_tok	*node_for_dollar(int level, char *spitted_cmd, char **env)
+{
+	char	*expanded;
 
-t_list_of_tok *node_for_wildcard(int level, char *spitted_cmd)
+	expanded = expansion_dollar(spitted_cmd. env);
+	if (expanded == NULL)
+	{
+		printf("I need to handle better these cases\n");
+		return (create_node(level, "failure"));
+	}
+	else
+		return (create_node(level, expanded);
+}
+
+static t_list_of_tok	*node_for_wildcard(int level, char *spitted_cmd)
 {
 	char **expanded;
 	int		i;
@@ -74,13 +87,15 @@ t_list_of_tok *create_node(int level, char *spitted_cmd)
 }
 
 /*Function to create a list of tokens */
-t_list_of_tok *create_list_of_tok(t_list_of_tok **head, char *spitted_cmd)
+t_list_of_tok *create_list_of_tok(t_list_of_tok **head, char *spitted_cmd, char **env)
 {
 	t_list_of_tok *new_node;
 	t_list_of_tok *current;
 
 	if (valid_wildcard(spitted_cmd))
 		new_node = node_for_wildcard(0, spitted_cmd);
+	else if (valid_dollar(spitted_cmd))
+		new_node = node_for_dollar(0. spitted_cmd);
 	else
 		new_node = create_node(0, spitted_cmd);
 	if (*head == NULL)

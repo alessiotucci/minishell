@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 21:50:00 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/27 09:31:05 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/30 17:31:58 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	is_flag(char *str)
 
 int	is_dollar(char *str)
 {
-	if (my_strcmp(str, "$") == 0)
+	if (str[0] == '$')
 		return (1);
 	else
 		return (0);

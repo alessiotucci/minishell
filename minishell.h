@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/29 18:36:47 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/30 17:57:01 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int		is_flag(char *str);
 int		is_builtin(char *str);
 int		is_parent(char *str);
 /*Starting working on the parsing*/
-t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *spitted_cmd);
+t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *spitted_cmd, char **env);
 void			print_list_tokens(t_list_of_tok **head);
 void			print_node(t_list_of_tok *node);
 //void			type_of_token(char *spitted);
@@ -132,7 +132,8 @@ void	tree_maker3(void);
 t_type_of_tok	type_of_token(char *spitted);
 
 t_list_of_tok	*create_node(int level, char *spitted_cmd);
-
+// MADE THEM STATIC ALRIGHT
+// t_list_of_tok	*node_for_dollar(int level, char *spitted_cmd, char **env);
 void	token(void);
 void	parser(void);
 int		lexer(char *string, char **envp);

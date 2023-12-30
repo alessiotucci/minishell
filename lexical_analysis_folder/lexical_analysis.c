@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/30 12:04:32 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/30 17:49:29 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,13 @@ int	lexer(char *string, char **env)
 		line_of_commands[i] = replace_me(line_of_commands[i], '"', ' ', '\t');
 		line_of_commands[i] = replace_me(line_of_commands[i], 39, ' ', '\t');
 //		valid_wildcard(line_of_commands[i]);
-		create_list_of_tok(&token_head, line_of_commands[i]);
+		create_list_of_tok(&token_head, line_of_commands[i], env);
 		i++;
 	}
 	// redirection_wo_spaces(&token_head);
 	priority_level(&token_head);
 	update_token_types(&token_head);
-//	print_list_tokens(&token_head);
+	print_list_tokens(&token_head);
 	//recursive_tree_builder(&token_head);
 	executor(&token_head, env);
 	free_list(&token_head);
