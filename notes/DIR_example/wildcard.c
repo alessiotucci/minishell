@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "../../libft/libft.h"
-
+#include "../../minishell.h"
 size_t	ft_strlen(const char *str)
 {
 	size_t	count;
@@ -22,7 +22,7 @@ char	*my_strchr(char *str, int cherry)
 			return (&str[count]);
 		count++;
 	}
-	return (NULL);
+	return (null);
 }
 
 int	my_strcmp(const char *str1, const char *str2)
@@ -46,42 +46,36 @@ static int	find_matches(char *wildcard, char *name)
 	char	*prefix;
 	char	*suffix;
 	char	*asterix;
-	if (wildcard[0] == '*')
+	char	*copy;
+
+	copy = ft_strdup(wildcard);
+	if (copy[0] == '*')
 	{
-		prefix = NULL;
-		suffix = &wildcard[1];
+		prefix = null;
+		suffix = &copy[1];
 	}
-	/*else if (wildcard[ft_strlen(wildcard) - 1] == '*')
-	{
-		suffix = NULL;
-		wildcard[ft_strlen(wildcard) -1] = '\0';
-		prefix = wildcard;
-	}*/
 	else
 	{
-		asterix = my_strchr(wildcard, '*');
-		if (asterix != NULL)
+		asterix = my_strchr(copy, '*');
+		if (asterix != null)
 		{
 			*asterix = '\0';
-			prefix = wildcard;
+			prefix = copy;
 			suffix = asterix + 1;
 		}
 		else
 		{
-			// Handle the case where there is no '*' in the wildcard
-			// For example, you could set prefix and suffix to NULL
-			prefix = wildcard;
+			// handle the case where there is no '*' in the wildcard
+			// for example, you could set prefix and suffix to null
+			prefix = copy;
 			suffix = "";
 		}
 	}
-//	printf("prefix:%s, suffix:%s\n", prefix, suffix);
-	if (prefix != NULL && ft_strncmp(name, prefix, ft_strlen(prefix)) != 0)
-//		return (printf("My dear, comparing: %s, with %s)", name, prefix));
-		return (1);
-	if (suffix != NULL && my_strcmp(name + ft_strlen(name) - ft_strlen(suffix), suffix) != 0)
-//		return (printf("the comparison between %s and [%s]\n", name + ft_strlen(name) - ft_strlen(suffix), suffix));
-		return (1);
-	return (0);
+	if (prefix != null && ft_strncmp(name, prefix, ft_strlen(prefix)) != 0)
+		return (free(copy),1);
+	if (suffix != null && my_strcmp(name + ft_strlen(name) - ft_strlen(suffix), suffix) != 0)
+		return (free(copy),1);
+	return (free(copy),0);
 }
 // your functions here
 
@@ -89,12 +83,17 @@ int main(int ac, char *av[])
 {
 	char *wildcard = av[1];
 	char *name = av[2];
-	printf("0 means success\n 1 means failure, no matches\n");
 	(void)av;
 	if (ac == 3)
 	{
+		printf("FIND_MATCHES\nMatch result of wildcard '%s' and name '%s'\n. . .\n", wildcard, name);
 		int match_result = find_matches(wildcard, name);
-		printf("FIND_MATCHES\nMatch result of wildcard '%s' and name '%s'\n%d\n", wildcard, name, match_result);
+		if (match_result == 0)
+			printf("%s0 means success%s\n", GREEN, RESET);
+		else
+			printf("%s1 means failure, no matches%s\n", RED, RESET);
+		int result = find_matches(wildcard, name);
+		printf("after the first function call result of wildcard '%s' and name '%s'is\n [%d]!\n", wildcard, name, result);
 	}
 	else
 		printf("USAGE: ./a.out \"wildcard\", name\n");

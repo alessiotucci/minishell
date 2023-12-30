@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:53:12 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/28 18:12:00 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/30 13:16:46 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,42 +18,37 @@ static int	find_matches(char *wildcard, char *name)
 	char	*prefix;
 	char	*suffix;
 	char	*asterix;
-	if (wildcard[0] == '*')
+	char	*copy;
+
+	copy = ft_strdup(wildcard);
+	if (copy[0] == '*')
 	{
 		prefix = NULL;
-		suffix = &wildcard[1];
+		suffix = &copy[1];
 	}
-	/*else if (wildcard[ft_strlen(wildcard) - 1] == '*')
-	{
-		suffix = NULL;
-		wildcard[ft_strlen(wildcard) -1] = '\0';
-		prefix = wildcard;
-	}*/
 	else
 	{
-		asterix = my_strchr(wildcard, '*');
+		asterix = my_strchr(copy, '*');
 		if (asterix != NULL)
 		{
 			*asterix = '\0';
-			prefix = wildcard;
+			prefix = copy;
 			suffix = asterix + 1;
 		}
 		else
 		{
-			// Handle the case where there is no '*' in the wildcard
-			// For example, you could set prefix and suffix to NULL
-			prefix = wildcard;
+			// handle the case where there is no '*' in the wildcard
+			// for example, you could set prefix and suffix to NULL
+			prefix = copy;
 			suffix = "";
 		}
 	}
-//	printf("prefix:%s, suffix:%s\n", prefix, suffix);
 	if (prefix != NULL && ft_strncmp(name, prefix, ft_strlen(prefix)) != 0)
-//		return (printf("My dear, comparing: %s, with %s)", name, prefix));
-		return (1);
+		return (free(copy),1);
 	if (suffix != NULL && my_strcmp(name + ft_strlen(name) - ft_strlen(suffix), suffix) != 0)
-//		return (printf("the comparison between %s and [%s]\n", name + ft_strlen(name) - ft_strlen(suffix), suffix));
-		return (1);
-	return (0);
+		return (free(copy),1);
+	return (free(copy),0);
+
 }
 /* function to know how many match we find, wildcard = *.txt | ft_* | ft_*.txt */
 static int	count_matches(char *wildcard)
@@ -121,7 +116,7 @@ int	valid_wildcard(const char *str)
 	while (str[i])
 	{
 		if (str[i] == '*')
-			return(printf("%sis valid wildcard\n%s", GREEN, RESET));
+			return(1);
 		i++;
 	}
 	return (0);
