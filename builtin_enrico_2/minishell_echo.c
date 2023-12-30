@@ -1,37 +1,51 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include "libft.h"
 
-void minishell_echo(char *args[]) {
-    int i = 1;
-    int suppress_newline = 0;
-
-    // Check for the -n option
-    if (args[1] != NULL && strcmp(args[1], "-n") == 0) {
-        suppress_newline = 1;
-        i++;
-    }
-
-    while (args[i] != NULL) {
-        printf("%s", args[i]);
-
-        // Print space between arguments
-        if (args[i + 1] != NULL) {
-            printf(" ");
+void minishell_export(char *args[]) 
+{
+    // If no arguments provided, print the current environment variables
+    if (args[1] == NULL) 
+    {
+        extern char **environ;
+        char **env = environ;
+        while (*env != NULL) 
+        {
+            printf("%s\n", *env);
+            env++;
         }
+    } 
+    else 
+    {
+        // Iterate through the arguments and set environment variables
+        int i = 1;
+        while (args[i] != NULL) 
+        {
+            char **key_value = ft_split(args[i], '=');
 
-        i++;
-    }
+            // Check if the format is key=value
+            if (key_value && key_value[0] && key_value[1]) 
+            {
+                if (setenv(key_value[0], key_value[1], 1) != 0) 
+                {
+                    perror("minishell_export");
+                }
+                free(key_value);
+            } 
+            else 
+            {
+                fprintf(stderr, "minishell_export: Invalid format: %s\n", args[i]);
+            }
 
-    // Print newline unless -n option is used
-    if (!suppress_newline) {
-        printf("\n");
+            i++;
+        }
     }
 }
 
-int main(int argc, char *argv[]) {
-    // Pass command-line arguments to minishell_echo
-    minishell_echo(argv);
+int main(int argc, char *argv[]) 
+{
+    minishell_export(argv);
 
     return 0;
 }
-
