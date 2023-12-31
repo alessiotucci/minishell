@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 18:23:17 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/30 18:37:52 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/31 12:56:50 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,40 +16,39 @@
 #include <stdio.h>
 #include <string.h>
 
-char* find_env_value(char** env, char* dollar)
+char	*find_env_value(char **env, char *dollar)
 {
-	// Remove $ or ${} from dollar
-	char*	key;
+	char	*key;
 	int		i;
+	int		key_len;
 
 	if (dollar[0] == '$')
 	{
 		if (dollar[1] == '{')
-			key = strndup(dollar + 2, strlen(dollar) - 3);
+			key = strndup(dollar + 2, ft_strlen(dollar) - 3);
 		else
-			key = strdup(dollar + 1);
+			key = ft_strdup(dollar + 1);
 	}
 	else
 		key = ft_strdup(dollar);
-	// Iterate over env
 	i = 0;
+	key_len = ft_strlen(key);
 	while (env[i] != NULL)
 	{
-		// Check if key is prefix of env[i]
-		if (ft_strncmp(env[i], key, ft_strlen(key)) == 0 && env[i][ft_strlen(key)] == '=')
+		if (ft_strncmp(env[i], key, key_len) == 0 && env[i][key_len] == '=')
 		{
-			// Return value after =
 			free(key);
-			return ft_strdup(env[i] + strlen(key) + 1);
+			return (ft_strdup(env[i] + ft_strlen(key) + 1));
 		}
 		i++;
 	}
 	return (free(key), NULL);
 }
 
-int main(int ac, char** av, char** env)
+int	main(int ac, char **av, char **env)
 {
 	char	*value;
+
 	if (ac > 1)
 	{
 		value = find_env_value(env, av[1]);
@@ -63,6 +62,5 @@ int main(int ac, char** av, char** env)
 	}
 	else
 		printf("Usage: %s <variable>\n", av[0]);
-	return 0;
+	return (0);
 }
-
