@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/31 16:28:36 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/31 17:16:57 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,8 +154,8 @@ void	*which_built_in(t_list_of_tok *node);
 int		executor(t_list_of_tok **head, char **envp);
 char	**find_path_env(char **env);
 char	**argv_for_exceve(t_list_of_tok **head);
-char	*find_possible_command(char **directs, char *command_as_string);
-void	execute_command(char *command, char **test, char **envp, t_list_of_tok *current);
+char	*find_possible_command(char *command_as_string, char **envp);
+void	*execute_command(char *command, char **test, char **envp, t_list_of_tok *current);
 void	redirection_process(t_list_of_tok *current, t_type_of_tok type);
 
 /* fucking redirection are here*/

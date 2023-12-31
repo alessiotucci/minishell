@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:38:22 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/31 16:25:33 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/31 18:12:16 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ void	executor3(void)
 	return ;
 }
 
-char	*find_possible_command(char **directs, char *command_as_string)
+char	*find_possible_command(char *command_as_string, char **envp)
 {
 	int		i;
 	int		y;
 	char	*possible_command;
+	char	**directs;
 
+	directs = find_path_env(envp);
 	i = 0;
 	while (directs[i] != NULL)
 	{
@@ -50,19 +52,28 @@ char	*find_possible_command(char **directs, char *command_as_string)
 	}
 	return (NULL);
 }
-
-void	execute_command(char *command, char **test, char **envp, t_list_of_tok *current)
+/* first handle the redirection
+ * then check for builtins
+ * otherwise fork and go on with execve
+ * */
+void	*execute_command(char *command, char **test, char **envp, t_list_of_tok *current)
 {
-	if (fork() == 0)
-	{
-		if (current->file_name != NULL)
-			redirection_process(current, current->next->type);
-		execve(command, test, envp);
-		perror("execve"); // execve returns only on error
-		exit(EXIT_FAILURE);
-	}
+	if (current->file_name != NULL)
+		redirection_process(current, current->next->type); // here the fd are changed
+	if (current->type == T_BUILTIN)
+		return (which_built_in(current));
 	else
-		wait(NULL); // parent waits for the child to finish
+	{
+		if (fork() == 0)
+		{
+			execve(command, test, envp);
+			perror("execve"); // execve returns only on error
+			exit(EXIT_FAILURE);
+		}
+		else
+			wait(NULL); // parent waits for the child to finish
+	}
+return (NULL);
 }
 
 /* Function to get the size of the list */
@@ -109,12 +120,11 @@ char **argv_for_exceve(t_list_of_tok **head)
 	size = get_size(*head);
 	argv = malloc((size + 1) * sizeof(char *));
 	if (!argv)
-		return NULL; // return NULL if memory allocation fails
+		return (NULL);
 	t_list_of_tok *current = *head;
 	i = 0;
 	while (current != NULL)
 	{
-		// Check if the type of the node is related to a command
 		if (current->type == T_COMMAND || current->type == T_BUILTIN || current->type == T_COMMAND_ARGS || current->type == T_FLAG)
 		{
 			argv[i] = ft_strdup(current->command_as_string); // duplicate the string

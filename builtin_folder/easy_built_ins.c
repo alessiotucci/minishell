@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:33:57 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/31 15:36:55 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/31 17:19:40 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	minishell_pwd(void)
 {
+//	printf("%sour implementation of pwd:%s\n", GREEN, RESET);
 	char	cwd[1024];
 
 	if (getcwd(cwd, sizeof(cwd)) != NULL)

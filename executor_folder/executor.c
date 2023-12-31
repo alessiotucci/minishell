@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/31 16:28:01 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/31 17:24:32 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ t_list_of_tok	*find_command_in_list(t_list_of_tok **head)
 	current = *head;
 	while (current != NULL)
 	{
-		if (current->type == T_COMMAND)// || current->type == T_BUILTIN)
+		if (current->type == T_COMMAND || current->type == T_BUILTIN)
 			return (current);
-		if (current->type == T_BUILTIN)
-			which_built_in(current);
+		//if (current->type == T_BUILTIN)
+		//	which_built_in(current);
 		current = current->next;
 	}
 	return (NULL);
@@ -123,25 +123,28 @@ void	redirection_process(t_list_of_tok *current, t_type_of_tok type)
 int	executor(t_list_of_tok **head, char **envp)
 {
 	int		i;
-	char	**directs;
-	char	*command = NULL;
+	char	*command;
 	char	**test;
 
-	t_list_of_tok *current = find_command_in_list(head);
+	t_list_of_tok *current = find_command_in_list(head); // in this line the builtin take over
 	if (current == NULL)
 		return (printf("there is no command in the string sadly\n"));
-	// I need to check for pipes and redirections
 	current->file_name = find_pipe_redirect(current);
-	printf("FILE TO OPEN | COMMAND TO TAKE: %s%s%s\n", YELLOW, current->file_name, RESET);
+	command = current->command_as_string;
+//	printf("FILE TO OPEN | COMMAND TO TAKE: %s%s%s\n", YELLOW, current->file_name, RESET);
 	i = 0;
-	directs = find_path_env(envp);
-	command = find_possible_command(directs, current->command_as_string);
+	if (current->type != T_BUILTIN)
+		command = find_possible_command(current->command_as_string, envp);
 	if (command == NULL)
-		return (printf("the commmand is null\n"));
-	// I need to create a array of string to pass to the execve!
-		test = argv_for_exceve(head);
-		execute_command(command, test, envp, current);
-				free(command);
+		return (free(command), printf("the commmand is null\n"));
+	test = argv_for_exceve(head);
+/*	printf("**%s Let's the debugging start ! ***%s \n", BG_GREEN, BG_RESET);
+	printf("command: [%s]", command);
+	print_string_array(test);
+	print_node(current);
+	printf("**%s finished with the debugging!***%s \n", BG_RED, BG_RESET); */
+	execute_command(command, test, envp, current);
+//	free(command);
 	executor2();
 	executor3();
 	return (0);
