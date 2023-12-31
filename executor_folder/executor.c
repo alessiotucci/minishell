@@ -6,31 +6,12 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/29 19:32:25 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/31 16:28:01 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char	**find_path_env(char **env)
-{
-	int	i;
-	char *nully = NULL;
-	(void)env;
-	i = 0;
-	while (env[i] != NULL)
-	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-		{
-			nully = env[i] + 5;
-			break ;
-		}
-		i++;
-	}
-	//printf("path env: |%s%s%s|\n",YELLOW, nully, RESET);
-	return (ft_split(nully, ':'));
-}
-
+/* 5 function in this file */
 t_list_of_tok	*find_command_in_list(t_list_of_tok **head)
 {
 	t_list_of_tok	*current;
@@ -47,7 +28,7 @@ t_list_of_tok	*find_command_in_list(t_list_of_tok **head)
 	return (NULL);
 }
 
-/* this functinon needs to be written entirely */
+/* 4) this functinon needs to be written entirely */
 char *find_pipe_redirect(t_list_of_tok *iterator)
 {
 	char	*found;
@@ -69,7 +50,7 @@ char *find_pipe_redirect(t_list_of_tok *iterator)
 	}
 	return (found);
 }
-/*an other suggestive suggestion */
+/*3) an other suggestive suggestion */
 void find_pipe_redirecty(t_list_of_tok *head)
 {
 	// Create a pointer to traverse the list
@@ -101,7 +82,10 @@ void find_pipe_redirecty(t_list_of_tok *head)
 	// End of function, no return value needed as function is void
 }
 
-/* this fuction handle the redirection process */
+/*2)
+ this fuction handle the redirection process
+ redirection_process(current, current->next->type);
+ */
 void	redirection_process(t_list_of_tok *current, t_type_of_tok type)
 {
 	if (type == T_FLAG || type == T_COMMAND_ARGS)
@@ -118,7 +102,11 @@ void	redirection_process(t_list_of_tok *current, t_type_of_tok type)
 		redirect_output(current, type);
 	}
 	else if (type == T_PIPES)
+	{
 		printf("handling PIPES case\n");
+		printf("%s%s%s\n", GREEN,current->file_name, RESET);
+		//pipex(current, current->next);
+	}
 	else if (type == T_HERE_DOC)
 	{
 		printf("handling HERE_DOC case\n");
@@ -131,57 +119,30 @@ void	redirection_process(t_list_of_tok *current, t_type_of_tok type)
 	}
 }
 
-void	executor(t_list_of_tok **head, char **envp)
+/* 1) Main function to execute the program */
+int	executor(t_list_of_tok **head, char **envp)
 {
 	int		i;
-	int		y;
 	char	**directs;
 	char	*command = NULL;
-	char	*possible_command;
+	char	**test;
 
 	t_list_of_tok *current = find_command_in_list(head);
 	if (current == NULL)
-	{
-//		printf("there is no command in the string sadly\n");
-		return ;
-	}
+		return (printf("there is no command in the string sadly\n"));
 	// I need to check for pipes and redirections
 	current->file_name = find_pipe_redirect(current);
 	printf("FILE TO OPEN | COMMAND TO TAKE: %s%s%s\n", YELLOW, current->file_name, RESET);
-	
 	i = 0;
 	directs = find_path_env(envp);
-	while (directs[i] != NULL)
-	{
-		y = ft_strlen(directs[i]) + ft_strlen(current->command_as_string) + 2;
-		possible_command = malloc(ft_strlen(directs[i]) + ft_strlen(current->command_as_string) + 2); // +2 for the '/' and '\0'
-		ft_strlcpy(possible_command, directs[i], y);
-		ft_strlcat(possible_command, "/", y);
-		ft_strlcat(possible_command, current->command_as_string, y);
-		if (access(possible_command, X_OK) == 0)// Check if the command is executable
-		{
-			command = possible_command;
-			break;
-		}
-		free(possible_command);
-		i++;
-	}
+	command = find_possible_command(directs, current->command_as_string);
+	if (command == NULL)
+		return (printf("the commmand is null\n"));
 	// I need to create a array of string to pass to the execve!
-	char **test = argv_for_exceve(head);
-/*                                                                           */
-		if (fork() == 0)
-		{
-			if (current->file_name != NULL)
-				redirection_process(current, current->next->type);
-			execve(command, test, envp);
-			perror("execve");// execve returns only on error
-			exit(EXIT_FAILURE);
-		}
-		else
-			wait(NULL);// parent waits for the child to finish
-		free(command);
-/*                                                                          */
+		test = argv_for_exceve(head);
+		execute_command(command, test, envp, current);
+				free(command);
 	executor2();
 	executor3();
-	return ;
+	return (0);
 }

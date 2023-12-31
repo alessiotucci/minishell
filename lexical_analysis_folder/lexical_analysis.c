@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/30 17:49:29 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/31 13:45:35 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	lexer(char *string, char **env)
 	// redirection_wo_spaces(&token_head);
 	priority_level(&token_head);
 	update_token_types(&token_head);
-	print_list_tokens(&token_head);
+//	print_list_tokens(&token_head);
 	//recursive_tree_builder(&token_head);
 	executor(&token_head, env);
 	free_list(&token_head);

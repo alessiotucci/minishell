@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/31 13:10:08 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/31 16:28:36 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void	token(void);
 void	parser(void);
 int		lexer(char *string, char **envp);
 void	try_builtin(void);
+
 /* build in functions */
 void	minishell_pwd(void);
 void	minishell_cd(char *directory);
@@ -148,11 +149,14 @@ void	minishell_echo(char *args[]);
 void	minishell_export(char *args[]);
 void	minishell_env(char *args[]);
 void	*which_built_in(t_list_of_tok *node);
-/* function for the executor */
 
-void	executor(t_list_of_tok **head, char **envp);
+/* function for the executor */
+int		executor(t_list_of_tok **head, char **envp);
 char	**find_path_env(char **env);
 char	**argv_for_exceve(t_list_of_tok **head);
+char	*find_possible_command(char **directs, char *command_as_string);
+void	execute_command(char *command, char **test, char **envp, t_list_of_tok *current);
+void	redirection_process(t_list_of_tok *current, t_type_of_tok type);
 
 /* fucking redirection are here*/
 void	redirect_input(char *file_name);

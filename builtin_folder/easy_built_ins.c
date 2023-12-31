@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:33:57 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/29 19:37:08 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/31 15:36:55 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ void	minishell_pwd(void)
 		perror("getcwd");
 }
 
-/* Verifica se il percorso esiste, Cambia la directory corrente */
+/* Verifica se il percorso esiste, Cambia la directory corrente
+ Se non viene specificato un percorso, porta alla directory home
+ */
 void	minishell_cd(char *directory)
 {
 	if (directory == NULL)
@@ -30,7 +32,7 @@ void	minishell_cd(char *directory)
 		fprintf(stderr, "cd: missing argument\n");
 		return ;
 	}
-	printf("Changing directory to: %s%s%s\n",YELLOW, directory, RESET);
+	//printf("Changing directory to: %s%s%s\n",YELLOW, directory, RESET);
 	if (access(directory, F_OK) != 0)
 	{
 		perror("cd");
@@ -38,8 +40,8 @@ void	minishell_cd(char *directory)
 	}
 	if (chdir(directory) != 0)
 		perror("cd");
-	else
-		printf("%sDirectory change successful!%s\n", GREEN, RESET);
+	//else
+	//	printf("%sDirectory change successful!%s\n", GREEN, RESET);
 }
 
 void	minishell_echo(char *args[])
