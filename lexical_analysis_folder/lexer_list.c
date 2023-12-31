@@ -6,13 +6,44 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/30 18:00:09 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/31 13:19:32 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*This function takes a node and a strings, performs several check 
+/*5) helper function for this case */
+static char	*expansion_dollar(char *dollar, char **env)
+{
+	char	*key;
+	int		i;
+	int		key_len;
+
+	if (dollar[0] == '$')
+	{
+		if (dollar[1] == '{')
+			key = my_strndup(dollar + 2, ft_strlen(dollar) - 3);
+		else
+			key = ft_strdup(dollar + 1);
+	}
+	else
+		key = ft_strdup(dollar);
+	i = 0;
+	key_len = ft_strlen(key);
+	while (env[i] != NULL)
+	{
+		if (ft_strncmp(env[i], key, key_len) == 0 && env[i][key_len] == '=')
+		{
+			free(key);
+			return (ft_strdup(env[i] + ft_strlen(key) + 1));
+		}
+		i++;
+	}
+	return (free(key), NULL);
+}
+
+/*4) 
+ * This function takes a node and a strings, performs several check 
  * then create the node with the fields initialized if needed, we will go 
  * from there with further implementation
 */
@@ -20,16 +51,17 @@ static t_list_of_tok	*node_for_dollar(int level, char *spitted_cmd, char **env)
 {
 	char	*expanded;
 
-	expanded = expansion_dollar(spitted_cmd. env);
+	expanded = expansion_dollar(spitted_cmd, env);
 	if (expanded == NULL)
 	{
 		printf("I need to handle better these cases\n");
 		return (create_node(level, "failure"));
 	}
 	else
-		return (create_node(level, expanded);
+		return (create_node(level, expanded));
 }
 
+/*3) Helper function to expand the wildcard  */
 static t_list_of_tok	*node_for_wildcard(int level, char *spitted_cmd)
 {
 	char **expanded;
@@ -66,7 +98,7 @@ static t_list_of_tok	*node_for_wildcard(int level, char *spitted_cmd)
 }
 
 
-/* Helper function to create a new node */
+/*2)  Helper function to create a new node */
 t_list_of_tok *create_node(int level, char *spitted_cmd)
 {
 	t_list_of_tok *new_node;
@@ -86,7 +118,7 @@ t_list_of_tok *create_node(int level, char *spitted_cmd)
 	return (new_node);
 }
 
-/*Function to create a list of tokens */
+/*1) Function to create a list of tokens */
 t_list_of_tok *create_list_of_tok(t_list_of_tok **head, char *spitted_cmd, char **env)
 {
 	t_list_of_tok *new_node;
@@ -94,8 +126,8 @@ t_list_of_tok *create_list_of_tok(t_list_of_tok **head, char *spitted_cmd, char 
 
 	if (valid_wildcard(spitted_cmd))
 		new_node = node_for_wildcard(0, spitted_cmd);
-	else if (valid_dollar(spitted_cmd))
-		new_node = node_for_dollar(0. spitted_cmd);
+	else if (spitted_cmd[0] == '$')
+		new_node = node_for_dollar(0, spitted_cmd, env);
 	else
 		new_node = create_node(0, spitted_cmd);
 	if (*head == NULL)

@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/30 17:57:01 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/31 13:10:08 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,13 @@ typedef struct s_tree_node
 
 /*lexer part alright*/
 int		lexer1(char *param);
+
 /* utils of libft */
 char	*my_strchr(char *str, int cherry);
 int		my_strcmp(const char *str1, const char *str2);
+char	*my_strndup(const char *src_str, size_t max_len);
 
+/* regular expression function */
 int		is_file_reader(char *str);
 int		is_file_writer(char *str);
 int		is_file_appender(char *str);

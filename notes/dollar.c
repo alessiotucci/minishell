@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 18:23:17 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/31 12:56:50 by atucci           ###   ########.fr       */
+/*   Updated: 2023/12/31 13:09:38 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "../minishell.h"
 
 #include <stdio.h>
-#include <string.h>
 
 char	*find_env_value(char **env, char *dollar)
 {
@@ -25,7 +24,7 @@ char	*find_env_value(char **env, char *dollar)
 	if (dollar[0] == '$')
 	{
 		if (dollar[1] == '{')
-			key = strndup(dollar + 2, ft_strlen(dollar) - 3);
+			key = my_strndup(dollar + 2, ft_strlen(dollar) - 3);
 		else
 			key = ft_strdup(dollar + 1);
 	}
