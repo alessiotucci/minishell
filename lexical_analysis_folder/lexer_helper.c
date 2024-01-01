@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:37:59 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/30 17:31:29 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/01 15:58:43 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	is_parent(char *str)
 	else
 		return (0);
 }
+
 /*
  < : “File Reader”, since it reads input from a file.
 */

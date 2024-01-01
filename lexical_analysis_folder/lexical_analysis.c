@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/31 17:17:57 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/01 16:28:30 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,8 @@ int	lexer(char *string, char **env)
 //	print_list_tokens(&token_head);
 
 	//recursive_tree_builder(&token_head);
-	executor(&token_head, env);
+	int debug = executor(&token_head, env);
+	printf("Executor finished with the code: %d\n", debug);
 	free_list(&token_head);
 	free_split(line_of_commands);
 	return (0);

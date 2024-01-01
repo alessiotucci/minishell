@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 09:14:57 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/27 12:59:47 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/01 16:26:47 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	redirect_input(char *file_name)
 	int	fd;
 
 	fd = open(file_name, O_RDONLY);
-	printf("redirect_input function, fd: [%d]\n", fd);
+//	printf("redirect_input function, fd: [%d]\n", fd);
 	if (fd == -1)
 	{
 		perror("open");
@@ -79,6 +79,7 @@ void	here_document(char *delimiter)
 void	redirect_output(t_list_of_tok *current, t_type_of_tok type)
 {
 	int	fd;
+
 	if (type == T_REDIR_OUT)
 		fd = open(current->file_name, OVERWRITE_FLAGS, 0666);
 	else

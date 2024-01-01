@@ -6,37 +6,35 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 19:29:51 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/21 12:31:01 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/01 15:57:53 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	check_parentheses(char* str)
+int	check_parentheses(char *str)
 {
-	int count = 0;
+	int	count;
+
+	count = 0;
 	while (*str != '\0')
 	{
-	if (*str == '(')
-	{
-		count++;
-	}
-	else if (*str == ')')
-	{
-		if (count == 0)
+		if (*str == '(')
+			count++;
+		else if (*str == ')')
 		{
-			return (-1); // unbalanced
+			if (count == 0)
+				return (-1);
+			count--;
 		}
-		count--;
-	}
 		str++;
 	}
 	if (count == 0)
 		return (0);
 	else
 		return (-1);
-	// return count == 0 ? 0 : -1; // 0 if balanced
 }
+
 /*this function will be used to assign priority inside the parenthesis*/
 void	priority_level(t_list_of_tok **head)
 {

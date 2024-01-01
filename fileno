@@ -1,0 +1,40 @@
+Makefile
+README.md
+builtin_enrico_2
+builtin_folder
+ciao
+executor_folder
+extra.c
+extra.o
+fileno
+lexical_analysis_folder
+libft
+minishell
+minishell.c
+minishell.h
+minishell.o
+minishellSubject.pdf
+notes
+printf_for_debug
+recursive_parsing_tree
+signals.c
+signals.o
+signals_enrico.c
+test.h
+text
+wildcard_bonus
+** finished execution **
+Executor finished with the code: 0
+[1;31mminishell% [0m
+Executor finished with the code: 0
+[1;31mminishell% [0m
+Executor finished with the code: 0
+[1;31mminishell% [0m
+Executor finished with the code: 0
+[1;31mminishell% [0mqeusta e la storia di un mia amico 
+the commmand is null
+Executor finished with the code: 21
+[1;31mminishell% [0m
+Executor finished with the code: 0
+[1;31mminishell% [0m okay withs handling signales with ctrl-c
+

@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/31 17:24:32 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/01 13:11:26 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,37 +50,36 @@ char *find_pipe_redirect(t_list_of_tok *iterator)
 	}
 	return (found);
 }
-/*3) an other suggestive suggestion */
-void find_pipe_redirecty(t_list_of_tok *head)
+
+/* first handle the redirection
+ * then check for builtins
+ * otherwise fork and go on with execve
+ * */
+void	*execute_command(char *command, char **test, char **envp, t_list_of_tok *current)
 {
-	// Create a pointer to traverse the list
-	t_list_of_tok *current_node = head;
-	// Print a message indicating the start of pipe or redirection check
-	printf("%sChecking for pipes or redirection%s\n", RED, RESET);
-	// Iterate through the list
-	while (current_node != NULL)
+	pid_t	fix_pid;
+//	int		status;
+
+	if (current->file_name != NULL)
+		redirection_process(current, current->next->type); // here the fd are changed
+	if (current->type == T_BUILTIN)
+		return (which_built_in(current));
+	else
 	{
-		// Check if the current node is a pipe or redirection operator
-		if (current_node->type == T_PIPES || current_node->type == T_REDIR_OUT || current_node->type == T_REDIR_APP || current_node->type == T_REDIR_IN)
+		fix_pid = fork();
+		if (fix_pid == 0)
 		{
-			// If there's no next node, print an error message and return
-			if (current_node->next == NULL)
-			{
-				printf("Syntax error: unexpected end of command\n");
-				return;
-			}
-			// Save the type of operator in the current node
-			current_node->type = current_node->next->type;
-			// Save the filename or command in the current node
-			current_node->file_name = ft_strdup(current_node->next->command_as_string);
-			// Skip the next node as we've already processed it
-			current_node->next = current_node->next->next;
+			execve(command, test, envp);
+			perror("execve"); // execve returns only on error
+			exit(EXIT_FAILURE);
 		}
-		// Move to the next node
-		current_node = current_node->next;
+		else
+			wait(NULL);
+//			waitpid(fix_pid, &status, 0); // parent waits for the child to finish
 	}
-	// End of function, no return value needed as function is void
+return (NULL);
 }
+
 
 /*2)
  this fuction handle the redirection process
@@ -93,7 +92,7 @@ void	redirection_process(t_list_of_tok *current, t_type_of_tok type)
 		// handle the case if there is a flag
 	if (type == T_REDIR_IN)
 	{
-		printf("redirect the input\n");
+		//printf("redirect the input\n");
 		redirect_input(current->file_name);
 	}
 	else if (type == T_REDIR_OUT || type == T_REDIR_APP)
@@ -126,9 +125,9 @@ int	executor(t_list_of_tok **head, char **envp)
 	char	*command;
 	char	**test;
 
-	t_list_of_tok *current = find_command_in_list(head); // in this line the builtin take over
+	t_list_of_tok *current = find_command_in_list(head);
 	if (current == NULL)
-		return (printf("there is no command in the string sadly\n"));
+		return (printf(""));
 	current->file_name = find_pipe_redirect(current);
 	command = current->command_as_string;
 //	printf("FILE TO OPEN | COMMAND TO TAKE: %s%s%s\n", YELLOW, current->file_name, RESET);
@@ -144,6 +143,7 @@ int	executor(t_list_of_tok **head, char **envp)
 	print_node(current);
 	printf("**%s finished with the debugging!***%s \n", BG_RED, BG_RESET); */
 	execute_command(command, test, envp, current);
+	printf("** finished execution **\n");
 //	free(command);
 	executor2();
 	executor3();

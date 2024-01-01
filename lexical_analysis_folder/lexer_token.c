@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 19:50:51 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/27 11:30:29 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/01 15:59:55 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 /*Fully process is a function needed to find command arguments and other stuff*/
 void	update_token_types(t_list_of_tok **head)
 {
-	t_list_of_tok *current = *head;
-	t_list_of_tok *prev = NULL;
+	t_list_of_tok	*current;
+	t_list_of_tok	*prev;
 
+	prev = NULL;
+	current = *head;
 	while (current != NULL)
 	{
 		if (prev != NULL
-			&& (prev->type == T_COMMAND || prev->type == T_FLAG || prev->type == T_BUILTIN)
+			&& (prev->type == T_COMMAND
+				|| prev->type == T_FLAG || prev->type == T_BUILTIN)
 			&& current->type == T_COMMAND)
 			current->type = T_COMMAND_ARGS;
 		prev = current;

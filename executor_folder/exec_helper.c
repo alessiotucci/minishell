@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_helper.c                                     :+:      :+:    :+:   */
+/*   exec_helper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:38:22 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/31 18:12:16 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/01 16:13:34 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	executor3(void)
 {
 	return ;
 }
-
+/* 4) */
 char	*find_possible_command(char *command_as_string, char **envp)
 {
 	int		i;
@@ -52,31 +52,7 @@ char	*find_possible_command(char *command_as_string, char **envp)
 	}
 	return (NULL);
 }
-/* first handle the redirection
- * then check for builtins
- * otherwise fork and go on with execve
- * */
-void	*execute_command(char *command, char **test, char **envp, t_list_of_tok *current)
-{
-	if (current->file_name != NULL)
-		redirection_process(current, current->next->type); // here the fd are changed
-	if (current->type == T_BUILTIN)
-		return (which_built_in(current));
-	else
-	{
-		if (fork() == 0)
-		{
-			execve(command, test, envp);
-			perror("execve"); // execve returns only on error
-			exit(EXIT_FAILURE);
-		}
-		else
-			wait(NULL); // parent waits for the child to finish
-	}
-return (NULL);
-}
-
-/* Function to get the size of the list */
+/*3) Function to get the size of the list */
 static int get_size(t_list_of_tok *head)
 {
 	int size = 0;
@@ -88,7 +64,7 @@ static int get_size(t_list_of_tok *head)
 	return size;
 }
 
-/* helper function to find the path in the ev */
+/*2) helper function to find the path in the ev */
 char	**find_path_env(char **env)
 {
 	int	i;
@@ -108,9 +84,7 @@ char	**find_path_env(char **env)
 	return (ft_split(nully, ':'));
 }
 
-
-
-/* Function to create argv for execve */
+/*1) Function to create argv for execve */
 char **argv_for_exceve(t_list_of_tok **head)
 {
 	int		size;

@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/31 13:19:32 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/01 16:07:15 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,30 +47,31 @@ static char	*expansion_dollar(char *dollar, char **env)
  * then create the node with the fields initialized if needed, we will go 
  * from there with further implementation
 */
-static t_list_of_tok	*node_for_dollar(int level, char *spitted_cmd, char **env)
+static t_list_of_tok	*node_for_dollar(int lvl, char *spitted, char **env)
 {
 	char	*expanded;
 
-	expanded = expansion_dollar(spitted_cmd, env);
+	expanded = expansion_dollar(spitted, env);
 	if (expanded == NULL)
 	{
 		printf("I need to handle better these cases\n");
-		return (create_node(level, "failure"));
+		return (create_node(lvl, "failure"));
 	}
 	else
-		return (create_node(level, expanded));
+		return (create_node(lvl, expanded));
 }
 
 /*3) Helper function to expand the wildcard  */
 static t_list_of_tok	*node_for_wildcard(int level, char *spitted_cmd)
 {
-	char **expanded;
-	int		i;
+	char			**expanded;
+	int				i;
 	t_list_of_tok	*current;
 	t_list_of_tok	*new_node;
-	t_list_of_tok	*head = NULL;
-	i = 0;
+	t_list_of_tok	*head;
 
+	head = NULL;
+	i = 0;
 	expanded = expansion_wildcard(spitted_cmd);
 	if (expanded == NULL)
 	{
@@ -79,7 +80,6 @@ static t_list_of_tok	*node_for_wildcard(int level, char *spitted_cmd)
 	}
 	while (expanded[i])
 	{
-	// create node ok?
 		new_node = create_node(level, expanded[i]);
 		if (head == NULL)
 			head = new_node;
@@ -88,7 +88,7 @@ static t_list_of_tok	*node_for_wildcard(int level, char *spitted_cmd)
 			current = head;
 			while (current->next != NULL)
 				current = current->next;
-			current->next  = new_node;
+			current->next = new_node;
 			new_node->previous = current;
 			new_node->index = current->index + 1;
 		}
@@ -97,11 +97,10 @@ static t_list_of_tok	*node_for_wildcard(int level, char *spitted_cmd)
 	return (head);
 }
 
-
 /*2)  Helper function to create a new node */
-t_list_of_tok *create_node(int level, char *spitted_cmd)
+t_list_of_tok	*create_node(int level, char *spitted_cmd)
 {
-	t_list_of_tok *new_node;
+	t_list_of_tok	*new_node;
 
 	new_node = (t_list_of_tok *)malloc(sizeof(t_list_of_tok));
 	if (new_node == NULL)
@@ -109,9 +108,9 @@ t_list_of_tok *create_node(int level, char *spitted_cmd)
 		printf("Error with malloc");
 		exit(1);
 	}
-	new_node->command_as_string = spitted_cmd; // ft_strdup(spitted_cmd);
-	new_node->type = type_of_token(spitted_cmd); // I need to change this to make it works
-	new_node->priority_lev = level; // for now ok? 
+	new_node->command_as_string = spitted_cmd;
+	new_node->type = type_of_token(spitted_cmd);
+	new_node->priority_lev = level;
 	new_node->next = NULL;
 	new_node->previous = NULL;
 	new_node->index = 0;
@@ -119,17 +118,17 @@ t_list_of_tok *create_node(int level, char *spitted_cmd)
 }
 
 /*1) Function to create a list of tokens */
-t_list_of_tok *create_list_of_tok(t_list_of_tok **head, char *spitted_cmd, char **env)
+t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env)
 {
-	t_list_of_tok *new_node;
-	t_list_of_tok *current;
+	t_list_of_tok	*new_node;
+	t_list_of_tok	*current;
 
-	if (valid_wildcard(spitted_cmd))
-		new_node = node_for_wildcard(0, spitted_cmd);
-	else if (spitted_cmd[0] == '$')
-		new_node = node_for_dollar(0, spitted_cmd, env);
+	if (valid_wildcard(cmd))
+		new_node = node_for_wildcard(0, cmd);
+	else if (cmd[0] == '$')
+		new_node = node_for_dollar(0, cmd, env);
 	else
-		new_node = create_node(0, spitted_cmd);
+		new_node = create_node(0, cmd);
 	if (*head == NULL)
 		*head = new_node;
 	else
@@ -140,9 +139,6 @@ t_list_of_tok *create_list_of_tok(t_list_of_tok **head, char *spitted_cmd, char 
 		current->next = new_node;
 		new_node->previous = current;
 		new_node->index = current->index + 1;
-		//if ((current->type == T_COMMAND || current->type == T_FLAG) && new_node->type == T_COMMAND)
-		//new_node->type = T_COMMAND_ARGS;
 	}
 	return (new_node);
 }
-

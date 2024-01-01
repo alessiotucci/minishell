@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:51:40 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/31 15:36:58 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/01 13:05:29 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	*which_built_in(t_list_of_tok *node)
 			minishell_cd(node->next->command_as_string);
 	}
 	else if (my_strcmp(node->command_as_string, "pwd") == 0)
+	{
 		minishell_pwd();
+		//exit(0); // this is the issue
+	}
 	else if (my_strcmp(node->command_as_string, "export") == 0)
 		return NULL;//minishell_export();
 	else if (my_strcmp(node->command_as_string, "unset") == 0)
