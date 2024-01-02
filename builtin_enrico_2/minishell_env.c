@@ -6,17 +6,24 @@
 /*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 22:05:47 by enricogiral       #+#    #+#             */
-/*   Updated: 2023/12/30 10:14:22 by enricogiral      ###   ########.fr       */
+/*   Updated: 2024/01/02 16:25:24 by enricogiral      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 
-void    minishell_env(char *args[]) 
+void    minishell_env(char **env) 
 {
     // If no arguments provided, print the current environment variables
-    if (args[1] == NULL) 
+    
+    int i = 0;
+    while (env[i])
+    {
+        printf("%s \n", env[i]);
+        i++;
+    }
+    /*if (env[1] == NULL) 
     {
         extern char **environ;
         char **env = environ;
@@ -29,12 +36,12 @@ void    minishell_env(char *args[])
     else 
     {
         fprintf(stderr, "minishell_env: Too many arguments\n");
-    }
+    }*/
 }
 
-int main(int argc, char *argv[]) 
+int main(int argc, char **argv, char **env) 
 {
-    minishell_env(argv);
+    minishell_env(env);
     return 0;
 }
 
