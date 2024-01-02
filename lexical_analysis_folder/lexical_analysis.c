@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/02 12:44:36 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/02 17:55:12 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	free_list(t_list_of_tok **head)
 	while (current != NULL)
 	{
 		next_node = current->next;
-//		free(current->command_as_string);//  DO I NEED TO USE STRDUP (?)
+//		free(current->token);//  DO I NEED TO USE STRDUP (?)
 		free(current);
 		current = next_node;
 	}
@@ -107,8 +107,7 @@ int	lexer(char *string, char **env)
 	// redirection_wo_spaces(&token_head);
 	priority_level(&token_head);
 	update_token_types(&token_head);
-//	print_list_tokens(&token_head);
-
+	//print_list_tokens(&token_head);
 	//recursive_tree_builder(&token_head);
 	//int debug =
 	executor(&token_head, env);

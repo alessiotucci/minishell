@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:37:25 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/18 15:57:55 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/02 18:00:50 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	print_tree(t_tree_node *root, int depth)
 		return (printf("null"));
 	}
 	print_tabs(depth);
-	printf("\t[ %s ]\n", root->token->command_as_string);
+//	printf("\t[ %s ]\n", root->token->token);
 	printf("LEFT:");
 	print_tree(root->left, depth + 1);
 	printf("\tRIGHT: ");

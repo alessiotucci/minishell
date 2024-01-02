@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:38:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/02 14:26:38 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/02 17:57:13 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	executor3(void)
 	return ;
 }
 /* 4) */
-char	*find_possible_command(char *command_as_string, char **envp)
+char	*find_possible_command(char *token, char **envp)
 {
 	int		i;
 	int		y;
@@ -38,11 +38,11 @@ char	*find_possible_command(char *command_as_string, char **envp)
 	i = 0;
 	while (directs[i] != NULL)
 	{
-		y = ft_strlen(directs[i]) + ft_strlen(command_as_string) + 2;
+		y = ft_strlen(directs[i]) + ft_strlen(token) + 2;
 		possible_command = malloc(y); // +2 for the '/' and '\0'
 		ft_strlcpy(possible_command, directs[i], y);
 		ft_strlcat(possible_command, "/", y);
-		ft_strlcat(possible_command, command_as_string, y);
+		ft_strlcat(possible_command, token, y);
 		if (access(possible_command, X_OK) == 0)
 		{ // Check if the command is executable
 			return (possible_command);
@@ -101,7 +101,7 @@ char **array_from_list(t_list_of_tok **head)
 	{
 		if (current->type == T_COMMAND || current->type == T_BUILTIN || current->type == T_COMMAND_ARGS || current->type == T_FLAG)
 		{
-			argv[i] = ft_strdup(current->command_as_string); // duplicate the string
+			argv[i] = ft_strdup(current->token); // duplicate the string
 			if (!argv[i])
 				return NULL; // return NULL if memory allocation fails
 			i++;

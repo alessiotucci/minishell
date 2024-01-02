@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/01 16:07:15 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/02 17:56:44 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ t_list_of_tok	*create_node(int level, char *spitted_cmd)
 		printf("Error with malloc");
 		exit(1);
 	}
-	new_node->command_as_string = spitted_cmd;
+	new_node->token = spitted_cmd;
 	new_node->type = type_of_token(spitted_cmd);
 	new_node->priority_lev = level;
 	new_node->next = NULL;

@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/02 14:27:01 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/02 17:55:47 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_list_of_tok
 {
 	int						fd_redirect;
 	char					*file_name;
-	char					*command_as_string;
+	char					*token;
 	t_type_of_tok			type;
 	struct s_list_of_tok	*next;
 	struct s_list_of_tok	*previous;
@@ -79,8 +79,8 @@ typedef struct s_tree_node
 {
 	int					fd;
 	char				*useful;
-	char				*command_as_string;
-	t_list_of_tok		*token; // this is a fix (?)
+	char				*token;
+//	t_list_of_tok		*token; // this is a fix (?)
 	int					priority_lev;
 	struct s_tree_node	*left;
 	struct s_tree_node	*right;
@@ -148,13 +148,14 @@ void	minishell_cd(char *directory);
 void	minishell_echo(char *args[]);
 void	minishell_export(char *args[]);
 void	minishell_env(char *args[]);
+// minishell unset //
 void	*which_built_in(t_list_of_tok *node);
 
 /* function for the executor */
 int		executor(t_list_of_tok **head, char **envp);
 char	**find_path_env(char **env);
 char	**array_from_list(t_list_of_tok **head);
-char	*find_possible_command(char *command_as_string, char **envp);
+char	*find_possible_command(char *token, char **envp);
 void	*execute_command(char *command, char **test, char **envp, t_list_of_tok *current);
 void	redirection_process(t_list_of_tok *current, t_type_of_tok type);
 

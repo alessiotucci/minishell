@@ -6,13 +6,13 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:13:21 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/29 17:00:00 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/02 14:48:18 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "built_ins.h"
-
+/*
 extern long long	g_exit_status;
 
 static void	exit_non_numeric_arg(void)
@@ -48,7 +48,7 @@ void	cmd_exit(t_statement *s)
 
 	exit(g_exit_status);
 }
-
+*/
 /* If no arguments provided, print the current environment variables */
 void	minishell_export(char *args[])
 {

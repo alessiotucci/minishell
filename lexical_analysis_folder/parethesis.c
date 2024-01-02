@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 19:29:51 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/01 15:57:53 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/02 17:57:04 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	priority_level(t_list_of_tok **head)
 	current = *head;
 	while (current != NULL)
 	{
-		if (my_strcmp(current->command_as_string, "(") == 0)
+		if (my_strcmp(current->token, "(") == 0)
 			priority++;
-		else if (my_strcmp(current->command_as_string, ")") == 0)
+		else if (my_strcmp(current->token, ")") == 0)
 			priority--;
 		current->priority_lev = priority;
 		current = current->next;

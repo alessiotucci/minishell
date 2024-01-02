@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:44 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/24 17:48:17 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/02 18:00:18 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static t_tree_node *create_tree_node(t_list_of_tok *token)
 	t_tree_node	*new_node;
 
 	new_node = (t_tree_node *)malloc(sizeof(t_tree_node));
-	new_node->token = token;
+//	new_node->token = token;
 	new_node->priority_lev = token->priority_lev;
 	new_node->left = NULL;
 	new_node->right = NULL;
@@ -32,7 +32,7 @@ static t_list_of_tok*	create_sublist(t_list_of_tok *start, t_list_of_tok *end)
 	head = NULL;
 	while (start != end) // this doesnt compile
 	{
-		new_node = create_node(start->priority_lev, start->command_as_string);// define this function, not compiling
+		new_node = create_node(start->priority_lev, start->token);// define this function, not compiling
 		new_node->next = head;
 		head = new_node;
 		start = start->next;
