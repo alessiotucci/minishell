@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 09:14:57 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/01 16:26:47 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/01 17:17:43 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	redirect_output(t_list_of_tok *current, t_type_of_tok type)
 	if (dup2(fd, STDOUT_FILENO) == -1)
 	{
 		perror("dup2");
+		close(fd);
 		exit(EXIT_FAILURE);
 	}
 	close(fd);

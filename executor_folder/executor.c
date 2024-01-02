@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/01 13:11:26 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/02 12:40:03 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,21 @@ void	*execute_command(char *command, char **test, char **envp, t_list_of_tok *cu
 {
 	pid_t	fix_pid;
 //	int		status;
+	int	stdout_copy = dup(STDOUT_FILENO);
 
 	if (current->file_name != NULL)
 		redirection_process(current, current->next->type); // here the fd are changed
 	if (current->type == T_BUILTIN)
-		return (which_built_in(current));
+	{
+		which_built_in(current);
+		// Restore the original stdout file descriptor
+		dup2(stdout_copy, STDOUT_FILENO);
+		close(stdout_copy);	
+		return NULL; //(which_built_in(current));
+	}
 	else
 	{
+		printf("WE are gonna FORK for %s!\n", command);
 		fix_pid = fork();
 		if (fix_pid == 0)
 		{
@@ -143,8 +151,8 @@ int	executor(t_list_of_tok **head, char **envp)
 	print_node(current);
 	printf("**%s finished with the debugging!***%s \n", BG_RED, BG_RESET); */
 	execute_command(command, test, envp, current);
-	printf("** finished execution **\n");
 //	free(command);
+	printf("** finished execution **\n");
 	executor2();
 	executor3();
 	return (0);
