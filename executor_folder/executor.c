@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/02 12:40:03 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/02 12:47:53 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ char *find_pipe_redirect(t_list_of_tok *iterator)
 }
 
 /* first handle the redirection
- * then check for builtins
- * otherwise fork and go on with execve
+ * then check for builtins, after perform built in, restore fd (?)
+ * otherwise fork and go on with execve, after that restore fd (?)
  * */
 void	*execute_command(char *command, char **test, char **envp, t_list_of_tok *current)
 {
@@ -73,7 +73,7 @@ void	*execute_command(char *command, char **test, char **envp, t_list_of_tok *cu
 	}
 	else
 	{
-		printf("WE are gonna FORK for %s!\n", command);
+//		printf("WE are gonna FORK for %s!\n", command);
 		fix_pid = fork();
 		if (fix_pid == 0)
 		{
@@ -85,6 +85,8 @@ void	*execute_command(char *command, char **test, char **envp, t_list_of_tok *cu
 			wait(NULL);
 //			waitpid(fix_pid, &status, 0); // parent waits for the child to finish
 	}
+dup2(stdout_copy, STDOUT_FILENO);
+close(stdout_copy);
 return (NULL);
 }
 
@@ -152,7 +154,7 @@ int	executor(t_list_of_tok **head, char **envp)
 	printf("**%s finished with the debugging!***%s \n", BG_RED, BG_RESET); */
 	execute_command(command, test, envp, current);
 //	free(command);
-	printf("** finished execution **\n");
+//	printf("** finished execution **\n");
 	executor2();
 	executor3();
 	return (0);
