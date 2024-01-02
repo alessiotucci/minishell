@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:33:57 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/31 17:19:40 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/02 14:25:35 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	minishell_echo(char *args[])
 
 	suppress_newline = 0;
 	i = 1;
-	if (args[1] != NULL && strcmp(args[1], "-n") == 0)
+	if (args[1] != NULL && my_strcmp(args[1], "-n") == 0)
 	{
 		suppress_newline = 1;
 		i++;

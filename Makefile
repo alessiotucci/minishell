@@ -6,7 +6,7 @@
 #    By: atucci <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 09:05:05 by atucci            #+#    #+#              #
-#    Updated: 2023/12/29 18:32:27 by atucci           ###   ########.fr        #
+#    Updated: 2024/01/02 14:06:15 by atucci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC = ./minishell.c \
 	./extra.c \
 	./builtin_folder/builtin_helper.c \
 	./builtin_folder/easy_built_ins.c \
-	./builtin_folder/execution.c \
+	./builtin_folder/exec_builtin.c \
 	./lexical_analysis_folder/lexical_analysis.c \
 	./lexical_analysis_folder/lexer_helper.c \
 	./lexical_analysis_folder/lexer_list.c \

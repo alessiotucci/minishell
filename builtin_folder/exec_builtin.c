@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:51:40 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/01 13:05:29 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/02 14:29:02 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,13 @@ void	minishell_env(char *args[])
 
 void	*which_built_in(t_list_of_tok *node)
 {
+	char	**params;
+
+	params = array_from_list(&node);
 	if (node == NULL)
 		return (NULL);
 	if (my_strcmp(node->command_as_string, "echo") == 0)
-		return NULL;//minishell_echo();
+		minishell_echo(params);
 	else if (my_strcmp(node->command_as_string, "cd") == 0)
 	{
 		if (node->next != NULL)

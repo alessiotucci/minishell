@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/02 12:47:53 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/02 14:27:28 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ int	executor(t_list_of_tok **head, char **envp)
 		command = find_possible_command(current->command_as_string, envp);
 	if (command == NULL)
 		return (free(command), printf("the commmand is null\n"));
-	test = argv_for_exceve(head);
+	test = array_from_list(head);
 /*	printf("**%s Let's the debugging start ! ***%s \n", BG_GREEN, BG_RESET);
 	printf("command: [%s]", command);
 	print_string_array(test);

@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:38:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/01 16:13:34 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/02 14:26:38 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	**find_path_env(char **env)
 }
 
 /*1) Function to create argv for execve */
-char **argv_for_exceve(t_list_of_tok **head)
+char **array_from_list(t_list_of_tok **head)
 {
 	int		size;
 	char	**argv;
