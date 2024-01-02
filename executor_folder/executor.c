@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/02 17:55:12 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/02 18:32:37 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,9 @@ int	executor(t_list_of_tok **head, char **envp)
 {
 	char	*command;
 	char	**test;
+	t_list_of_tok *current;
 
-	t_list_of_tok *current = find_command_in_list(head);
+	current = find_command_in_list(head);
 	if (current == NULL)
 		return (printf(" "));
 	current->file_name = find_pipe_redirect(current);

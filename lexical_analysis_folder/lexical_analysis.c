@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/02 17:55:12 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/02 18:43:40 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,18 +100,15 @@ int	lexer(char *string, char **env)
 	{
 		line_of_commands[i] = replace_me(line_of_commands[i], '"', ' ', '\t');
 		line_of_commands[i] = replace_me(line_of_commands[i], 39, ' ', '\t');
-//		valid_wildcard(line_of_commands[i]);
 		create_list_of_tok(&token_head, line_of_commands[i], env);
 		i++;
 	}
-	// redirection_wo_spaces(&token_head);
 	priority_level(&token_head);
 	update_token_types(&token_head);
-	//print_list_tokens(&token_head);
+	print_list_tokens(&token_head);
 	//recursive_tree_builder(&token_head);
 	//int debug =
 	executor(&token_head, env);
-//	printf("Executor finished with the code: %d\n", debug);
 	free_list(&token_head);
 	free_split(line_of_commands);
 	return (0);
