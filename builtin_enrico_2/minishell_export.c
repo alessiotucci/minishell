@@ -12,8 +12,7 @@ void minishell_export(char *args[])
         char **env = environ;
         while (*env != NULL) 
         {
-            write(STDOUT_FILENO, *env, strlen(*env));
-            write(STDOUT_FILENO, "\n", 1);
+            printf("%s\n", *env);
             env++;
         }
     } 
@@ -45,16 +44,12 @@ void minishell_export(char *args[])
                 } 
                 else 
                 {
-                    char error_message[100];
-                    sprintf(error_message, "minishell_export: Invalid format: %s\n", arg);
-                    write(STDERR_FILENO, error_message, strlen(error_message));
+                    printf("minishell_export: Invalid format: %s\n", arg);
                 }
             } 
             else 
             {
-                char error_message[100];
-                sprintf(error_message, "minishell_export: Invalid format: %s\n", arg);
-                write(STDERR_FILENO, error_message, strlen(error_message));
+                printf("minishell_export: Invalid format: %s\n", arg);
             }
 
             i++;
