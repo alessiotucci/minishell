@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 19:50:51 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/01 15:59:55 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/04 11:15:48 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	update_token_types(t_list_of_tok **head)
 	{
 		if (prev != NULL
 			&& (prev->type == T_COMMAND
-				|| prev->type == T_FLAG || prev->type == T_BUILTIN)
+				|| prev->type == T_FLAG
+				|| prev->type == T_BUILTIN
+				|| prev->type == T_COMMAND_ARGS)
 			&& current->type == T_COMMAND)
 			current->type = T_COMMAND_ARGS;
 		prev = current;

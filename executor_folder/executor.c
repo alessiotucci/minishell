@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/03 12:01:11 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/04 11:25:59 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ return (NULL);
 int	executor(t_list_of_tok **head, char **envp)
 {
 	char	*command;
-	char	**test;
+	char	**argoums;
 	t_list_of_tok *current;
 	//char	*file_name;
 	current = find_command_in_list(head);
@@ -140,7 +140,7 @@ int	executor(t_list_of_tok **head, char **envp)
 		command = find_path_command(current->token, envp);
 	if (command == NULL)
 		return (free(command), printf("the commmand is null\n"));
-	test = array_from_list(head);
-	execute_command(command, test, envp, current);
+	argoums = array_from_list(head);
+	execute_command(command, argoums, envp, current);
 	return (0);
 }
