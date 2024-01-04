@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:38:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/02 17:57:13 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/03 12:01:11 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	executor3(void)
 	return ;
 }
 /* 4) */
-char	*find_possible_command(char *token, char **envp)
+char	*find_path_command(char *token, char **envp)
 {
 	int		i;
 	int		y;

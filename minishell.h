@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/02 17:55:47 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/03 11:59:58 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,14 @@ typedef enum e_type_of_tok
 
 typedef struct s_list_of_tok
 {
+	t_type_of_tok			type;
 	int						fd_redirect;
 	char					*file_name;
 	char					*token;
-	t_type_of_tok			type;
-	struct s_list_of_tok	*next;
-	struct s_list_of_tok	*previous;
 	int						index;
 	int						priority_lev;
+	struct s_list_of_tok	*next;
+	struct s_list_of_tok	*previous;
 }	t_list_of_tok;
 
 
@@ -155,7 +155,7 @@ void	*which_built_in(t_list_of_tok *node);
 int		executor(t_list_of_tok **head, char **envp);
 char	**find_path_env(char **env);
 char	**array_from_list(t_list_of_tok **head);
-char	*find_possible_command(char *token, char **envp);
+char	*find_path_command(char *token, char **envp);
 void	*execute_command(char *command, char **test, char **envp, t_list_of_tok *current);
 void	redirection_process(t_list_of_tok *current, t_type_of_tok type);
 

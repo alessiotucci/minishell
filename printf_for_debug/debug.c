@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:47:07 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/02 18:01:39 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/03 17:42:13 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	print_node(t_list_of_tok *node)
 	printf("|%sPRIORITY %s%d\n", RED, RESET, node->priority_lev);
 	printf("|PREV %p \n",node->previous);
 	printf("|NEXT %p \n",node->next);
-	if (node->next != NULL)
-	printf("|NEXT-Type %d,  %s%s%s \n",node->next->type, colors[node->next->type], names[node->next->type], RESET);
+//	if (node->next != NULL)
+//	printf("|NEXT-Type %d,  %s%s%s \n",node->next->type, colors[node->next->type], names[node->next->type], RESET);
 	printf("|INDEX %d\n", node->index);
 	printf("|--------------------|\n\n");
 }
