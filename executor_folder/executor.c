@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/05 11:58:16 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/05 14:55:22 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 		redirection_process(cmd_nod, cmd_nod->next->type); // here the fd are changed
 	if (cmd_nod->type == T_BUILTIN)
 	{
-		printf("Builtin fd is %d\n\n\n", cmd_nod->fd_pipe);
+		printf("Builtin:%s%s\t(%s)%s Fd: %d\n", BLUE, cmd_nod->token, command, RESET, cmd_nod->fd_pipe);
 		which_built_in(cmd_nod, args_a, envp);
 		// Restore the original stdout file descriptor
 		//dup2(stdout_copy, STDOUT_FILENO);
@@ -94,7 +94,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 	}
 	else
 	{
-		printf("Command fd is %d\n\n\n", cmd_nod->fd_pipe);
+		printf("Command:%s%s\t(%s)%s Fd: %d\n", GREEN, cmd_nod->token, command, RESET, cmd_nod->fd_pipe);
 		fix_pid = fork();
 		if (fix_pid == 0)
 		{
