@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:29:34 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/31 15:36:29 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/05 10:48:24 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,8 @@ int	main(int ac, char **av)
 	first_command = ft_split(av[1], ' ');
 	second_command = ft_split(av[2], ' ');
 	if (pipe(pip_fd) == -1)
-	{
-		ft_putstr_fd("Failed to create a pipe\n", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n", 2);
 		return (1);
-	}
 	first_pid = fork();
-	if (first_pid < 0)
-	{
-		ft_putstr_fd("Failed to fork for the first time\n", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n", 2);
-	}
 	if (first_pid == 0)
 	{
 		dup2(pip_fd[1], STDOUT_FILENO);
@@ -48,12 +37,6 @@ int	main(int ac, char **av)
 		execvp(first_command[0], first_command);
 	}
 	second_pid = fork();
-	if (second_pid < 0)
-	{
-		ft_putstr_fd("Failed to fork for the second time\n", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n", 2);
-	}
 	if (second_pid == 0)
 	{
 		dup2(pip_fd[0], STDIN_FILENO);
