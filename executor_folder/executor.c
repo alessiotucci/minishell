@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/04 13:59:15 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/05 11:58:16 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,10 @@ void	redirection_process(t_list_of_tok *cmd_nod, t_type_of_tok type)
 		redirect_input(cmd_nod->file_name);
 	else if (type == T_REDIR_OUT || type == T_REDIR_APP)
 		redirect_output(cmd_nod, type);
-	else if (type == T_PIPES)
-	{
-		printf("handling PIPES case\n");
-		printf("%s%s%s\n", GREEN, cmd_nod->file_name, RESET);
-		//pipex(cmd_nod, cmd_nod->next);
-	}
 	else if (type == T_HERE_DOC)
 		here_document(cmd_nod->file_name);
-	else
-		print_node(cmd_nod);
+//	else
+//		print_node(cmd_nod);
 }
 
 /* 2)
@@ -85,20 +79,22 @@ void	redirection_process(t_list_of_tok *cmd_nod, t_type_of_tok type)
 void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *cmd_nod)
 {
 	pid_t	fix_pid;
-	int	stdout_copy = dup(STDOUT_FILENO);
+//	int	stdout_copy = dup(STDOUT_FILENO);
 
 	if (cmd_nod->file_name != NULL)
 		redirection_process(cmd_nod, cmd_nod->next->type); // here the fd are changed
 	if (cmd_nod->type == T_BUILTIN)
 	{
+		printf("Builtin fd is %d\n\n\n", cmd_nod->fd_pipe);
 		which_built_in(cmd_nod, args_a, envp);
 		// Restore the original stdout file descriptor
-		dup2(stdout_copy, STDOUT_FILENO);
-		close(stdout_copy);
+		//dup2(stdout_copy, STDOUT_FILENO);
+		//close(stdout_copy);
 		return NULL;
 	}
 	else
 	{
+		printf("Command fd is %d\n\n\n", cmd_nod->fd_pipe);
 		fix_pid = fork();
 		if (fix_pid == 0)
 		{
@@ -109,8 +105,8 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 		else
 			wait(NULL);
 	}
-dup2(stdout_copy, STDOUT_FILENO);
-close(stdout_copy);
+//dup2(stdout_copy, STDOUT_FILENO);
+//close(stdout_copy);
 return (NULL);
 }
 
@@ -122,21 +118,23 @@ return (NULL);
  * */
 int	executor(t_list_of_tok **head, char **envp)
 {
-	char	*command;
-	char	**argoums;
-	t_list_of_tok *cmd_node;
+	char			*command;
+	char			**argoums;
+	t_list_of_tok	*cmd_node;
 
 	cmd_node = find_command_in_list(head);
-	if (cmd_node == NULL)
-		return (printf(" "));
-	cmd_node->file_name = find_redirect(cmd_node);
-	find_pipes(head);
-	command = cmd_node->token;
-	if (cmd_node->type != T_BUILTIN)
-		command = find_path_command(cmd_node->token, envp);
-	if (command == NULL)
-		return (free(command), printf(" Command not found: %s\n", cmd_node->token));
-	argoums = array_from_list(head);
-	execute_command(command, argoums, envp, cmd_node);
+	while (cmd_node != NULL)
+	{
+		cmd_node->file_name = find_redirect(cmd_node);
+		find_pipes(cmd_node);
+		command = cmd_node->token;
+		if (cmd_node->type != T_BUILTIN)
+			command = find_path_command(cmd_node->token, envp);
+		if (command == NULL)
+			return (free(command), printf(" Command not found: %s\n", cmd_node->token));
+		argoums = array_from_list(head);
+		execute_command(command, argoums, envp, cmd_node);
+		cmd_node = find_command_in_list(&cmd_node->next);
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:38:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/03 12:01:11 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/05 11:17:11 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char	*find_path_command(char *token, char **envp)
 	}
 	return (NULL);
 }
+
 /*3) Function to get the size of the list */
 static int get_size(t_list_of_tok *head)
 {
