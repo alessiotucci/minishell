@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/05 11:51:50 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/05 17:04:08 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,15 @@ typedef enum e_type_of_tok
 	T_REDIR_APP, // >>
 	T_HERE_DOC, // << 
 	T_LOGIC_OPERAR,// && or || 
-	T_COMMAND_ARGS
+	T_COMMAND_ARGS,
+	T_FILE_NAME
 }	t_type_of_tok;
 
 typedef struct s_list_of_tok
 {
 	t_type_of_tok			type;
-	int						fd_pipe;
+	int						fd_pipe_in; // updates
+	int						fd_pipe_out; // updates
 	char					*file_name;
 	char					*token;
 	int						index;
@@ -86,9 +88,6 @@ typedef struct s_tree_node
 	struct s_tree_node	*right;
 	struct s_tree_node	*parent;
 }	t_tree_node;
-
-
-
 
 /*lexer part alright*/
 int		lexer1(char *param);

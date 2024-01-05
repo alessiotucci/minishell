@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:29:34 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/05 14:26:08 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/05 15:53:53 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	set_pipes(t_list_of_tok *first_cmd, t_list_of_tok *secnd_cmd)
 	printf("*** Piping [%s] with [%s] ***\n", first_cmd->token, secnd_cmd->token);
 	if (pipe(fd) == -1)
 		return (perror("pipe"));
-	first_cmd->fd_pipe = fd[1];
-	secnd_cmd->fd_pipe = fd[0];
+	first_cmd->fd_pipe_out = fd[1];
+	secnd_cmd->fd_pipe_in = fd[0];
 }
 
 void	find_pipes(t_list_of_tok *head)

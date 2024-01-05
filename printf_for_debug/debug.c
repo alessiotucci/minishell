@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:47:07 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/03 17:42:13 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/05 17:16:08 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ const char *names[] =
 	"Redirection appender",
 	"Here Documents",
 	"Logical Operator",
-	"Command Arguments"
+	"Command Arguments",
+	"File Name "
 };
 
 const char *colors[] =
@@ -40,7 +41,8 @@ const char *colors[] =
 	BG_CYAN,
 	BG_YELLOW,
 	BG_RED,
-	BLUE
+	RESET,
+	RESET
 };
 
 void	print_node(t_list_of_tok *node)

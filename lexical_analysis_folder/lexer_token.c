@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 19:50:51 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/04 11:15:48 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/05 17:19:09 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ void	update_token_types(t_list_of_tok **head)
 				|| prev->type == T_COMMAND_ARGS)
 			&& current->type == T_COMMAND)
 			current->type = T_COMMAND_ARGS;
+		else if (prev != NULL
+			&& (prev->type == T_REDIR_APP || prev->type == T_REDIR_IN || prev->type == T_REDIR_OUT || prev->type == T_HERE_DOC))
+			current->type = T_FILE_NAME;
 		prev = current;
 		current = current->next;
 	}
