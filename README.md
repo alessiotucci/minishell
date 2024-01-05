@@ -95,20 +95,9 @@
 
 
 
-# 30-Day Work Plan for Minishell Project
 
-This is a detailed 30-day work plan for the Minishell project. It includes additional resources for each task.
+
 
 | Day    | Task Description                                      | Resources |
 | ------ | ----------------------------------------------------- | --------- |
-| 1 - 2  | **Project Understanding**: Familiarize yourself with the project requirements and objectives. Understand what a shell is and how it works. | GeeksforGeeks, Medium, Medium, Medium |
-| 3 - 4  | **Parsing User Input**: Implement functionality to read and parse user input. This includes separating commands and their arguments. | GeeksforGeeks |
-| 5 - 7  | **Command Execution**: Enable your shell to execute commands. This will involve creating new processes and executing the command in these processes. | GeeksforGeeks |
-| 8 - 10 | **Built-in Commands**: Implement built-in shell commands like `cd`, `help`, `exit`, etc. These commands are executed directly by the shell, not by calling external programs. | GitHub |
-| 11 - 13 | **Input/Output Redirection**: Implement the ability to redirect command input and output using `>`, `<`, and `>>`. | GitHub |
-| 14 - 16 | **Pipes and Pipelining**: Implement pipelining, which allows the output of one command to be used as the input of another command. This involves using the pipe operator `|`. | GitHub |
-| 17 - 19 | **History and Command Recall**: Implement a history feature that keeps track of previously entered commands. Users should be able to recall these commands using the up and down arrow keys. | GitHub |
-| 20 - 22 | **Prompt and User Interface**: Customize your shell prompt and improve the user interface. This could include displaying the current directory or color-coding output. | GitHub |
-| 23 - 25 | **Signal Handling**: Handle signals like `SIGINT` (Ctrl+C) and `SIGTSTP` (Ctrl+Z). This will involve writing signal handler functions. | GitHub |
-| 26 - 28 | **Error Handling and Testing**: Implement error handling to make your shell robust. Test your shell thoroughly to ensure it works as expected. | GitHub |
-| 29 - 30 | **Documentation and Cleanup**: Document your code thoroughly, explaining how each part works. Clean up your code, removing unnecessary parts and improving readability. Prepare for project submission. | Stack Overflow |
+| day one | the quotes goes like this | day one | 
