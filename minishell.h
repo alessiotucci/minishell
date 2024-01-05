@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/04 11:28:08 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/04 13:45:34 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef enum e_type_of_tok
 typedef struct s_list_of_tok
 {
 	t_type_of_tok			type;
-	int						fd_redirect;
+	int						fd_pipe;
 	char					*file_name;
 	char					*token;
 	int						index;
@@ -158,6 +158,7 @@ char	**array_from_list(t_list_of_tok **head);
 char	*find_path_command(char *token, char **envp);
 void	*execute_command(char *command, char **test, char **envp, t_list_of_tok *current);
 void	redirection_process(t_list_of_tok *current, t_type_of_tok type);
+t_list_of_tok	*find_command_in_list(t_list_of_tok **head);
 
 /* fucking redirection are here*/
 void	redirect_input(char *file_name);
@@ -166,6 +167,9 @@ void	here_document(char *delimiter);
 void	executor2(void);
 void	executor3(void);
 
+/* setting up pipes */
+void	set_pipes(t_list_of_tok *first_cmd, t_list_of_tok *secnd_cmd);
+void	find_pipes(t_list_of_tok **head);
 /**/
 // function to handle signals
 void	handle_ctrl_c(int sig);
