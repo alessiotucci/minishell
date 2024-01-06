@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 09:14:57 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/01 17:17:43 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/06 15:23:50 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,14 @@ void	here_document(char *delimiter)
 	unlink(file_name);
 }
 /*this function check if the type of redirection is either > or >> and behave */
-void	redirect_output(t_list_of_tok *current, t_type_of_tok type)
+void	redirect_output(char *file_name, t_type_of_tok type)
 {
 	int	fd;
 
 	if (type == T_REDIR_OUT)
-		fd = open(current->file_name, OVERWRITE_FLAGS, 0666);
+		fd = open(file_name, OVERWRITE_FLAGS, 0666);
 	else
-		fd = open(current->file_name, APPEND_FLAGS, 0666);
+		fd = open(file_name, APPEND_FLAGS, 0666);
 	if (fd == -1)
 	{
 		perror("open");
