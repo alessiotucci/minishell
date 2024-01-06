@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/06 15:45:45 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/06 15:54:09 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	find_redirect(t_list_of_tok *cmd_node)
 			if (iterator->next->type == T_FILE_NAME)
 			{
 				cmd_node->file_name = ft_strdup(iterator->next->token);
-				cmd_node->redirect_type = iterator->type;
+				cmd_node->redirect_type = iterator->type; // latest update we need more variables
 				//printf("cmd_node->token:(%s) and cmd_node->filename:(%s)\n", cmd_node->token, cmd_node->file_name);
 				return (0);
 			}
@@ -86,20 +86,16 @@ static int	find_redirect(t_list_of_tok *cmd_node)
  */
 void	redirection_process(char *file_name, t_type_of_tok type)
 {
-	printf("%sFUNCTION-> redirection_process()%s;\n\tfile_name: [%s] type_parameter {%s}\n", BG_RED, BG_RESET, file_name, namey[type]);
-	if (type == T_FLAG || type == T_COMMAND_ARGS || type == T_COMMAND || type == T_BUILTIN)
-		exit(0);
+	//printf("%sFUNCTION-> redirection_process()%s;\n\tfile_name: [%s] type_parameter {%s}\n", BG_RED, BG_RESET, file_name, namey[type]);
 	if (type == T_REDIR_IN)
 		redirect_input(file_name);
 	else if (type == T_REDIR_OUT || type == T_REDIR_APP)
 	{
-		printf("file_name of [%s]\n", file_name);
+//		printf("file_name of [%s]\n", file_name);
 		redirect_output(file_name, type);
 	}
 	else if (type == T_HERE_DOC)
 		here_document(file_name);
-//	else
-//		print_node(cmd_nod);
 }
 
 static void	piping_process(t_list_of_tok *cmd_nod)
@@ -130,15 +126,15 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 	int	stdout_copy = dup(STDOUT_FILENO);
 	int	status;
 
-	printf("%sFunciton-> Execute_command()%s;\n\tCommand: {%s},\n\targs[1]: {%s}\n",BG_YELLOW, BG_RESET, command, args_a[1]);
-	printf("\ncmd_nod->file_name != NULL (%s)\n", cmd_nod->file_name);
+//	printf("%sFunciton-> Execute_command()%s;\n\tCommand: {%s},\n\targs[1]: {%s}\n",BG_YELLOW, BG_RESET, command, args_a[1]);
+//	printf("\ncmd_nod->file_name != NULL (%s)\n", cmd_nod->file_name);
 	if (cmd_nod->file_name != NULL)
 		redirection_process(cmd_nod->file_name, cmd_nod->redirect_type); // here the fd are changed
 		piping_process(cmd_nod);
 	if (cmd_nod->type == T_BUILTIN)
 	{
-		printf("Builtins: %s%s\t(%s)%s\n", BLUE, cmd_nod->token, command, RESET);
-		printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->fd_pipe_in, YELLOW, RESET, cmd_nod->fd_pipe_out);
+//		printf("Builtins: %s%s\t(%s)%s\n", BLUE, cmd_nod->token, command, RESET);
+//		printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->fd_pipe_in, YELLOW, RESET, cmd_nod->fd_pipe_out);
 		which_built_in(cmd_nod, args_a, envp);
 		// Restore the original stdout file descriptor
 		dup2(stdout_copy, STDOUT_FILENO);
@@ -146,8 +142,8 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 	}
 	else
 	{
-		printf("Command: %s%s\t(%s)%s\n", GREEN, cmd_nod->token, command, RESET);
-		printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->fd_pipe_in, YELLOW, RESET, cmd_nod->fd_pipe_out);
+//		printf("Command: %s%s\t(%s)%s\n", GREEN, cmd_nod->token, command, RESET);
+//		printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->fd_pipe_in, YELLOW, RESET, cmd_nod->fd_pipe_out);
 		fix_pid = fork();
 		if (fix_pid == 0)
 		{
@@ -187,10 +183,12 @@ int	executor(t_list_of_tok **head, char **envp)
 		find_pipes(cmd_node);
 		command = cmd_node->token;
 		if (cmd_node->type != T_BUILTIN)
+		{
 			command = find_path_command(cmd_node->token, envp);
-		if (command == NULL)
-			return (free(command), printf(" Command not found: %s\n", cmd_node->token));
-			//command = cmd_node->token;
+			if (command == NULL)
+		//		return (free(command), printf(" Command not found: %s\n", cmd_node->token));
+				command = cmd_node->token;
+		}
 		argoums = array_from_list(&cmd_node);
 		execute_command(command, argoums, envp, cmd_node);
 		cmd_node = find_command_in_list(&cmd_node->next);
