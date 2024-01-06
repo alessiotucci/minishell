@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/06 14:08:29 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/06 18:08:19 by enricogiral      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,53 @@ static void	handle_signal(void)
 	signal(SIGQUIT, handle_ctrl_backlash); 
 }
 
+//env_copy
+static char **copy_array(const char **env) 
+{
+    int env_count = 0;
+    while (env[env_count] != NULL) 
+	{
+        env_count++;
+    }
+
+    char **env_copy; 
+	
+	env_copy = (char **)malloc((env_count + 1) * sizeof(char *));
+    if (env_copy == NULL) 
+	{
+        perror("Error in memory allocation");
+        exit(EXIT_FAILURE);
+    }
+
+    int i = 0;
+    while (env[i] != NULL) 
+	{
+        env_copy[i] = strdup(env[i]);
+        if (env_copy[i] == NULL) {
+            perror("Error in memory allocation");
+            exit(EXIT_FAILURE);
+        }
+        i++;
+    }
+
+    env_copy[env_count] = NULL;
+
+    return env_copy;
+}
+
+// Free memory of env copy
+static void free_array(char **arr) 
+{
+    int i = 0;
+    while (arr[i] != NULL) 
+	{
+        free(arr[i]);
+        i++;
+    }
+    free(arr);
+}
+
+
 int	main(int ac, char *av[], char *envp[])
 {
 //	int		count;
@@ -26,6 +73,9 @@ int	main(int ac, char *av[], char *envp[])
 //	count = 1;
 	if (ac || av || envp)
 		ft_printf("\n");
+	
+	char **env_copy;
+	env_copy = copy_array(envp);
 	while (1)
 	{
 		handle_signal();
