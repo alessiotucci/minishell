@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/05 18:32:33 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/06 13:44:59 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,29 @@ t_list_of_tok	*find_command_in_list(t_list_of_tok **head)
  * it has being copy and paste from bingAi again
  *
  * */
-char *find_redirect(t_list_of_tok *iterator)
+static void	find_redirect(t_list_of_tok *cmd_node)
 {
-	char	*found;
+	t_list_of_tok	*iterator;
 
-	found = NULL;
+	iterator = cmd_node;
 	while (iterator != NULL)
 	{
 		if (iterator->type == T_REDIR_OUT || iterator->type == T_REDIR_APP || iterator->type == T_REDIR_IN)
 		{
 			if (iterator->next == NULL)
-				return (NULL);
-			iterator->file_name = ft_strdup(iterator->next->token);
-			found = ft_strdup(iterator->file_name); // remember to free it
+			{
+				printf("zsh: parse error near `\\n\'");
+				return ;
+			}
+			if (iterator->next->type == T_FILE_NAME)
+			{
+				cmd_node->file_name = ft_strdup(iterator->next->token);
+				//printf("cmd_node->token:(%s) and cmd_node->filename:(%s)\n", cmd_node->token, cmd_node->file_name);
+				return ;
+			}
 		}
 		iterator = iterator->next;
 	}
-	return (found);
 }
 
 /*3)
@@ -64,7 +70,10 @@ void	redirection_process(t_list_of_tok *cmd_nod, t_type_of_tok type)
 	if (type == T_REDIR_IN)
 		redirect_input(cmd_nod->file_name);
 	else if (type == T_REDIR_OUT || type == T_REDIR_APP)
+	{
+		printf("Node of token: [%s] has file_name of [%s]\n", cmd_nod->token, cmd_nod->file_name);
 		redirect_output(cmd_nod, type);
+	}
 	else if (type == T_HERE_DOC)
 		here_document(cmd_nod->file_name);
 //	else
@@ -97,14 +106,15 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 	pid_t	fix_pid;
 	int	stdout_copy = dup(STDOUT_FILENO);
 
-	printf("funciton call: command: {%s} args[1]: {%s}\n", command, args_a[1]);
+	//printf("%sFunciton-> Execute_command()%s;\n\tCommand: {%s},\n\targs[1]: {%s}\n",BG_YELLOW, BG_RESET, command, args_a[1]);
+	//printf("\ncmd_nod->file_name != NULL (%s)\n", cmd_nod->file_name);
 	if (cmd_nod->file_name != NULL)
 		redirection_process(cmd_nod, cmd_nod->next->type); // here the fd are changed
 		piping_process(cmd_nod);
 	if (cmd_nod->type == T_BUILTIN)
 	{
-		fprintf(stdout, "Builtins:%s%s\t(%s)%s\n", BLUE, cmd_nod->token, command, RESET);
-		fprintf(stdout, "%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->fd_pipe_in, YELLOW, RESET, cmd_nod->fd_pipe_out);
+	//	fprintf(stdout, "Builtins:%s%s\t(%s)%s\n", BLUE, cmd_nod->token, command, RESET);
+	//	fprintf(stdout, "%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->fd_pipe_in, YELLOW, RESET, cmd_nod->fd_pipe_out);
 		which_built_in(cmd_nod, args_a, envp);
 		// Restore the original stdout file descriptor
 		dup2(stdout_copy, STDOUT_FILENO);
@@ -113,15 +123,15 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 	}
 	else
 	{
-		fprintf(stdout, "Command:%s%s\t(%s)%s\n", GREEN, cmd_nod->token, command, RESET);
-		fprintf(stdout, "%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->fd_pipe_in, YELLOW, RESET, cmd_nod->fd_pipe_out);
+	//	fprintf(stdout, "Command:%s%s\t(%s)%s\n", GREEN, cmd_nod->token, command, RESET);
+	//	fprintf(stdout, "%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->fd_pipe_in, YELLOW, RESET, cmd_nod->fd_pipe_out);
 		fix_pid = fork();
 		if (fix_pid == 0)
 		{
 			//close_fds(cmd_nod);
 			execve(command, args_a, envp);
 			perror("execve"); // execve returns only on error
-			exit(EXIT_FAILURE);
+			//exit(EXIT_FAILURE);
 		}
 		else
 		{
@@ -149,13 +159,14 @@ int	executor(t_list_of_tok **head, char **envp)
 	cmd_node = find_command_in_list(head);
 	while (cmd_node != NULL)
 	{
-		cmd_node->file_name = find_redirect(cmd_node);
+		find_redirect(cmd_node);
 		find_pipes(cmd_node);
 		command = cmd_node->token;
 		if (cmd_node->type != T_BUILTIN)
 			command = find_path_command(cmd_node->token, envp);
 		if (command == NULL)
-			return (free(command), printf(" Command not found: %s\n", cmd_node->token));
+			//return (free(command), printf(" Command not found: %s\n", cmd_node->token));
+			command = cmd_node->token;
 		argoums = array_from_list(&cmd_node);
 		execute_command(command, argoums, envp, cmd_node);
 		cmd_node = find_command_in_list(&cmd_node->next);

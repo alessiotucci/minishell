@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/05 15:57:36 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/06 12:57:51 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ t_list_of_tok	*create_node(int level, char *spitted_cmd)
 	new_node->next = NULL;
 	new_node->previous = NULL;
 	new_node->index = 0;
+	new_node->file_name = NULL;
 	new_node->fd_pipe_in = STDIN_FILENO;
 	new_node->fd_pipe_out = STDOUT_FILENO; // this is the latest updated here
 	return (new_node);
