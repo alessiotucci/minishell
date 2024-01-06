@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/06 14:18:48 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/06 14:21:10 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ static int	find_redirect(t_list_of_tok *cmd_node)
 /*3)
  this fuction handle the redirection process
  redirection_process(current, current->next->type);
+  !! there is a issue with this functin !! 
+  try launch the norminette libft > fiile @
  */
 void	redirection_process(t_list_of_tok *cmd_nod, t_type_of_tok type)
 {
