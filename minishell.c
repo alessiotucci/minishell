@@ -6,7 +6,7 @@
 /*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/06 18:08:19 by enricogiral      ###   ########.fr       */
+/*   Updated: 2024/01/06 18:26:36 by enricogiral      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,18 @@ static void	handle_signal(void)
 }
 
 //env_copy
-static char **copy_array(const char **env) 
+static char **copy_array(char **env) 
 {
     int env_count = 0;
-    while (env[env_count] != NULL) 
-	{
+    while (env[env_count] != NULL)
         env_count++;
-    }
 
-    char **env_copy; 
-	
+    char **env_copy;
+
 	env_copy = (char **)malloc((env_count + 1) * sizeof(char *));
     if (env_copy == NULL) 
 	{
-        perror("Error in memory allocation");
+        perror("Errore in memory allocation");
         exit(EXIT_FAILURE);
     }
 
@@ -40,8 +38,9 @@ static char **copy_array(const char **env)
     while (env[i] != NULL) 
 	{
         env_copy[i] = strdup(env[i]);
-        if (env_copy[i] == NULL) {
-            perror("Error in memory allocation");
+        if (env_copy[i] == NULL) 
+		{
+            perror("Errore in memory allocation");
             exit(EXIT_FAILURE);
         }
         i++;
@@ -52,7 +51,7 @@ static char **copy_array(const char **env)
     return env_copy;
 }
 
-// Free memory of env copy
+// Funzione per liberare la memoria dell'array di copia delle variabili di ambiente
 static void free_array(char **arr) 
 {
     int i = 0;
@@ -63,7 +62,6 @@ static void free_array(char **arr)
     }
     free(arr);
 }
-
 
 int	main(int ac, char *av[], char *envp[])
 {
@@ -76,6 +74,7 @@ int	main(int ac, char *av[], char *envp[])
 	
 	char **env_copy;
 	env_copy = copy_array(envp);
+
 	while (1)
 	{
 		handle_signal();
