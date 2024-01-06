@@ -1,64 +1,50 @@
-#include <unistd.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell_export_2.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/06 18:49:23 by enricogiral       #+#    #+#             */
+/*   Updated: 2024/01/06 18:51:50 by enricogiral      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-void minishell_export(char *args[]) 
+int main(int argc, char *argv[]) 
 {
-    // If no arguments provided, print the current environment variables
-    if (args[1] == NULL) 
+    if (argc != 3) 
     {
-        extern char **environ;
-        char **env = environ;
-        while (*env != NULL) 
-        {
-            printf("%s\n", *env);
-            env++;
-        }
+        printf("Usage: %s VARIABLE VALUE\n", argv[0]);
+        return 1;
+    }
+
+    char *variable = argv[1];
+    char *value = argv[2];
+
+    // Set the environment variable
+    if (setenv(variable, value, 1) != 0) 
+    {
+        printf("Error setting environment variable\n");
+        perror(NULL); // This will print the error message to stderr
+        return 1;
+    }
+
+    // Print the exported variable and its value
+    printf("export %s=\"%s\"\n", variable, value);
+
+    // Example of using getenv to retrieve the value
+    char *retrievedValue = getenv(variable);
+    if (retrievedValue != NULL) 
+    {
+        printf("Retrieved value using getenv: %s\n", retrievedValue);
     } 
     else 
     {
-        // Process arguments without using strtok
-        int i = 1;
-        while (args[i] != NULL) 
-        {
-            char *arg = args[i];
-            char *key = arg;
-
-            // Find the position of '=' in the argument
-            char *equal_sign = strchr(arg, '=');
-
-            // If '=' is found and not at the beginning or end
-            if (equal_sign != NULL && equal_sign != arg && equal_sign[1] != '\0') 
-            {
-                *equal_sign = '\0';  // Null-terminate the key
-                char *value = equal_sign + 1;
-
-                // Check if the key and value are not empty
-                if (*key != '\0' && *value != '\0') 
-                {
-                    if (setenv(key, value, 1) != 0) 
-                    {
-                        perror("minishell_export");
-                    }
-                } 
-                else 
-                {
-                    printf("minishell_export: Invalid format: %s\n", arg);
-                }
-            } 
-            else 
-            {
-                printf("minishell_export: Invalid format: %s\n", arg);
-            }
-
-            i++;
-        }
+        printf("Environment variable not found\n");
     }
-}
-
-int main(int argc, char *argv[]) {
-    minishell_export(argv);
 
     return 0;
 }
