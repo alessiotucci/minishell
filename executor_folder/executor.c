@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/07 19:27:01 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/07 20:07:15 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,14 +143,14 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 
 	stdout_copy = dup(STDOUT_FILENO);
 	stdin_copy = dup(STDIN_FILENO);
-	//printf("%sFunciton-> Execute_command()%s;\n\tCommand: {%s},\n\targs[1]: {%s}\n",BG_YELLOW, BG_RESET, command, args_a[1]);
-	//printf("\ncmd_nod->file_name != NULL (%s)\n", cmd_nod->file_name);
+	printf("%sFunciton-> Execute_command()%s;\n\tCommand: {%s},\n\targs[1]: {%s}\n",BG_YELLOW, BG_RESET, command, args_a[1]);
+	printf("\ncmd_nod->file_name != NULL (%s)\n", cmd_nod->file_name);
 	if (cmd_nod->file_name != NULL)
 		redirection_process(cmd_nod->file_name, cmd_nod->redirect_type); // here the fd are changed
 	piping_process(cmd_nod);
 	if (cmd_nod->type == T_BUILTIN)
 	{
-		/*/////////////////////////////////////////////
+		//////////////////////////////////////////////
 		ft_putstr_fd("\nBuiltins\n", stdout_copy);
 		ft_putstr_fd("fd_in : ", stdout_copy);
 		ft_putnbr_fd(cmd_nod->fd_pipe_in, stdout_copy);
@@ -158,16 +158,16 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 		ft_putnbr_fd(cmd_nod->fd_pipe_out, stdout_copy);
 		ft_putstr_fd("\n", stdout_copy);
 		/////////////////////////////////////////////////
-		*/
-		//printf("Builtins: %s%s\t(%s)%s\n", BLUE, cmd_nod->token, command, RESET);
-		//printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->fd_pipe_in, YELLOW, RESET, cmd_nod->fd_pipe_out);
+		
+		printf("Builtins: %s%s\t(%s)%s\n", BLUE, cmd_nod->token, command, RESET);
+		printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->fd_pipe_in, YELLOW, RESET, cmd_nod->fd_pipe_out);
 		which_built_in(cmd_nod, args_a, envp);
 		// Restore the original stdout file descriptor
 		restore_original_stdout(stdout_copy);
 	}
 	else
 	{
-		/*////////////////////////////////////////////
+		/////////////////////////////////////////////
 		ft_putstr_fd("\nCommanD:\n", stdout_copy);
 		ft_putstr_fd("\tFd_in: ", stdout_copy);
 		ft_putnbr_fd(cmd_nod->fd_pipe_in, stdout_copy);
@@ -175,12 +175,15 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 		ft_putnbr_fd(cmd_nod->fd_pipe_out, stdout_copy);
 		ft_putstr_fd("\n", stdout_copy);
 		//////////////////////////////////////////////
-		*/
-		//printf("Command: %s%s\t(%s)%s\n", GREEN, cmd_nod->token, command, RESET);
-		//printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->fd_pipe_in, YELLOW, RESET, cmd_nod->fd_pipe_out);
+		
+		printf("Command: %s%s\t(%s)%s\n", GREEN, cmd_nod->token, command, RESET);
+		printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->fd_pipe_in, YELLOW, RESET, cmd_nod->fd_pipe_out);
 		fix_pid = fork();
+		// TO DO BY ROGER
+		// check child process for closing 
 		if (fix_pid == 0)
 		{
+			//close(cmd_nod->fd_pipe_in);
 			execve(command, args_a, envp);
 			perror("execve"); // execve returns only on error
 		}
@@ -188,6 +191,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 		{
 //			ft_putstr_fd("Manually closing the fd!\n", stdout_copy);
 //			waitpid(fix_pid, &status, 0);
+			close(cmd_nod->fd_pipe_out);
 			wait(NULL);
 		}
 	}
