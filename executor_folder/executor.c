@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/06 18:51:14 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/07 19:27:01 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,21 @@ void	redirection_process(char *file_name, t_type_of_tok type)
 		here_document(file_name);
 }
 
+/* this function is suppose to handle the piping if
+ * the fd are differente than the standards
+*/
 static void	piping_process(t_list_of_tok *cmd_nod)
 {
 	if (cmd_nod->fd_pipe_in != STDIN_FILENO)
+	{
 		dup2(cmd_nod->fd_pipe_in, STDIN_FILENO);
+//		close(cmd_nod->fd_pipe_in);
+	}
 	if (cmd_nod->fd_pipe_out != STDOUT_FILENO)
+	{
 		dup2(cmd_nod->fd_pipe_out, STDOUT_FILENO);
+//		close(cmd_nod->fd_pipe_out);
+	}
 }
 
 /* useless function fuck */
@@ -114,7 +123,12 @@ void	close_fds(t_list_of_tok *cmd_nod)
 	if (cmd_nod->fd_pipe_out != STDOUT_FILENO)
 		close(cmd_nod->fd_pipe_out);
 }
-
+/* last change */
+static void	restore_original_stdout(int copy)
+{
+		dup2(copy, STDOUT_FILENO);
+		close(copy);
+}
 /* 2)
  * first handle the redirection
  * then check for builtins, after perform built in, restore fd (?)
@@ -129,40 +143,41 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 
 	stdout_copy = dup(STDOUT_FILENO);
 	stdin_copy = dup(STDIN_FILENO);
-//	printf("%sFunciton-> Execute_command()%s;\n\tCommand: {%s},\n\targs[1]: {%s}\n",BG_YELLOW, BG_RESET, command, args_a[1]);
-//	printf("\ncmd_nod->file_name != NULL (%s)\n", cmd_nod->file_name);
+	//printf("%sFunciton-> Execute_command()%s;\n\tCommand: {%s},\n\targs[1]: {%s}\n",BG_YELLOW, BG_RESET, command, args_a[1]);
+	//printf("\ncmd_nod->file_name != NULL (%s)\n", cmd_nod->file_name);
 	if (cmd_nod->file_name != NULL)
 		redirection_process(cmd_nod->file_name, cmd_nod->redirect_type); // here the fd are changed
-		piping_process(cmd_nod);
+	piping_process(cmd_nod);
 	if (cmd_nod->type == T_BUILTIN)
 	{
-		///////////////////////////////////////////////
+		/*/////////////////////////////////////////////
 		ft_putstr_fd("\nBuiltins\n", stdout_copy);
 		ft_putstr_fd("fd_in : ", stdout_copy);
 		ft_putnbr_fd(cmd_nod->fd_pipe_in, stdout_copy);
 		ft_putstr_fd("\tfd_out :", stdout_copy);
 		ft_putnbr_fd(cmd_nod->fd_pipe_out, stdout_copy);
 		ft_putstr_fd("\n", stdout_copy);
-		////////////////////////////////////////////////
-		printf("Builtins: %s%s\t(%s)%s\n", BLUE, cmd_nod->token, command, RESET);
-		printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->fd_pipe_in, YELLOW, RESET, cmd_nod->fd_pipe_out);
+		/////////////////////////////////////////////////
+		*/
+		//printf("Builtins: %s%s\t(%s)%s\n", BLUE, cmd_nod->token, command, RESET);
+		//printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->fd_pipe_in, YELLOW, RESET, cmd_nod->fd_pipe_out);
 		which_built_in(cmd_nod, args_a, envp);
 		// Restore the original stdout file descriptor
-		dup2(stdout_copy, STDOUT_FILENO);
-		close(stdout_copy);
+		restore_original_stdout(stdout_copy);
 	}
 	else
 	{
-		//////////////////////////////////////////////
+		/*////////////////////////////////////////////
 		ft_putstr_fd("\nCommanD:\n", stdout_copy);
 		ft_putstr_fd("\tFd_in: ", stdout_copy);
 		ft_putnbr_fd(cmd_nod->fd_pipe_in, stdout_copy);
 		ft_putstr_fd(" Fd_out: ", stdout_copy);
 		ft_putnbr_fd(cmd_nod->fd_pipe_out, stdout_copy);
 		ft_putstr_fd("\n", stdout_copy);
-		////////////////////////////////////////////////
-		printf("Command: %s%s\t(%s)%s\n", GREEN, cmd_nod->token, command, RESET);
-		printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->fd_pipe_in, YELLOW, RESET, cmd_nod->fd_pipe_out);
+		//////////////////////////////////////////////
+		*/
+		//printf("Command: %s%s\t(%s)%s\n", GREEN, cmd_nod->token, command, RESET);
+		//printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->fd_pipe_in, YELLOW, RESET, cmd_nod->fd_pipe_out);
 		fix_pid = fork();
 		if (fix_pid == 0)
 		{
@@ -171,16 +186,12 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 		}
 		else
 		{
-			ft_putstr_fd("... wait_pid is waiting over here ...\n", stdout_copy);
 //			ft_putstr_fd("Manually closing the fd!\n", stdout_copy);
 //			waitpid(fix_pid, &status, 0);
 			wait(NULL);
-			ft_putstr_fd("... waited enought for me!!\n", stdout_copy);
 		}
 	}
-// Restore the original stdout file descriptor
-dup2(stdout_copy, STDOUT_FILENO);
-close(stdout_copy);
+restore_original_stdout(stdout_copy);
 return (NULL);
 }
 
