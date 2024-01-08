@@ -6,43 +6,43 @@
 /*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:16:44 by enricogiral       #+#    #+#             */
-/*   Updated: 2023/12/30 10:24:13 by enricogiral      ###   ########.fr       */
+/*   Updated: 2024/01/08 16:15:31 by enricogiral      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-void minishell_unset(char *args[]) 
-{
-    // Check if there are arguments to unset
-    if (args[1] == NULL)
-    {
-        printf("minishell_unset: Missing argument\n");
-        return;
+int main(int argc, char *argv[], char *envp[]) {
+    if (argc != 2) {
+        printf("Usage: %s VARIABLE_NAME\n", argv[0]);
+        return 1;
     }
 
-    // Unset the first argument
-    if (unsetenv(args[1]) != 0) 
-    {
-        printf("minishell_unset: Error unsetting %s\n", args[1]);
-    }
+    // Trova la variabile nell'ambiente
+    char *variable_name = argv[1];
+    char **env = envp;
+    int found = 0;
 
-    // If there are more arguments, unset them one by one
-    int i = 2;
-    while (args[i] != NULL) 
-    {
-        if (unsetenv(args[i]) != 0) 
-        {
-            printf("minishell_unset: Error unsetting %s\n", args[i]);
+    while (*env != NULL) {
+        if (strncmp(*env, variable_name, strlen(variable_name)) == 0 &&
+            (*env)[strlen(variable_name)] == '=') {
+            found = 1;
+            break;
         }
-        i++;
+        env++;
     }
-}
 
-int main(int argc, char *argv[]) 
-{
-    minishell_unset(argv);
+    // Se la variabile è stata trovata, rimuovila
+    if (found) {
+        for (char **p = env; *p != NULL; p++) {
+            *p = *(p + 1);
+        }
+        printf("Unset variable: %s\n", variable_name);
+    } else {
+        printf("Variable not found: %s\n", variable_name);
+    }
 
     return 0;
 }
