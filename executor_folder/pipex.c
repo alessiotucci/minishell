@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:29:34 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/08 10:02:02 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/08 10:45:25 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
  * @param first_cmd Pointer to the first command node.
  * @param secnd_cmd Pointer to the second command node.
  */
-/*void	set_pipes(t_list_of_tok *first_cmd, t_list_of_tok *secnd_cmd)
+void	set_pipes(t_list_of_tok *first_cmd, t_list_of_tok *secnd_cmd)
 {
 	int	fd[2];// File descriptors for the pipe //
 
-	printf("*** Piping [%s] with [%s] ***\n", first_cmd->token, secnd_cmd->token);
+	printf("***\nPiping [%s\t%s\t%s] with [%s\t%s\t%s]\n***\n",BG_GREEN, first_cmd->token,BG_RESET, BG_RED, secnd_cmd->token, BG_RESET);
 	if (pipe(fd) == -1)
 		return (perror("pipe"));
 	// If pipe creation fails, print an error message and return //
@@ -32,14 +32,16 @@
 	// Set the write end of the pipe (fd[1]) as the output for the first command //
 	// Set the read end of the pipe (fd[0]) as the input for the second command //
 	
-}*/
+}
+/*
 void	set_pipes(t_list_of_tok *first_cmd, t_list_of_tok *secnd_cmd)
 {
 	(void)first_cmd;
 	(void)secnd_cmd;
+	printf("***\nPiping [%s%s%s] with [%s%s%s]\n***\n",BG_RED, first_cmd->token,BG_RESET, BG_YELLOW, secnd_cmd->token, BG_RESET);
 	printf("debuggin mode\n");
 }
-
+*/
 void	find_pipes(t_list_of_tok *head)
 {
 	t_list_of_tok	*current;

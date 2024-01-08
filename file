@@ -1,0 +1,32 @@
+Command: [1;32mls	(/bin/ls)[0m
+[1;31m	Fd_in:[0m 0 [1;33mFd_out:[0m 1
+
+
+total 3264
+-rw-r--r--    1 atucci  2022_rome     4631  4 Jan 12:13 Makefile
+-rw-r--r--    1 atucci  2022_rome     9235  5 Jan 14:56 README.md
+drwxr-xr-x   12 atucci  2022_rome      408  8 Jan 08:31 builtin_enrico_2
+drwxr-xr-x   12 atucci  2022_rome      408  8 Jan 10:37 builtin_folder
+drwxr-xr-x   14 atucci  2022_rome      476  8 Jan 10:39 executor_folder
+-rw-r--r--    1 atucci  2022_rome     1807 31 Dec 13:11 extra.c
+-rw-r--r--    1 atucci  2022_rome     1768  8 Jan 10:28 extra.o
+-rw-r--r--    1 atucci  2022_rome       77  8 Jan 10:41 file
+drwxr-xr-x   14 atucci  2022_rome      476  8 Jan 10:28 lexical_analysis_folder
+drwxr-xr-x  102 atucci  2022_rome     3468  2 Jan 19:08 libft
+-rwxr-xr-x    1 atucci  2022_rome    35428  8 Jan 10:39 minishell
+-rw-r--r--    1 atucci  2022_rome     2301  7 Jan 17:56 minishell.c
+-rw-r--r--    1 atucci  2022_rome     5779  7 Jan 18:57 minishell.h
+-rw-r--r--    1 atucci  2022_rome     1880  8 Jan 10:28 minishell.o
+-rw-r--r--@   1 atucci  2022_rome  1568599  2 Nov 10:53 minishellSubject.pdf
+drwxr-xr-x   11 atucci  2022_rome      374  8 Jan 09:21 notes
+drwxr-xr-x    4 atucci  2022_rome      136  8 Jan 10:28 printf_for_debug
+drwxr-xr-x    6 atucci  2022_rome      204  8 Jan 10:28 recursive_parsing_tree
+-rw-r--r--    1 atucci  2022_rome     1697 11 Dec 13:27 signals.c
+-rw-r--r--    1 atucci  2022_rome     1316  8 Jan 10:28 signals.o
+-rw-r--r--    1 atucci  2022_rome      843 30 Dec 13:18 signals_enrico.c
+-rw-r--r--    1 atucci  2022_rome     1289 11 Nov 15:30 test.h
+drwxr-xr-x    4 atucci  2022_rome      136  8 Jan 10:28 wildcard_bonus
+Builtins: [1;34mpwd	(pwd)[0m
+[1;31m	Fd_in:[0m 0 [1;33mFd_out:[0m 1
+
+/Users/atucci/Desktop/minishell

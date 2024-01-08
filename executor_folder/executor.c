@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/08 10:04:24 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/08 10:48:56 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 	printf("\ncmd_nod->file_name != NULL\n\t(%s)\n", cmd_nod->file_name);
 	if (cmd_nod->file_name != NULL)
 		redirection_process(cmd_nod->file_name, cmd_nod->redirect_type); // here the fd are changed
-	piping_process(cmd_nod);
+	piping_process(cmd_nod); // here the fd are changed too 
 	if (cmd_nod->type == T_BUILTIN)
 	{
 		//////////////////////////////////////////////
