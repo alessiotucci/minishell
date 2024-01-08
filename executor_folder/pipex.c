@@ -6,23 +6,34 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:29:34 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/05 15:53:53 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/07 18:55:34 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "../libft/libft.h"
 
+/**
+ * This function sets up a pipe between two commands.
+ *
+ * @param first_cmd Pointer to the first command node.
+ * @param secnd_cmd Pointer to the second command node.
+ */
 void	set_pipes(t_list_of_tok *first_cmd, t_list_of_tok *secnd_cmd)
 {
-	int	fd[2];
+	int	fd[2];// File descriptors for the pipe //
 
 	printf("*** Piping [%s] with [%s] ***\n", first_cmd->token, secnd_cmd->token);
 	if (pipe(fd) == -1)
 		return (perror("pipe"));
+	// If pipe creation fails, print an error message and return //
 	first_cmd->fd_pipe_out = fd[1];
 	secnd_cmd->fd_pipe_in = fd[0];
+	// Set the write end of the pipe (fd[1]) as the output for the first command //
+	// Set the read end of the pipe (fd[0]) as the input for the second command //
+	
 }
+
 
 void	find_pipes(t_list_of_tok *head)
 {
@@ -43,9 +54,4 @@ void	find_pipes(t_list_of_tok *head)
 		current = current->next;
 	}
 }
-/* pipex(current, current->next);
-int	pipex(t_list_of_tok *first, t_list_of_tok *second)
-{
 
-}
-*/

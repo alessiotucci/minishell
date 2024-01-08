@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 09:14:57 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/06 15:23:50 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/06 18:25:06 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,13 @@ void	redirect_input(char *file_name)
 	fd = open(file_name, O_RDONLY);
 //	printf("redirect_input function, fd: [%d]\n", fd);
 	if (fd == -1)
-	{
-		perror("open");
-		return ;
-	}
+		return (perror("open"));
 	if (dup2(fd, STDIN_FILENO) == -1)
-	{
-		perror("dup2");
-		return ;
-	}
+		return(perror("dup2"));
 	close(fd);
 	return ;
 }
+
 /* this function handles the here_doc */
 void	here_document(char *delimiter)
 {
