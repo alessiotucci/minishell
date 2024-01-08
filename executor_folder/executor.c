@@ -6,10 +6,11 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/07 20:07:15 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/08 10:04:24 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "time.h"
 #include "../minishell.h"
 const char *namey[] =
 {
@@ -115,14 +116,15 @@ static void	piping_process(t_list_of_tok *cmd_nod)
 	}
 }
 
-/* useless function fuck */
+/* useless function fuck 
 void	close_fds(t_list_of_tok *cmd_nod)
 {
 	if (cmd_nod->fd_pipe_in != STDIN_FILENO)
 		close(cmd_nod->fd_pipe_in);
 	if (cmd_nod->fd_pipe_out != STDOUT_FILENO)
 		close(cmd_nod->fd_pipe_out);
-}
+}*/
+
 /* last change */
 static void	restore_original_stdout(int copy)
 {
@@ -137,14 +139,14 @@ static void	restore_original_stdout(int copy)
 void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *cmd_nod)
 {
 	pid_t	fix_pid;
-	int	stdout_copy;
-	int	stdin_copy;
+	int	stdout_copy; // those copy stay STANDARD
+	int	stdin_copy; // those copy stay STANDARD
 //	int	status;
 
 	stdout_copy = dup(STDOUT_FILENO);
 	stdin_copy = dup(STDIN_FILENO);
 	printf("%sFunciton-> Execute_command()%s;\n\tCommand: {%s},\n\targs[1]: {%s}\n",BG_YELLOW, BG_RESET, command, args_a[1]);
-	printf("\ncmd_nod->file_name != NULL (%s)\n", cmd_nod->file_name);
+	printf("\ncmd_nod->file_name != NULL\n\t(%s)\n", cmd_nod->file_name);
 	if (cmd_nod->file_name != NULL)
 		redirection_process(cmd_nod->file_name, cmd_nod->redirect_type); // here the fd are changed
 	piping_process(cmd_nod);
@@ -183,15 +185,20 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 		// check child process for closing 
 		if (fix_pid == 0)
 		{
+			ft_putstr_fd("\n ChiLd_ProceSs * ", stdout_copy);
+			ft_putnbr_fd(time(NULL), stdout_copy);
+			write(stdout_copy, "\n", 1);
 			//close(cmd_nod->fd_pipe_in);
 			execve(command, args_a, envp);
 			perror("execve"); // execve returns only on error
 		}
 		else
 		{
-//			ft_putstr_fd("Manually closing the fd!\n", stdout_copy);
+			ft_putstr_fd("\nFather_ProCesS * ", stdout_copy);
+			ft_putnbr_fd(time(NULL), stdout_copy);
+			write(1, "\n", 1);
 //			waitpid(fix_pid, &status, 0);
-			close(cmd_nod->fd_pipe_out);
+//			close(cmd_nod->fd_pipe_out);
 			wait(NULL);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 09:14:57 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/06 18:25:06 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/08 09:26:54 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@
 /*this function will handle the case where the input is redirect instead of the output*/
 void	redirect_input(char *file_name)
 {
-	int	fd;
+	int	new_fd;
 
-	fd = open(file_name, O_RDONLY);
+	new_fd = open(file_name, O_RDONLY);
 //	printf("redirect_input function, fd: [%d]\n", fd);
-	if (fd == -1)
+	if (new_fd == -1)
 		return (perror("open"));
-	if (dup2(fd, STDIN_FILENO) == -1)
+	if (dup2(new_fd, STDIN_FILENO) == -1)
 		return(perror("dup2"));
-	close(fd);
+	close(new_fd);
 	return ;
 }
 

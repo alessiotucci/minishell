@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:29:34 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/07 18:55:34 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/08 10:02:02 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param first_cmd Pointer to the first command node.
  * @param secnd_cmd Pointer to the second command node.
  */
-void	set_pipes(t_list_of_tok *first_cmd, t_list_of_tok *secnd_cmd)
+/*void	set_pipes(t_list_of_tok *first_cmd, t_list_of_tok *secnd_cmd)
 {
 	int	fd[2];// File descriptors for the pipe //
 
@@ -32,8 +32,13 @@ void	set_pipes(t_list_of_tok *first_cmd, t_list_of_tok *secnd_cmd)
 	// Set the write end of the pipe (fd[1]) as the output for the first command //
 	// Set the read end of the pipe (fd[0]) as the input for the second command //
 	
+}*/
+void	set_pipes(t_list_of_tok *first_cmd, t_list_of_tok *secnd_cmd)
+{
+	(void)first_cmd;
+	(void)secnd_cmd;
+	printf("debuggin mode\n");
 }
-
 
 void	find_pipes(t_list_of_tok *head)
 {
