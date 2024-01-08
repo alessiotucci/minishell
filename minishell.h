@@ -44,7 +44,11 @@
 #define OVERWRITE_FLAGS (O_WRONLY | O_CREAT | O_TRUNC)
 #define APPEND_FLAGS (O_WRONLY | O_CREAT | O_APPEND)
 
-
+/* Those macro are from a github, they seem
+ * more clear to understand when dealing
+ * with the pipes, maybe ill use them */
+# define READ_END 0
+# define WRITE_END 1
 
 typedef enum e_type_of_tok
 {
