@@ -140,11 +140,11 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 {
 	pid_t	fix_pid;
 	int	stdout_copy; // those copy stay STANDARD
-	int	stdin_copy; // those copy stay STANDARD
+//	int	stdin_copy; // those copy stay STANDARD
 //	int	status;
 
 	stdout_copy = dup(STDOUT_FILENO);
-	stdin_copy = dup(STDIN_FILENO);
+//	stdin_copy = dup(STDIN_FILENO);
 	printf("%sFunciton-> Execute_command()%s;\n\tCommand: {%s},\n\targs[1]: {%s}\n",BG_YELLOW, BG_RESET, command, args_a[1]);
 	printf("\ncmd_nod->file_name != NULL\n\t(%s)\n", cmd_nod->file_name);
 	if (cmd_nod->file_name != NULL)

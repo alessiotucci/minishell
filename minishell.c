@@ -74,7 +74,7 @@ int	main(int ac, char *av[], char *envp[])
 		add_history(input);
 		if (input == NULL)
 			return (0 * write(1, "\n", 1));
-		if (input != NULL && lexer(input, envp) == 1)
+		if (input != NULL && lexer(input, env_copy) == 1)
 			return (1);
 	// what we need to return for syntax error? 
 	//	token();
