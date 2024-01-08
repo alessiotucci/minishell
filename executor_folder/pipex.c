@@ -27,8 +27,8 @@ void	set_pipes(t_list_of_tok *first_cmd, t_list_of_tok *secnd_cmd)
 	if (pipe(fd) == -1)
 		return (perror("pipe"));
 	// If pipe creation fails, print an error message and return //
-	first_cmd->fd_pipe_out = fd[1];
-	secnd_cmd->fd_pipe_in = fd[0];
+	first_cmd->out_file = fd[1];
+	secnd_cmd->in_file = fd[0];
 	// Set the write end of the pipe (fd[1]) as the output for the first command //
 	// Set the read end of the pipe (fd[0]) as the input for the second command //
 	

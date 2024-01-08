@@ -115,8 +115,8 @@ t_list_of_tok	*create_node(int level, char *spitted_cmd)
 	new_node->previous = NULL;
 	new_node->index = 0;
 	new_node->file_name = NULL;
-	new_node->fd_pipe_in = STDIN_FILENO;
-	new_node->fd_pipe_out = STDOUT_FILENO; // this is the latest updated here
+	new_node->in_file = STDIN_FILENO;
+	new_node->out_file = STDOUT_FILENO; // this is the latest updated here
 	return (new_node);
 }
 

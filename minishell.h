@@ -47,6 +47,7 @@
 /* Those macro are from a github, they seem
  * more clear to understand when dealing
  * with the pipes, maybe ill use them */
+
 # define READ_END 0
 # define WRITE_END 1
 
@@ -71,8 +72,8 @@ typedef struct s_list_of_tok
 {
 	t_type_of_tok			type;
 	t_type_of_tok			redirect_type;
-	int						fd_pipe_in; // updates
-	int						fd_pipe_out; // updates
+	int						in_file; // updates
+	int						out_file; // updates suggestion github
 	char					*file_name;
 	char					*token;
 	int						index;
