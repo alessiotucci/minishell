@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:13:21 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/09 17:22:18 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/09 18:33:31 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,42 @@ void	cmd_exit(t_statement *s)
 	exit(g_exit_status);
 }
 */
+
+// Function to implement the 'unset' built-in
+void minishell_unset(char *var_name, char *envp[]) 
+{
+	char	**env;
+	int		found;
+	char	**p;
+
+	found = 0;
+	env = envp;
+	while (*env != NULL)
+	{
+		if (ft_strncmp(*env, var_name, ft_strlen(var_name)) == 0 &&
+			(*env)[ft_strlen(var_name)] == '=')
+		{
+			found = 1;
+			break;
+		}
+		env++;
+	}
+	if (found)
+	{
+		//for (char **p = env; *p != NULL; p++)
+		p = env;
+		while (*p != NULL)
+		{
+			*p = *(p + 1);
+			p++;
+		}
+		printf("Unset variable: %s\n", var_name);
+	}
+	else
+		printf("Variable not found: %s\n", var_name);
+}
+
+
 /* If no arguments provided, print the current environment variables */
 void minishell_export(char *args[]) 
 {
@@ -106,4 +142,32 @@ void	try_builtin(void)
 	builtin2();
 	builtin3();
 	return ;
+}
+
+void	cleanup_resources()
+{
+	printf("Pulizia delle risorse...\n");
+}
+
+void	handle_signal(int signal)
+{
+	printf("Ricevuto il segnale %d\n", signal);
+	cleanup_resources();
+	exit(1);
+}
+
+void	minishell_exit(char **arg)
+{
+	pid_t	childPid;
+	int		exit_code;
+
+	if (arg[1])
+		exit_code = ft_atoi(arg[1]);
+	else
+		exit_code = 0;
+	cleanup_resources();
+	while ((childPid = waitpid(-1, NULL, WNOHANG)) > 0)
+		printf("Processo figlio %d terminato\n", childPid);
+	printf("Uscita con codice %d\n", exit_code);
+	exit(exit_code);
 }

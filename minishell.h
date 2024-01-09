@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/09 16:47:48 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/09 18:32:59 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,9 @@ void	minishell_cd(char *directory);
 void	minishell_echo(char *args[]);
 void	minishell_export(char *args[]);
 void	minishell_env(char **env);
-// minishell unset //
+void	minishell_unset(char *variable_name, char *envp[]);
+void	minishell_exit(char **args);
+
 void	*which_built_in(t_list_of_tok *node, char **args, char **env);
 
 /* function for the executor */
