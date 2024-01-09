@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/09 15:26:21 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/09 15:42:18 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,9 @@ static void	piping_process(t_list_of_tok *cmd_nod)
 	}
 	if (cmd_nod->out_file!= 1)
 	{
-		printf("%sCMD NODE->OUT_FILE != STDOUT!%s\n", RED, RESET); // if this print happens before
 		dup2(cmd_nod->out_file, STDOUT_FILENO);
 		close(cmd_nod->out_file);
+		printf("%sCMD NODE->OUT_FILE != STDOUT!%s\n", RED, RESET); // if this print happens before
 	}
 }
 
@@ -171,8 +171,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 		// check child process for closingg
 		if (fix_pid == 0)
 		{
-			ft_putstr_fd("\n Processo Figlio time:", stdout_copy);
-			ft_putnbr_fd(time(NULL), stdout_copy);
+			ft_putstr_fd("\n Processo Figlio", stdout_copy);
 			write(stdout_copy, "\n", 1);
 			//close(cmd_nod->fd_pipe_in);
 
@@ -181,8 +180,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 		}
 		else
 		{
-			ft_putstr_fd("\nFather_ProCesS *time:", stdout_copy);
-			ft_putnbr_fd(time(NULL), stdout_copy);
+			ft_putstr_fd("\nFather_ProCesS", stdout_copy);
 			write(1, "\n", 1);
 //			waitpid(fix_pid, &status, 0);
 //			close(cmd_nod->fd_pipe_out);

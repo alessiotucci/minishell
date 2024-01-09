@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:33:57 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/02 14:25:35 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/09 16:30:56 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	minishell_pwd(void)
 
 /* Verifica se il percorso esiste, Cambia la directory corrente
  Se non viene specificato un percorso, porta alla directory home
+ TO_DO: we need to update the env for the current folder
  */
 void	minishell_cd(char *directory)
 {
@@ -44,7 +45,7 @@ void	minishell_cd(char *directory)
 	//else
 	//	printf("%sDirectory change successful!%s\n", GREEN, RESET);
 }
-
+/* adding the support for the -nnn and the -n */
 void	minishell_echo(char *args[])
 {
 	int	i;

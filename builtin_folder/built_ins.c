@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:13:21 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/02 14:48:18 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/09 17:22:18 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,49 +50,56 @@ void	cmd_exit(t_statement *s)
 }
 */
 /* If no arguments provided, print the current environment variables */
-void	minishell_export(char *args[])
+void minishell_export(char *args[]) 
 {
-	if (args[1] == NULL)
+	int			i;
+	char		**key_value;
+	char		**env;
+	extern char	**environ;
+
+	if (args[1] == NULL) 
 	{
-		extern char **environ;
-		for (char **env = environ; *env != NULL; env++)
+		env = environ;
+		while (*env != NULL) 
 		{
 			printf("%s\n", *env);
+			env++;
 		}
 	}
 	else
 	{
-		// Iterate through the arguments and set environment variables
-		for (int i = 1; args[i] != NULL; i++)
+		i = 1;
+		while (args[i] != NULL) 
 		{
-			char *key = strtok(args[i], "=");
-			char *value = strtok(NULL, "");
-			// Check if the format is key=value
-			if (key != NULL && value != NULL)
+			key_value = ft_split(args[i], '=');
+			if (key_value && key_value[0] && key_value[1]) 
 			{
-				if (setenv(key, value, 1) != 0)
+				if (setenv(key_value[0], key_value[1], 1) != 0) 
 					perror("minishell_export");
+				free(key_value);
 			}
 			else
-				fprintf(stderr, "minishell_export: Invalid format: %s\n", args[i]);
+				printf("minishell_export: Invalid format: %s\n", args[i]);
+			i++;
 		}
 	}
 }
 
-/* If no arguments provided, print the current environment variables */
-void	minishell_env(char *args[])
+/* If no arguments provided, print the current environment variables
+ * we need to double check this case
+ */
+void	minishell_env(char **env)
 {
-	if (args[1] == NULL)
+	int	i;
+
+	i = 0;
+	while (env[i])
 	{
-		extern char **environ;
-		for (char **env = environ; *env != NULL; env++)
-		{
-			printf("%s\n", *env);
-		}
+		printf("%s \n", env[i]);
+		i++;
 	}
-	else
-		fprintf(stderr, "minishell_env: Too many arguments\n");
 }
+
 void	try_builtin(void)
 {
 	builtin1();
