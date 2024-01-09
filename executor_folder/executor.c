@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/08 10:48:56 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/09 15:26:21 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ static int	find_redirect(t_list_of_tok *cmd_node)
 /*3)
  this fuction handle the redirection process
  redirection_process(current, current->next->type);
-  !! there is a issue with this functin !! 
-  try launch the norminette libft > fiile @
  */
 void	redirection_process(char *file_name, t_type_of_tok type)
 {
@@ -91,10 +89,7 @@ void	redirection_process(char *file_name, t_type_of_tok type)
 	if (type == T_REDIR_IN)
 		redirect_input(file_name);
 	else if (type == T_REDIR_OUT || type == T_REDIR_APP)
-	{
-//		printf("file_name of [%s]\n", file_name);
 		redirect_output(file_name, type);
-	}
 	else if (type == T_HERE_DOC)
 		here_document(file_name);
 }
@@ -104,26 +99,19 @@ void	redirection_process(char *file_name, t_type_of_tok type)
 */
 static void	piping_process(t_list_of_tok *cmd_nod)
 {
-	if (cmd_nod->in_file != STDIN_FILENO)
+	if (cmd_nod->in_file != 0)
 	{
 		dup2(cmd_nod->in_file, STDIN_FILENO);
-//		close(cmd_nod->fd_pipe_in);
+		close(cmd_nod->in_file);
+		printf("%sCMD NODE->IN_FILE != STDIN!%s\n", RED, RESET); // if this print happens before
 	}
-	if (cmd_nod->out_file!= STDOUT_FILENO)
+	if (cmd_nod->out_file!= 1)
 	{
+		printf("%sCMD NODE->OUT_FILE != STDOUT!%s\n", RED, RESET); // if this print happens before
 		dup2(cmd_nod->out_file, STDOUT_FILENO);
-//		close(cmd_nod->fd_pipe_out);
+		close(cmd_nod->out_file);
 	}
 }
-
-/* useless function fuck 
-void	close_fds(t_list_of_tok *cmd_nod)
-{
-	if (cmd_nod->fd_pipe_in != STDIN_FILENO)
-		close(cmd_nod->fd_pipe_in);
-	if (cmd_nod->fd_pipe_out != STDOUT_FILENO)
-		close(cmd_nod->fd_pipe_out);
-}*/
 
 /* last change */
 static void	restore_original_stdout(int copy)
@@ -140,15 +128,13 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 {
 	pid_t	fix_pid;
 	int	stdout_copy; // those copy stay STANDARD
-//	int	stdin_copy; // those copy stay STANDARD
-//	int	status;
 
 	stdout_copy = dup(STDOUT_FILENO);
-//	stdin_copy = dup(STDIN_FILENO);
 	printf("%sFunciton-> Execute_command()%s;\n\tCommand: {%s},\n\targs[1]: {%s}\n",BG_YELLOW, BG_RESET, command, args_a[1]);
 	printf("\ncmd_nod->file_name != NULL\n\t(%s)\n", cmd_nod->file_name);
 	if (cmd_nod->file_name != NULL)
-		redirection_process(cmd_nod->file_name, cmd_nod->redirect_type); // here the fd are changed
+		redirection_process(cmd_nod->file_name, cmd_nod->redirect_type); // why the fd doesnt change here?
+	printf("PIPING PROCESS!\n"); // this printf should not be there
 	piping_process(cmd_nod); // here the fd are changed too 
 	if (cmd_nod->type == T_BUILTIN)
 	{
@@ -160,12 +146,12 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 		ft_putnbr_fd(cmd_nod->out_file, stdout_copy);
 		ft_putstr_fd("\n", stdout_copy);
 		/////////////////////////////////////////////////
-		
 		printf("Builtins: %s%s\t(%s)%s\n", BLUE, cmd_nod->token, command, RESET);
 		printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->in_file, YELLOW, RESET, cmd_nod->out_file);
+
 		which_built_in(cmd_nod, args_a, envp);
 		// Restore the original stdout file descriptor
-		restore_original_stdout(stdout_copy);
+		//restore_original_stdout(stdout_copy);
 	}
 	else
 	{
@@ -177,24 +163,25 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 		ft_putnbr_fd(cmd_nod->out_file, stdout_copy);
 		ft_putstr_fd("\n", stdout_copy);
 		//////////////////////////////////////////////
-		
 		printf("Command: %s%s\t(%s)%s\n", GREEN, cmd_nod->token, command, RESET);
 		printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->in_file, YELLOW, RESET, cmd_nod->out_file);
+		
 		fix_pid = fork();
 		// TO DO BY ROGER
-		// check child process for closing 
+		// check child process for closingg
 		if (fix_pid == 0)
 		{
-			ft_putstr_fd("\n ChiLd_ProceSs * ", stdout_copy);
+			ft_putstr_fd("\n Processo Figlio time:", stdout_copy);
 			ft_putnbr_fd(time(NULL), stdout_copy);
 			write(stdout_copy, "\n", 1);
 			//close(cmd_nod->fd_pipe_in);
+
 			execve(command, args_a, envp);
 			perror("execve"); // execve returns only on error
 		}
 		else
 		{
-			ft_putstr_fd("\nFather_ProCesS * ", stdout_copy);
+			ft_putstr_fd("\nFather_ProCesS *time:", stdout_copy);
 			ft_putnbr_fd(time(NULL), stdout_copy);
 			write(1, "\n", 1);
 //			waitpid(fix_pid, &status, 0);
@@ -206,12 +193,14 @@ restore_original_stdout(stdout_copy);
 return (NULL);
 }
 
-/* 1) Main function to execute the program
+/*
+ * 1) Main function to execute the program
  * I go find the first command in the list
  * Inside the node of the command I update the filename
  * if there is a redirection, the command string take the
  * token of the node 
- * */
+ * 
+ */
 int	executor(t_list_of_tok **head, char **envp)
 {
 	char			*command;
