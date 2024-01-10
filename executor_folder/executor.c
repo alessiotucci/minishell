@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/10 13:13:36 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/10 15:40:32 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,10 @@ void	piping_process(t_list_of_tok *cmd_nod)
 }
 
 /* last change */
-void	restore_original_stdout(int copy)
+void	restore_original_stdout(int copy, t_list_of_tok *cmd_nod)
 {
+		ft_putstr_fd("\tRestoring originals\n", 1);
+		(void)cmd_nod;
 		dup2(copy, STDOUT_FILENO);
 		close(copy);
 }
@@ -139,55 +141,50 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 	if (cmd_nod->type == T_BUILTIN)
 	{
 		//////////////////////////////////////////////
-		ft_putstr_fd("\n\tBuiltins\n", stdout_copy);
+		ft_putstr_fd("\n\tBuiltins -> ", stdout_copy);
 		ft_putstr_fd("fd_in : ", stdout_copy);
 		ft_putnbr_fd(cmd_nod->in_file, stdout_copy);
 		ft_putstr_fd("\tfd_out :", stdout_copy);
 		ft_putnbr_fd(cmd_nod->out_file, stdout_copy);
-		ft_putstr_fd("\n", stdout_copy);
-		/////////////////////////////////////////////////
+		ft_putstr_fd("\n\n", stdout_copy);
 		printf("Builtins: %s%s\t(%s)%s\n", BLUE, cmd_nod->token, command, RESET);
 		printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->in_file, YELLOW, RESET, cmd_nod->out_file);
-
+		/////////////////////////////////////////////////
 		which_built_in(cmd_nod, args_a, envp);
-		// Restore the original stdout file descriptor
-		restore_original_stdout(stdout_copy);
+		if (cmd_nod->out_file != 1)
+		restore_original_stdout(stdout_copy, cmd_nod);
 	}
 	else
 	{
 		/////////////////////////////////////////////
-		ft_putstr_fd("\nCommanD:\n", stdout_copy);
+		ft_putstr_fd("\nCommand -> ", stdout_copy);
 		ft_putstr_fd("\tFd_in: ", stdout_copy);
 		ft_putnbr_fd(cmd_nod->in_file, stdout_copy);
 		ft_putstr_fd(" Fd_out: ", stdout_copy);
 		ft_putnbr_fd(cmd_nod->out_file, stdout_copy);
-		ft_putstr_fd("\n", stdout_copy);
-		//////////////////////////////////////////////
+		ft_putstr_fd("\n\n", stdout_copy);
 		printf("Command: %s%s\t(%s)%s\n", GREEN, cmd_nod->token, command, RESET);
 		printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->in_file, YELLOW, RESET, cmd_nod->out_file);
-		
+		//////////////////////////////////////////////
+				// TO DO BY ROGER
 		fix_pid = fork();
-		// TO DO BY ROGER
 		// check child process for closingg
 		if (fix_pid == 0)
 		{
 			ft_putstr_fd("\nProcesso Figlio", stdout_copy);
 			write(stdout_copy, "\n", 1);
-			//close(cmd_nod->fd_pipe_in);
-
 			execve(command, args_a, envp);
-			perror("execve"); // execve returns only on error
+			printf("command not found: %s\n", command);
 		}
 		else
 		{
 			ft_putstr_fd("\nFather_ProCesS", stdout_copy);
 			write(1, "\n", 1);
-//			waitpid(fix_pid, &status, 0);
-//			close(cmd_nod->fd_pipe_out);
 			wait(NULL);
 		}
 	}
-restore_original_stdout(stdout_copy);
+if (cmd_nod->out_file != 1)
+	restore_original_stdout(stdout_copy, cmd_nod);
 return (NULL);
 }
 
