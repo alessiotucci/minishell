@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/09 17:44:53 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/10 12:46:40 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,24 +97,24 @@ void	redirection_process(char *file_name, t_type_of_tok type)
 /* this function is suppose to handle the piping if
  * the fd are differente than the standards
 */
-static void	piping_process(t_list_of_tok *cmd_nod)
+void	piping_process(t_list_of_tok *cmd_nod)
 {
 	if (cmd_nod->in_file != 0)
 	{
 		dup2(cmd_nod->in_file, STDIN_FILENO);
-		close(cmd_nod->in_file);
+		//close(cmd_nod->in_file);
 		printf("%sCMD NODE->IN_FILE != STDIN!%s\n", RED, RESET); // if this print happens before
 	}
 	if (cmd_nod->out_file!= 1)
 	{
 		dup2(cmd_nod->out_file, STDOUT_FILENO);
-		close(cmd_nod->out_file);
+		//close(cmd_nod->out_file);
 		printf("%sCMD NODE->OUT_FILE != STDOUT!%s\n", RED, RESET); // if this print happens before
 	}
 }
 
 /* last change */
-static void	restore_original_stdout(int copy)
+void	restore_original_stdout(int copy)
 {
 		dup2(copy, STDOUT_FILENO);
 		close(copy);

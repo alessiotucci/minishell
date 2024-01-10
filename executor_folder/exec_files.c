@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 09:14:57 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/09 15:44:25 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/10 12:16:42 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	redirect_output(char *file_name, t_type_of_tok type)
 		fd = open(file_name, OVERWRITE_FLAGS, 0666);
 	else
 		fd = open(file_name, APPEND_FLAGS, 0666);
+	printf("Redirect OUTPUT:%s FD %d%s\n", RED, fd, RESET);
 	if (fd == -1)
 	{
 		perror("open");
