@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/09 18:32:59 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/10 10:54:48 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,16 @@ typedef struct s_tree_node
 /*lexer part alright*/
 int		lexer1(char *param);
 
-/* utils of libft */
+/* utils of libft, inside the extra.c */
 char	*my_strchr(char *str, int cherry);
 int		my_strcmp(const char *str1, const char *str2);
 char	*my_strndup(const char *src_str, size_t max_len);
+void	print_string_array(char **array);
+int		free_string_array(char **array);
+/* Advanced utils for builtins or Wildcard */
+
+int	lenght_string_array(char **array);
+char	**sort_string_array(char **array);
 
 /* regular expression function */
 int		is_file_reader(char *str);
@@ -185,6 +191,4 @@ void	handle_ctrl_backlash(int sig);
 /*function to handle the * wildcards */
 int		valid_wildcard(const char *str);
 char		**expansion_wildcard(char *wildcard);
-/* utils function */
-void	print_string_array(char **array);
 #endif

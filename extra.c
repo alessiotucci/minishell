@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 15:08:41 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/31 13:11:26 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/10 10:54:11 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,54 @@ void	print_string_array(char **array)
 		printf("%s\n", array[i]);
 		i++;
 	}
+}
+
+int	free_string_array(char **array)
+{
+	int	count;
+
+	count = 0;
+	while (array[count])
+	{
+		free(array[count]);
+		count++;
+	}
+	free(array);
+	return (0);
+}
+/* test */
+int	lenght_string_array(char **array)
+{
+	int	count;
+	count = 0;
+	while(array[count] != NULL)
+		count++;
+	return (count);
+}
+
+char	**sort_string_array(char **array)
+{
+	int		count;
+	int		mount;
+	int		lenght;
+	char	*temp;
+
+	count = 0;
+	lenght = lenght_string_array(array);
+	while (count < lenght - 1)
+	{
+		mount = 0;
+		while (mount < lenght - count - 1)
+		{
+			if (my_strcmp(array[mount], array[mount + 1]) > 0)
+			{
+				temp = array[mount];
+				array[mount] = array[mount + 1];
+				array[mount + 1] = temp;
+			}
+			mount++;
+		}
+		count++;
+	}
+	return (array);
 }

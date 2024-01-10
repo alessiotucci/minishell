@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:13:21 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/09 18:33:31 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/09 19:36:34 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,12 +146,12 @@ void	try_builtin(void)
 
 void	cleanup_resources()
 {
-	printf("Pulizia delle risorse...\n");
+	printf("cleaing of resources...\n");
 }
 
 void	handle_signal(int signal)
 {
-	printf("Ricevuto il segnale %d\n", signal);
+	printf("signal receive%d\n", signal);
 	cleanup_resources();
 	exit(1);
 }

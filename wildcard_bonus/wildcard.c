@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:53:12 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/30 13:16:46 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/10 10:53:07 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	**expansion_wildcard(char *wildcard)
 	matrix[count] = NULL; //fixed?
 	if (closedir(directory) == -1)
 		return (perror("Error closing directory"), NULL);
-	return (matrix);
+	return (sort_string_array(matrix));
 }
 /* this function check wheter a wildcard is valid or not */
 int	valid_wildcard(const char *str)
