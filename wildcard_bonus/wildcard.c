@@ -6,17 +6,17 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:53:12 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/10 10:53:07 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/10 11:03:11 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 /*this function actively look for matches with the wildcards*/
-static int	find_matches(char *wildcard, char *name)
+static int	find_matches(char *wildcard, char *nam)
 {
 	char	*prefix;
-	char	*suffix;
+	char	*sufx;
 	char	*asterix;
 	char	*copy;
 
@@ -24,7 +24,7 @@ static int	find_matches(char *wildcard, char *name)
 	if (copy[0] == '*')
 	{
 		prefix = NULL;
-		suffix = &copy[1];
+		sufx = &copy[1];
 	}
 	else
 	{
@@ -33,24 +33,23 @@ static int	find_matches(char *wildcard, char *name)
 		{
 			*asterix = '\0';
 			prefix = copy;
-			suffix = asterix + 1;
+			sufx = asterix + 1;
 		}
 		else
 		{
-			// handle the case where there is no '*' in the wildcard
-			// for example, you could set prefix and suffix to NULL
 			prefix = copy;
-			suffix = "";
+			sufx = "";
 		}
 	}
-	if (prefix != NULL && ft_strncmp(name, prefix, ft_strlen(prefix)) != 0)
-		return (free(copy),1);
-	if (suffix != NULL && my_strcmp(name + ft_strlen(name) - ft_strlen(suffix), suffix) != 0)
-		return (free(copy),1);
+	if (prefix != NULL && ft_strncmp(nam, prefix, ft_strlen(prefix)) != 0)
+		return (free(copy), 1);
+	if (sufx != NULL && my_strcmp(nam + ft_strlen(nam) - ft_strlen(sufx), sufx) != 0)
+		return (free(copy), 1);
 	return (free(copy),0);
-
 }
-/* function to know how many match we find, wildcard = *.txt | ft_* | ft_*.txt */
+
+/* function to know how many match we find,
+ * wildcard = *.txt | ft_* | ft_*.txt */
 static int	count_matches(char *wildcard)
 {
 	DIR				*directory;
@@ -64,13 +63,13 @@ static int	count_matches(char *wildcard)
 	entry = readdir(directory);
 	while (entry != NULL)
 	{
-		if (find_matches(wildcard, entry->d_name) == 0) // match found
+		if (find_matches(wildcard, entry->d_name) == 0)
 			count++;
 		entry = readdir(directory);
 	}
 	if (closedir(directory) == -1)
 		return (perror("Error closing directory"), -1);
-	return count;
+	return (count);
 }
 
 /* Helper function to expland wildcard and create a node for each */
@@ -83,11 +82,10 @@ char	**expansion_wildcard(char *wildcard)
 	int				count;
 
 	count = 0;
-	max_matrix = count_matches(wildcard); // check for negative -1
-	//printf("%sfound %d matches%s\n",BG_RED, max_matrix, BG_RESET);
+	max_matrix = count_matches(wildcard);
 	if (max_matrix < 1)
 		return (perror("no match wildcards"), NULL);
-	matrix = malloc(sizeof(char *) * max_matrix + 1); // check for malloc failure
+	matrix = malloc(sizeof(char *) * max_matrix + 1);
 	directory = opendir(".");
 	if (directory == NULL)
 		return (perror("Error opening directory"), NULL);
@@ -96,17 +94,17 @@ char	**expansion_wildcard(char *wildcard)
 	{
 		if (find_matches(wildcard, entry->d_name) == 0)
 		{
-			//printf("\n%sfound a match! %s %s%s\n",BG_YELLOW, wildcard, entry->d_name, BG_RESET);
 			matrix[count] = ft_strdup(entry->d_name);
 			count++;
 		}
 		entry = readdir(directory);
 	}
-	matrix[count] = NULL; //fixed?
+	matrix[count] = NULL;
 	if (closedir(directory) == -1)
 		return (perror("Error closing directory"), NULL);
 	return (sort_string_array(matrix));
 }
+
 /* this function check wheter a wildcard is valid or not */
 int	valid_wildcard(const char *str)
 {
@@ -116,9 +114,8 @@ int	valid_wildcard(const char *str)
 	while (str[i])
 	{
 		if (str[i] == '*')
-			return(1);
+			return (1);
 		i++;
 	}
 	return (0);
 }
-
