@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/10 12:39:49 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/10 17:21:11 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,11 +169,11 @@ char	**find_path_env(char **env);
 char	**array_from_list(t_list_of_tok **head);
 char	*find_path_command(char *token, char **envp);
 void	*execute_command(char *command, char **test, char **envp, t_list_of_tok *current);
-void	redirection_process(char *file_name, t_type_of_tok type);
+int		redirection_process(char *file_name, t_type_of_tok type);
 t_list_of_tok	*find_command_in_list(t_list_of_tok **head);
 
 /* fucking redirection are here*/
-void	redirect_input(char *file_name);
+int		redirect_input(char *file_name);
 void	redirect_output(char *file_name, t_type_of_tok type);
 void	here_document(char *delimiter);
 void	executor2(void);

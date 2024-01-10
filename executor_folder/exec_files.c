@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 09:14:57 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/10 13:18:32 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/10 17:55:32 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,21 @@
 // int fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
 
 /*this function will handle the case where the input is redirect instead of the output*/
-void	redirect_input(char *file_name)
+int	redirect_input(char *file_name)
 {
 	int	new_fd;
 
 	new_fd = open(file_name, O_RDONLY);
 //	printf("redirect_input function, fd: [%d]\n", fd);
 	if (new_fd == -1)
-		return (perror("open"));
+	{
+		close(new_fd);
+		return (perror("open"), 1);
+	}
 	if (dup2(new_fd, STDIN_FILENO) == -1)
-		return(perror("dup2"));
+		return(perror("dup2"), 1);
 	close(new_fd);
-	return ;
+	return (0);
 }
 
 /* this function handles the here_doc */
@@ -79,7 +82,7 @@ void	redirect_output(char *file_name, t_type_of_tok type)
 		fd = open(file_name, OVERWRITE_FLAGS, 0666);
 	else
 		fd = open(file_name, APPEND_FLAGS, 0666);
-	printf("Redirect OUTPUT:%s FD %d%s\n", RED, fd, RESET);
+	//printf("Redirect OUTPUT:%s FD %d%s\n", RED, fd, RESET);
 	if (fd == -1)
 	{
 		perror("open");
