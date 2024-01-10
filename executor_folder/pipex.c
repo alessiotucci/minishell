@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:29:34 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/10 12:50:47 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/10 12:53:21 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,7 @@ void	set_pipes(t_list_of_tok *first_cmd, t_list_of_tok *secnd_cmd)
 	printf("Write_end pipe (fd[1]) = %d output for %s the first: %s%s \n", fd[1],BG_GREEN, first_cmd->token, BG_RESET);
 	printf("Read_end pipe (fd[0]) = %d input for  %s the second: %s%s \n", fd[0], BG_RED, secnd_cmd->token, BG_RESET);
 }
-/*
-void	set_pipes(t_list_of_tok *first_cmd, t_list_of_tok *secnd_cmd)
-{
-	(void)first_cmd;
-	(void)secnd_cmd;
-	printf("***\nPiping [%s%s%s] with [%s%s%s]\n***\n",BG_RED, first_cmd->token,BG_RESET, BG_YELLOW, secnd_cmd->token, BG_RESET);
-	printf("debuggin mode\n");
-}
-*/
+
 void	find_pipes(t_list_of_tok *head)
 {
 	t_list_of_tok	*current;
