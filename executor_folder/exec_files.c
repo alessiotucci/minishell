@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 09:14:57 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/10 17:55:32 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/11 15:52:27 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,7 @@
 /* Opening a file for double redirection >> */
 // int fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
 
-/*this function will handle the case where the input is redirect instead of the output*/
-int	redirect_input(char *file_name)
-{
-	int	new_fd;
 
-	new_fd = open(file_name, O_RDONLY);
-//	printf("redirect_input function, fd: [%d]\n", fd);
-	if (new_fd == -1)
-	{
-		close(new_fd);
-		return (perror("open"), 1);
-	}
-	if (dup2(new_fd, STDIN_FILENO) == -1)
-		return(perror("dup2"), 1);
-	close(new_fd);
-	return (0);
-}
 
 /* this function handles the here_doc */
 void	here_document(char *delimiter)
@@ -95,4 +79,21 @@ void	redirect_output(char *file_name, t_type_of_tok type)
 		exit(EXIT_FAILURE);
 	}
 	close(fd);
+}
+/*this function will handle the case
+ * where the input is redirect instead of the output*/
+int	redirect_input(char *file_name)
+{
+	int	new_fd;
+
+	new_fd = open(file_name, O_RDONLY);
+	if (new_fd == -1)
+	{
+		close(new_fd);
+		return (perror("open"), 1);
+	}
+	if (dup2(new_fd, STDIN_FILENO) == -1)
+		return(perror("dup2"), 1);
+	close(new_fd);
+	return (0);
 }

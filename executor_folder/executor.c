@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/10 18:26:24 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/11 16:34:26 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ const char *namey[] =
 
 
 /* 5 function in this file 
- * This function goes through the list and look for commands,
+ * This function goes throught he list and look for commands,
  * it return the first it finds !
  * */
 t_list_of_tok	*find_command_in_list(t_list_of_tok **head)
@@ -99,27 +99,37 @@ int	redirection_process(char *file_name, t_type_of_tok type)
 /* this function is suppose to handle the piping if
  * the fd are differente than the standards
 */
-void	piping_process(t_list_of_tok *cmd_nod)
+int	piping_process(t_list_of_tok *cmd_nod)
 {
+	int	stat;
+
+	stat = 0;
 	if (cmd_nod->in_file != 0)
 	{
 		dup2(cmd_nod->in_file, STDIN_FILENO);
 		close(cmd_nod->in_file);
+		stat++;
 		//printf("%sCMD NODE->IN_FILE != STDIN!%s\n", RED, RESET); // if this print happens before
 	}
 	if (cmd_nod->out_file!= 1)
 	{
 		dup2(cmd_nod->out_file, STDOUT_FILENO);
 		close(cmd_nod->out_file);
+		stat++;
 		//printf("%sCMD NODE->OUT_FILE != STDOUT!%s\n", RED, RESET); // if this print happens before
 	}
+	return (stat);
 }
 
 /* last change */
 void	restore_original_stdout(int copy, t_list_of_tok *cmd_nod)
 {
-		//ft_putstr_fd("\tRestoring originals\n", 1);
+		//
+		ft_putstr_fd("\tRestoring originals\n", copy);
+		ft_putstr_fd(cmd_nod->token, copy);
+		ft_putchar_fd('\n', copy);
 		(void)cmd_nod;
+		//
 		dup2(copy, STDOUT_FILENO);
 		close(copy);
 }
@@ -132,6 +142,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 {
 	pid_t	fix_pid;
 	int	stdout_copy; // those copy stay STANDARD
+//	int		mensa;
 
 	stdout_copy = dup(STDOUT_FILENO);
 //	printf("%sFunciton-> Execute_command()%s;\n\tCommand: {%s},\n\targs[1]: {%s}\n",BG_YELLOW, BG_RESET, command, args_a[1]);
@@ -189,6 +200,9 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 			wait(NULL);
 		}
 	}
+// if the stdout has beeing change we need to restore
+// othewise we dont need to close or it shut the program
+// the issue remains tho :( ...
 restore_original_stdout(stdout_copy, cmd_nod);
 return (NULL);
 }
