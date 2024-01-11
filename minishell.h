@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/11 15:52:52 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/11 19:04:06 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ t_list_of_tok	*find_command_in_list(t_list_of_tok **head);
 /* fucking redirection are here*/
 int		redirect_input(char *file_name);
 void	redirect_output(char *file_name, t_type_of_tok type);
-void	here_document(char *delimiter);
+void	*here_document(char *delimiter);
 void	executor2(void);
 void	executor3(void);
 
