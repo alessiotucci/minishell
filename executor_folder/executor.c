@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/10 17:58:34 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/10 18:26:24 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 	else
 	{
 		/////////////////////////////////////////////
-		/*ft_putstr_fd("\nCommand -> ", stdout_copy);
+		/*ft_putstr_fd("\nCommand -> ", stdout_copy);/
 		ft_putstr_fd("\tFd_in: ", stdout_copy);
 		ft_putnbr_fd(cmd_nod->in_file, stdout_copy);
 		ft_putstr_fd(" Fd_out: ", stdout_copy);
@@ -169,25 +169,27 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 		printf("Command: %s%s\t(%s)%s\n", GREEN, cmd_nod->token, command, RESET);
 		printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->in_file, YELLOW, RESET, cmd_nod->out_file);*/
 		//////////////////////////////////////////////
-				// TO DO BY ROGER
+		// TO DO BY ROGER
 		fix_pid = fork();
 		// check child process for closingg
 		if (fix_pid == 0)
 		{
-			//ft_putstr_fd("\nProcesso Figlio", stdout_copy);
-			//write(stdout_copy, "\n", 1);
+			/*ft_putstr_fd("\nProcesso_Figlio\n", stdout_copy);
+			ft_putstr_fd(command, stdout_copy);
+			ft_putchar_fd('\n', stdout_copy); */
 			execve(command, args_a, envp);
 			printf("command not found: %s\n", command);
 		}
 		else
 		{
-			//ft_putstr_fd("\nFather_ProCesS", stdout_copy);
+			/*ft_putstr_fd("\nFather_ProCess\n", stdout_copy);
+			ft_putstr_fd(command, stdout_copy);
+			ft_putchar_fd('\n', stdout_copy); */
 			//write(1, "\n", 1);
 			wait(NULL);
 		}
 	}
-//if (cmd_nod->out_file != 1)
-	restore_original_stdout(stdout_copy, cmd_nod);
+restore_original_stdout(stdout_copy, cmd_nod);
 return (NULL);
 }
 

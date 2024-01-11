@@ -6,7 +6,7 @@
 #    By: atucci <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 09:05:05 by atucci            #+#    #+#              #
-#    Updated: 2024/01/04 12:13:44 by atucci           ###   ########.fr        #
+#    Updated: 2024/01/11 13:49:51 by atucci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,7 @@ RESET := \033[0m
 #--------------------------------------------------
 # Rule for building the "minishell" executable.
 $(NAME): $(OBJS)
-	@echo "$(CYAN)Building $(NAME)...$(RESET)"
+	@echo "$(CYAN)Building $(NAME).$(RESET)"
 	$(MAKE) -C libft
 	${CC} -o $(NAME) $(OBJS) $(LIBFT) -lreadline
 	@echo "$(GREEN) $(NAME)minishell  created successfully! $(RESET)"
