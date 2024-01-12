@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/12 16:58:19 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/12 19:25:19 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,14 @@
 
 # define READ_END 0
 # define WRITE_END 1
-
+/* Those macro are created by me to help me with 
+ * the parsing and interpretations of quotes
+*/
+# define ERROR_QUOTE 0
+# define SINGLE_QUOTE 1
+# define DOUBLE_QUOTE 2
+# define NO_QUOTE 3
+# define SEVERAL_QUOTES 4
 typedef enum e_type_of_tok
 {
 	T_COMMAND,

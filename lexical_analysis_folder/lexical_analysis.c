@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/12 17:40:47 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/12 19:24:53 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static void	free_list(t_list_of_tok **head)
 	}
 	*head = NULL;
 }
-/**/
-static int	handling_errors(char *input)
+/* Handling the quotes 
+int	handling_quotes(char *input)
 {
 	int	count_single;
 	int	count_double;
@@ -59,10 +59,46 @@ static int	handling_errors(char *input)
 			count_single++;
 		i++;
 	}
-	if (count_single % 2 == 0 && count_double % 2 == 0)
-		return (0);
+	if (count_single == 0 && count_double == 0)
+		return (NO_QUOTE);
+	else if (count_single != 0 && count_double == 0)
+		return (SINGLE_QUOTE);
+	else if (count_single == 0 && count_double != 0)
+		return (DOUBLE_QUOTE);
 	else
-		return (1);
+		return (ERROR_QUOTE);
+} */
+
+int	handling_quotes(char *input)
+{
+	int	count_single;
+	int	count_double;
+	int	i;
+	int	total_quotes;
+	i = 0;
+	count_double = 0;
+	count_single = 0;
+	while (input[i])
+	{
+		if (input[i] == '"' )
+			count_double++;
+		if (input[i] == 39)
+			count_single++;
+		i++;
+	}
+	total_quotes = count_single + count_double;
+	if (total_quotes % 2 != 0)
+		return (ERROR_QUOTE);
+	else if (total_quotes > 2)
+		return (SEVERAL_QUOTES);
+	else if (count_single == 0 && count_double == 0)
+		return (NO_QUOTE);
+	else if (count_single != 0 && count_double == 0)
+		return (SINGLE_QUOTE);
+	else if (count_single == 0 && count_double != 0)
+		return (DOUBLE_QUOTE);
+	else
+		return (NO_QUOTE);
 }
 
 /*Static function to perform some cleaning in the input*/
@@ -84,7 +120,7 @@ int	lexer(char *string, char **env)
 
 	i = 0;
 	token_head = NULL;
-	if (handling_errors(string) == 1)
+	if (handling_quotes(string) == ERROR_QUOTE)
 		return (printf("Not interpret unclosed quotes\n"));
 	if (check_parentheses(string))
 		return (ft_printf("bad parentheses\n"));
@@ -101,7 +137,7 @@ int	lexer(char *string, char **env)
 	}
 	priority_level(&token_head);
 	update_token_types(&token_head);
-	//print_list_tokens(&token_head);
+	//return (print_list_tokens(&token_head), 1);
 	executor(&token_head, env);
 	free_list(&token_head);
 	free_split(line_of_commands);
