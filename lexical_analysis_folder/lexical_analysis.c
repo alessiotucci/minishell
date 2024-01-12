@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/11 19:58:49 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/12 17:40:47 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	handling_errors(char *input)
 }
 
 /*Static function to perform some cleaning in the input*/
-static void	cleaning_input(char *input)
+void	cleaning_input(char *input)
 {
 	char	*cleaned;
 
@@ -85,11 +85,7 @@ int	lexer(char *string, char **env)
 	i = 0;
 	token_head = NULL;
 	if (handling_errors(string) == 1)
-	{
-		cleaning_input(string); // to shut up the error
-		printf("something wrong\n");
-		exit(0);
-	}
+		return (printf("Not interpret unclosed quotes\n"));
 	if (check_parentheses(string))
 		return (ft_printf("bad parentheses\n"));
 	new_string = replace_me(string, '"', '\t', ' ');
@@ -106,9 +102,6 @@ int	lexer(char *string, char **env)
 	priority_level(&token_head);
 	update_token_types(&token_head);
 	//print_list_tokens(&token_head);
-	//exit(0);
-	//recursive_tree_builder(&token_head);
-	//int debug =
 	executor(&token_head, env);
 	free_list(&token_head);
 	free_split(line_of_commands);

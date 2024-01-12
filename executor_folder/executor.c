@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/11 18:23:20 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/12 17:39:11 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,48 +99,32 @@ int	redirection_process(char *file_name, t_type_of_tok type)
 /* this function is suppose to handle the piping if
  * the fd are differente than the standards
 */
-int	piping_process(t_list_of_tok *cmd_nod)
+void	piping_process(t_list_of_tok *cmd_nod)
 {
-	int	stat;
 
-	stat = 0;
 	if (cmd_nod->in_file != 0)
 	{
 		dup2(cmd_nod->in_file, STDIN_FILENO);
 		close(cmd_nod->in_file);
-		stat++;
-		//printf("%sCMD NODE->IN_FILE != STDIN!%s\n", RED, RESET); // if this print happens before
 	}
 	if (cmd_nod->out_file!= 1)
 	{
 		dup2(cmd_nod->out_file, STDOUT_FILENO);
 		close(cmd_nod->out_file);
-		stat++;
-		//printf("%sCMD NODE->OUT_FILE != STDOUT!%s\n", RED, RESET); // if this print happens before
 	}
-	return (stat);
 }
 
 /* last change */
 void	restore_original_stdout(int copy, t_list_of_tok *cmd_nod)
 {
-		/*
-		ft_putstr_fd("\tRestoring originals stdout\n", copy);
-		ft_putstr_fd(cmd_nod->token, copy);
-		ft_putchar_fd('\n', copy); */
 		(void)cmd_nod;
-		//
 		dup2(copy, STDOUT_FILENO);
 		close(copy);
 }
+
 void	restore_original_stdin(int copy, t_list_of_tok *cmd_nod)
 {
-		/*
-		ft_putstr_fd("\tRestoring originals stdin\n", copy);
-		ft_putstr_fd(cmd_nod->token, copy);
-		ft_putchar_fd('\n', copy); */
 		(void)cmd_nod;
-		//
 		dup2(copy, STDIN_FILENO);
 		close(copy);
 }
@@ -152,68 +136,28 @@ void	restore_original_stdin(int copy, t_list_of_tok *cmd_nod)
 void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *cmd_nod)
 {
 	pid_t	fix_pid;
-	int	stdout_copy; // those copy stay STANDARD
+	int	stdout_copy;
 	int	stdin_copy;
-//	int		mensa;
+
 	stdin_copy = dup(STDIN_FILENO);
 	stdout_copy = dup(STDOUT_FILENO);
-	//printf("%sFunciton-> Execute_command()%s;\n\tCommand: {%s},\n\targs[1]: {%s}\n",BG_YELLOW, BG_RESET, command, args_a[1]);
-	//printf("\ncmd_nod->file_name != NULL\n\t(%s)\n", cmd_nod->file_name);
 	if (cmd_nod->file_name != NULL)
 		if (redirection_process(cmd_nod->file_name, cmd_nod->redirect_type))
-			return (NULL); // why the fd doesnt change here?
-	//printf("%sPIPING PROCESS!%s\n", BG_CYAN, BG_RESET); // this printf should not be there
-	piping_process(cmd_nod); // here the fd are changed too 
+			return (NULL);
+	piping_process(cmd_nod);
 	if (cmd_nod->type == T_BUILTIN)
-	{
-		//////////////////////////////////////////////
-	/*	ft_putstr_fd("\n\tBuiltins -> ", stdout_copy);
-		ft_putstr_fd("fd_in : ", stdout_copy);
-		ft_putnbr_fd(cmd_nod->in_file, stdout_copy);
-		ft_putstr_fd("\tfd_out :", stdout_copy);
-		ft_putnbr_fd(cmd_nod->out_file, stdout_copy);
-		ft_putstr_fd("\n\n", stdout_copy);
-		printf("Builtins: %s%s\t(%s)%s\n", BLUE, cmd_nod->token, command, RESET);
-		printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->in_file, YELLOW, RESET, cmd_nod->out_file); */
-		/////////////////////////////////////////////////
-		which_built_in(cmd_nod, args_a, envp);
-		//if (cmd_nod->out_file != 1)
-		//restore_original_stdout(stdout_copy, cmd_nod);
-	}
+			which_built_in(cmd_nod, args_a, envp);
 	else
 	{
-		/////////////////////////////////////////////
-	/*	ft_putstr_fd("\nCommand -> ", stdout_copy);
-		ft_putstr_fd("\tFd_in: ", stdout_copy);
-		ft_putnbr_fd(cmd_nod->in_file, stdout_copy);
-		ft_putstr_fd(" Fd_out: ", stdout_copy);
-		ft_putnbr_fd(cmd_nod->out_file, stdout_copy);
-		ft_putstr_fd("\n\n", stdout_copy);
-		printf("Command: %s%s\t(%s)%s\n", GREEN, cmd_nod->token, command, RESET);
-		printf("%s\tFd_in:%s %d %sFd_out:%s %d\n\n", RED, RESET,cmd_nod->in_file, YELLOW, RESET, cmd_nod->out_file); */
-		//////////////////////////////////////////////
-		// mLongo is a fucking genious
-		fix_pid = fork();
+			fix_pid = fork();
 		if (fix_pid == 0)
 		{
-			/*ft_putstr_fd("\nProcesso_Figlio\n", stdout_copy);
-			ft_putstr_fd(command, stdout_copy);
-			ft_putchar_fd('\n', stdout_copy);*/
 			execve(command, args_a, envp);
 			printf("command not found: %s\n", command);
 		}
 		else
-		{
-			/*ft_putstr_fd("\nFather_ProCess\n", stdout_copy);
-			ft_putstr_fd(command, stdout_copy);
-			ft_putchar_fd('\n', stdout_copy);*/
-			//write(1, "\n", 1);
-			wait(NULL);
-		}
+				wait(NULL);
 	}
-// if the stdout has beeing change we need to restore
-// othewise we dont need to close or it shut the program
-// the issue remains tho :( ...
 restore_original_stdout(stdout_copy, cmd_nod);
 restore_original_stdin(stdin_copy, cmd_nod);
 return (NULL);
@@ -244,7 +188,6 @@ int	executor(t_list_of_tok **head, char **envp)
 		{
 			command = find_path_command(cmd_node->token, envp);
 			if (command == NULL)
-		//		return (free(command), printf(" Command not found: %s\n", cmd_node->token));
 				command = cmd_node->token;
 		}
 		argoums = array_from_list(&cmd_node);

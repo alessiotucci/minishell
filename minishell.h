@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/11 19:04:06 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/12 16:58:19 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ void	executor3(void);
 /* setting up pipes */
 void	set_pipes(t_list_of_tok *first_cmd, t_list_of_tok *secnd_cmd);
 void	find_pipes(t_list_of_tok *head);
-int		piping_process(t_list_of_tok *cmd_nod);
+void	piping_process(t_list_of_tok *cmd_nod);
 /**/
 // function to handle signals
 void	handle_ctrl_c(int sig);
