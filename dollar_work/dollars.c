@@ -6,13 +6,13 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 16:23:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/13 16:26:44 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/13 18:36:34 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-/*
-char	*expansion_dollar(char *dollar, char **env)
+
+char *expansion_dollary(char *dollar, char **env)
 {
 	char	*key;
 	int		i;
@@ -21,72 +21,104 @@ char	*expansion_dollar(char *dollar, char **env)
 	if (dollar[0] == '$')
 	{
 		if (dollar[1] == '{')
-			key = my_strndup(dollar + 2, ft_strlen(dollar) - 3);
+			key = strndup(dollar + 2, strlen(dollar) - 3);
 		else
-			key = ft_strdup(dollar + 1);
+			key = strdup(dollar + 1);
 	}
 	else
-		key = ft_strdup(dollar);
+		key = strdup(dollar);
 	i = 0;
-	key_len = ft_strlen(key);
+	key_len = strlen(key);
 	while (env[i] != NULL)
 	{
-		if (ft_strncmp(env[i], key, key_len) == 0 && env[i][key_len] == '=')
+		if (strncmp(env[i], key, key_len) == 0 && env[i][key_len] == '=')
 		{
 			free(key);
-			return (ft_strdup(env[i] + ft_strlen(key) + 1));
+			return (strdup(env[i] + strlen(key) + 1));
 		}
 		i++;
 	}
 	return (free(key), NULL);
 }
 
-t_list_of_tok	*node_for_dollar(int lvl, char *spitted, char **env)
+// Function to replace a substring with another string
+char *replace_substr(char *str, char *substr, char *replacement)
 {
-	char	*expanded;
-	char	*dollar_pos = ft_strchr(spitted, '$');
-	char	*new_str;
-	printf("spitted: %s\n", spitted);
-	printf("$ strchr: %s\n", dollar_pos);
-	
-	if (dollar_pos != NULL && dollar_pos != spitted)
+	char *result;
+	char *ins;
+	char *tmp;
+	int len_sub;
+	int len_rep;
+	int len_front;
+	int count;
+
+	count = 0;
+	len_sub = strlen(substr);
+	if (!str || !substr || len_sub == 0)
+		return NULL;
+	if (!replacement)
+		replacement = "";
+	len_rep = strlen(replacement);
+	ins = str;
+	tmp = strstr(ins, substr);
+	while (tmp != NULL)
 	{
-		// Dollar sign is not at the beginning of the string
-		// Split the string into two parts: before and after the dollar sign
-		char *before_dollar = my_strndup(spitted, dollar_pos - spitted);
-		expanded = expansion_dollar(dollar_pos, env);
-		if (expanded == NULL)
-		{
-			printf("I need to handle better these cases\n");
-			new_str = ft_strdup(before_dollar);
-		}
-		else
-		{	// FUCK CHECK THE FUNCTION YOU USE!!!
-			// Concatenate the part before the dollar sign, the expanded value, and the rest of the string
-			new_str = malloc(strlen(before_dollar) + strlen(expanded) + 1);
-			strcpy(new_str, before_dollar); // check this
-			strcat(new_str, expanded); // check this one too
-		}
-		free(before_dollar);
-	}
-	else
+		count++;
+		ins = tmp + len_sub;
+		tmp = strstr(ins, substr);
+	}	
+	tmp = result = malloc(strlen(str) + (len_rep - len_sub) * count + 1);
+	if (!result)
+		return NULL;
+	while (count--)
 	{
-		// Dollar sign is at the beginning of the string or not present
-		expanded = expansion_dollar(spitted, env);
-		if (expanded == NULL)
-		{
-			printf("I need to handle better these cases\n");
-			new_str = ft_strdup("");
-		}
-		else
-			new_str = ft_strdup(expanded);
+		ins = strstr(str, substr);
+		len_front = ins - str;
+		tmp = strncpy(tmp, str, len_front) + len_front;
+		tmp = strcpy(tmp, replacement) + len_rep;
+		str += len_front + len_sub;
 	}
-	
-	if (expanded != NULL) {
-		free(expanded);
-	}
-	
-	return create_node(lvl, new_str);
+	strcpy(tmp, str);
+	return result;
 }
 
-*/
+char *find_and_expand_vars(char *str, char **env)
+{
+	int		i;
+	char	*var_start;
+	char	*var_end;
+	char	*var_name;
+	char	*var_value;
+	char	*var_name_with_dollar;
+	char	*new_str;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '$')
+		{
+			var_start = str + i + 1;
+			var_end = var_start;
+			while (*var_end != '\0' && *var_end != ' ' && *var_end != '$')
+				var_end++;
+			var_name = strndup(var_start, var_end - var_start);
+			var_value = expansion_dollary(var_name, env);
+			if (var_value != NULL)
+			{
+				var_name_with_dollar = malloc(strlen(var_name) + 2); // +2 for the dollar sign and null terminator
+				var_name_with_dollar[0] = '$';
+				strcpy(var_name_with_dollar + 1, var_name);
+				new_str = replace_substr(str, var_name_with_dollar, var_value);
+				free(var_name_with_dollar);
+				free(str);
+				str = new_str;
+				free(var_value);
+			}
+			free(var_name);
+		}
+	i++;
+	}
+	return str;
+}
+
+

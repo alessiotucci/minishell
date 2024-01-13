@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/13 17:15:54 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/13 18:51:53 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*expansion_dollar(char *dollar, char **env)
  * then create the node with the fields initialized if needed, we will go 
  * from there with further implementation
 */
-static t_list_of_tok	*node_for_dollar(int lvl, char *spitted, char **env)
+t_list_of_tok	*node_for_dollar(int lvl, char *spitted, char **env)
 {
 	char	*expanded;
 	char	*dollar_pos = ft_strchr(spitted, '$');
@@ -137,11 +137,19 @@ char* extract_content(char* str)
 	char*	start_quote;
 	char*	end_quote;
 	char*	content;
+	char	quote_char;
 
-	start_quote = ft_strchr(str, '\"');
+	if (ft_strchr(str, '\"'))
+		quote_char = '\"';
+	else if (ft_strchr(str, '\''))
+		quote_char = '\'';
+	else
+		return (str);
+
+	start_quote = ft_strchr(str, quote_char);
 	if (start_quote)
 	{
-		end_quote = ft_strchr(start_quote + 1, '\"');
+		end_quote = ft_strchr(start_quote + 1, quote_char);
 		if (end_quote)
 		{
 			content = malloc(end_quote - start_quote);
@@ -156,13 +164,14 @@ char* extract_content(char* str)
 	return (str);
 }
 
+
 /*2)  Helper function to create a new node */
 t_list_of_tok	*create_node(int level, char *spitted_cmd)
 {
 	t_list_of_tok	*new_node;
 
 	new_node = (t_list_of_tok *)malloc(sizeof(t_list_of_tok));
-	if (new_node == NULL)("string for node_for_dollar: (%s)\n", new_cmd);
+	if (new_node == NULL)
 	{
 		printf("Error with malloc");
 		exit(1);
@@ -192,13 +201,15 @@ t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env, i
 	printf("before:%s%s%s\n extract %s%s%s\n", RED, cmd, RESET, GREEN, new_cmd, RESET);
 	if (valid_wildcard(cmd))
 		new_node = node_for_wildcard(0, cmd);
-	else if ((ft_strchr(new_cmd, '$') != NULL) && (flag == DOUBLE_QUOTE || flag == NO_QUOTE))
+	else if ((ft_strchr(new_cmd, '$') != NULL) && (flag != SINGLE_QUOTE))
 	{
 		printf("string for node_for_dollar: (%s)\n", new_cmd);
-		new_node = node_for_dollar(0, new_cmd, env);
+		new_cmd = find_and_expand_vars(new_cmd, env);
+		printf("string after the work: (%s)\n", new_cmd);
+		new_node = create_node(0, new_cmd);
 	}
 	else
-		new_node = create_node(0, cmd);
+		new_node = create_node(0, new_cmd);
 	if (*head == NULL)
 		*head = new_node;
 	else
