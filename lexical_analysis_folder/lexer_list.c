@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/13 20:49:00 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/13 20:54:43 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,7 @@ t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env, i
 	}
 	else
 		new_node = create_node(0, new_cmd);
+	printf("new cmd: {%s}\n", new_cmd);
 	if (*head == NULL)
 		*head = new_node;
 	else
@@ -222,5 +223,6 @@ t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env, i
 		new_node->previous = current;
 		new_node->index = current->index + 1;
 	}
+	printf("%s new node token is this:-> %s %s\n", BG_GREEN, new_node->token, RESET);
 	return (new_node);
 }

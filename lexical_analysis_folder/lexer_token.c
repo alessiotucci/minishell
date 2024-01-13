@@ -6,11 +6,39 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 19:50:51 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/05 17:19:09 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/13 21:49:03 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void flag_for_echo(t_list_of_tok **head)
+{
+	char	*flag;
+	t_list_of_tok *current;
+	char	*new_flag;
+	current = *head;
+	while (current != NULL)
+	{
+		if (current->type == T_FLAG)
+		{
+			flag = current->token;
+			if (flag[0] == '-' && flag[1] == 'n' && flag[2] != '\0')
+			{
+				// Replace -nnnn with -n
+				new_flag = malloc(3 * sizeof(char));
+				if (new_flag == NULL)
+					fprintf(stderr, "Memory allocation failed\n");
+				new_flag[0] = '-';
+				new_flag[1] = 'n';
+				new_flag[2] = '\0';
+				free(current->token);
+				current->token = new_flag;
+			}
+		}
+		current = current->next;
+	}
+}
 
 /*Fully process is a function needed to find command arguments and other stuff*/
 void	update_token_types(t_list_of_tok **head)
@@ -18,6 +46,7 @@ void	update_token_types(t_list_of_tok **head)
 	t_list_of_tok	*current;
 	t_list_of_tok	*prev;
 
+	flag_for_echo(head);
 	prev = NULL;
 	current = *head;
 	while (current != NULL)
