@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/13 09:40:46 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/13 14:52:25 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,13 +121,15 @@ char	*replace_chars(char *string)
 void	create_tokens(char **line_of_commands, t_list_of_tok **token_head, char **env)
 {
 	int	i;
-
+	int	flag;
 	i = 0;
 	while (line_of_commands[i])
 	{
 		line_of_commands[i] = replace_me(line_of_commands[i], '"', ' ', '\t');
 		line_of_commands[i] = replace_me(line_of_commands[i], 39, ' ', '\t');
-		create_list_of_tok(token_head, line_of_commands[i], env);
+		flag = handling_quotes(line_of_commands[i]);
+		printf("flag: %d\n", flag);
+		create_list_of_tok(token_head, line_of_commands[i], env, flag);
 		i++;
 	}
 }
@@ -148,7 +150,7 @@ int	lexer(char *string, char **env)
 	create_tokens(line_of_commands, &token_head, env);
 	//priority_level(&token_head);
 	update_token_types(&token_head);
-	//return (print_list_tokens(&token_head), 1);
+	//print_list_tokens(&token_head);
 	executor(&token_head, env);
 	free_list(&token_head);
 	free_string_array(line_of_commands);

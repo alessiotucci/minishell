@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 15:08:41 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/10 10:54:11 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/13 12:35:42 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,23 @@ char	*my_strchr(char *str, int cherry)
 		count++;
 	}
 	return (NULL);
+}
+char	*my_strncpy(char *dst, const char *src, size_t len)
+{
+	size_t	src_len;
+
+	src_len = ft_strlen(src);
+	if (len > 0)
+	{
+		if (src_len >= len)
+			ft_memcpy(dst, src, len);
+		else
+		{
+			ft_memcpy(dst, src, src_len);
+			ft_memset(dst + src_len, '\0', len - src_len);
+		}
+	}
+	return (dst);
 }
 
 char	*my_strndup(const char *src_str, size_t max_len)

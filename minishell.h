@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/12 19:25:19 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/13 11:16:54 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int		lexer1(char *param);
 char	*my_strchr(char *str, int cherry);
 int		my_strcmp(const char *str1, const char *str2);
 char	*my_strndup(const char *src_str, size_t max_len);
+char	*my_strncpy(char *dst, const char *src, size_t len);
 void	print_string_array(char **array);
 int		free_string_array(char **array);
 /* Advanced utils for builtins or Wildcard */
@@ -127,7 +128,7 @@ int		is_flag(char *str);
 int		is_builtin(char *str);
 int		is_parent(char *str);
 /*Starting working on the parsing*/
-t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *spitted_cmd, char **env);
+t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *spitted_cmd, char **env, int flag);
 void			print_list_tokens(t_list_of_tok **head);
 void			print_node(t_list_of_tok *node);
 //void			type_of_token(char *spitted);

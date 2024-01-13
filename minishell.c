@@ -6,7 +6,7 @@
 /*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/07 17:56:52 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/13 12:39:16 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,6 @@ static char	**copy_array(char **env)
 	env_copy[env_count] = NULL;
 	return (env_copy);
 }
-
-/*
-// Funzione per liberare la memoria dell'array di copia delle variabili di ambiente
-// c'e gia una funzione nel utils chiamata free_split();
-static void free_array(char **arr) 
-{
-	int i = 0;
-	while (arr[i] != NULL) 
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-*/
 
 int	main(int ac, char *av[], char *envp[])
 {

@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/10 11:05:29 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/13 14:52:07 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,51 @@ static char	*expansion_dollar(char *dollar, char **env)
 static t_list_of_tok	*node_for_dollar(int lvl, char *spitted, char **env)
 {
 	char	*expanded;
-
-	expanded = expansion_dollar(spitted, env);
-	if (expanded == NULL)
+	char	*dollar_pos = ft_strchr(spitted, '$');
+	char	*new_str;
+	printf("spitted: %s\n", spitted);
+	printf("$ strchr: %s\n", dollar_pos);
+	
+	if (dollar_pos != NULL && dollar_pos != spitted)
 	{
-		printf("I need to handle better these cases\n");
-		return (create_node(lvl, "failure"));
+		// Dollar sign is not at the beginning of the string
+		// Split the string into two parts: before and after the dollar sign
+		char *before_dollar = my_strndup(spitted, dollar_pos - spitted);
+		expanded = expansion_dollar(dollar_pos, env);
+		if (expanded == NULL)
+		{
+			printf("I need to handle better these cases\n");
+			new_str = ft_strdup(before_dollar);
+		}
+		else
+		{	// FUCK CHECK THE FUNCTION YOU USE!!!
+			// Concatenate the part before the dollar sign, the expanded value, and the rest of the string
+			new_str = malloc(strlen(before_dollar) + strlen(expanded) + 1);
+			strcpy(new_str, before_dollar); // check this
+			strcat(new_str, expanded); // check this one too
+		}
+		free(before_dollar);
 	}
 	else
-		return (create_node(lvl, expanded));
+	{
+		// Dollar sign is at the beginning of the string or not present
+		expanded = expansion_dollar(spitted, env);
+		if (expanded == NULL)
+		{
+			printf("I need to handle better these cases\n");
+			new_str = ft_strdup("");
+		}
+		else
+			new_str = ft_strdup(expanded);
+	}
+	
+	if (expanded != NULL) {
+		free(expanded);
+	}
+	
+	return create_node(lvl, new_str);
 }
+
 
 /*3) Helper function to expand the wildcard  */
 static t_list_of_tok	*node_for_wildcard(int level, char *spitted_cmd)
@@ -97,6 +132,30 @@ static t_list_of_tok	*node_for_wildcard(int level, char *spitted_cmd)
 	return (head);
 }
 
+char* extract_content(char* str)
+{
+	char*	start_quote;
+	char*	end_quote;
+	char*	content;
+
+	start_quote = ft_strchr(str, '\"');
+	if (start_quote)
+	{
+		end_quote = ft_strchr(start_quote + 1, '\"');
+		if (end_quote)
+		{
+			content = malloc(end_quote - start_quote);
+			if(content == NULL)
+				return (perror("Error: malloc"), NULL);
+			my_strncpy(content, start_quote + 1, end_quote - start_quote - 1);
+			content[end_quote - start_quote - 1] = '\0';
+			printf("content: %s\n", content);
+			return (content);
+		}
+	}
+	return (str);
+}
+
 /*2)  Helper function to create a new node */
 t_list_of_tok	*create_node(int level, char *spitted_cmd)
 {
@@ -121,15 +180,22 @@ t_list_of_tok	*create_node(int level, char *spitted_cmd)
 }
 
 /*1) Function to create a list of tokens */
-t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env)
+t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env, int flag)
 {
 	t_list_of_tok	*new_node;
 	t_list_of_tok	*current;
+	(void)flag;
+	(void)env;
+	char	*new_cmd;
 
+	new_cmd = extract_content(cmd);
+	printf("before:%s%s%s\n extract %s%s%s\n", RED, cmd, RESET, GREEN, new_cmd, RESET);
 	if (valid_wildcard(cmd))
 		new_node = node_for_wildcard(0, cmd);
-	else if (cmd[0] == '$')
-		new_node = node_for_dollar(0, cmd, env);
+	else if ((ft_strchr(new_cmd, '$') != NULL) && (flag == DOUBLE_QUOTE || flag == NO_QUOTE))
+	{
+		new_node = node_for_dollar(0, new_cmd, env);
+	}
 	else
 		new_node = create_node(0, cmd);
 	if (*head == NULL)
