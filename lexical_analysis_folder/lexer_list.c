@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/13 14:52:07 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/13 17:15:54 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ t_list_of_tok	*create_node(int level, char *spitted_cmd)
 	t_list_of_tok	*new_node;
 
 	new_node = (t_list_of_tok *)malloc(sizeof(t_list_of_tok));
-	if (new_node == NULL)
+	if (new_node == NULL)("string for node_for_dollar: (%s)\n", new_cmd);
 	{
 		printf("Error with malloc");
 		exit(1);
@@ -194,6 +194,7 @@ t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env, i
 		new_node = node_for_wildcard(0, cmd);
 	else if ((ft_strchr(new_cmd, '$') != NULL) && (flag == DOUBLE_QUOTE || flag == NO_QUOTE))
 	{
+		printf("string for node_for_dollar: (%s)\n", new_cmd);
 		new_node = node_for_dollar(0, new_cmd, env);
 	}
 	else

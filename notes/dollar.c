@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 18:23:17 by atucci            #+#    #+#             */
-/*   Updated: 2023/12/31 13:09:38 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/13 16:24:16 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../minishell.h"
 
 #include <stdio.h>
+#include <strind.h>
 
 char	*find_env_value(char **env, char *dollar)
 {
