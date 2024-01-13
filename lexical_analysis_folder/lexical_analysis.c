@@ -6,25 +6,13 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/12 19:24:53 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/13 09:40:46 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	free_split(char **tab)
-{
-	int	count;
 
-	count = 0;
-	while (tab[count])
-	{
-		free(tab[count]);
-		count++;
-	}
-	free(tab);
-	return (0);
-}
 
 static void	free_list(t_list_of_tok **head)
 {
@@ -101,15 +89,48 @@ int	handling_quotes(char *input)
 		return (NO_QUOTE);
 }
 
-/*Static function to perform some cleaning in the input*/
-void	cleaning_input(char *input)
+/* Function to handle quotes 
+ * it returns ZERO in ok case*/
+int	handle_quotes(char *string)
 {
-	char	*cleaned;
-
-	cleaned = replace_me(input, '"', '\t', ' ');
-	printf("%s\n", cleaned);
+	if (handling_quotes(string) == ERROR_QUOTE)
+		return (printf("Not interpret unclosed quotes\n"));
+	return (0);
 }
 
+/* Function to check parentheses
+ * it returns ZERO in ok case*/
+int	first_check_parent(char *string)
+{
+	if (check_parentheses(string))
+		return (ft_printf("syntax error near unexpected token\n"));
+	return (0);
+}
+/* Function to replace characters in string */
+char	*replace_chars(char *string)
+{
+	char	*new_string;
+
+	new_string = replace_me(string, '"', '\t', ' ');
+	new_string = replace_me(string, 39, '\t', ' ');
+	new_string = add_spaces_around_symbols(string);
+	return (new_string);
+}
+
+/* Function to create list of tokens */
+void	create_tokens(char **line_of_commands, t_list_of_tok **token_head, char **env)
+{
+	int	i;
+
+	i = 0;
+	while (line_of_commands[i])
+	{
+		line_of_commands[i] = replace_me(line_of_commands[i], '"', ' ', '\t');
+		line_of_commands[i] = replace_me(line_of_commands[i], 39, ' ', '\t');
+		create_list_of_tok(token_head, line_of_commands[i], env);
+		i++;
+	}
+}
 /*The main function of the lexer, we use split and get the command line*/
 int	lexer(char *string, char **env)
 {
@@ -120,26 +141,16 @@ int	lexer(char *string, char **env)
 
 	i = 0;
 	token_head = NULL;
-	if (handling_quotes(string) == ERROR_QUOTE)
-		return (printf("Not interpret unclosed quotes\n"));
-	if (check_parentheses(string))
-		return (ft_printf("bad parentheses\n"));
-	new_string = replace_me(string, '"', '\t', ' ');
-	new_string = replace_me(string, 39, '\t', ' ');
-	new_string = add_spaces_around_symbols(string);
+	if (handle_quotes(string) || first_check_parent(string))
+		return (1);
+	new_string = replace_chars(string);
 	line_of_commands = ft_split(new_string, ' ');
-	while (line_of_commands[i]) // I need to perform additional_check here?
-	{
-		line_of_commands[i] = replace_me(line_of_commands[i], '"', ' ', '\t');
-		line_of_commands[i] = replace_me(line_of_commands[i], 39, ' ', '\t');
-		create_list_of_tok(&token_head, line_of_commands[i], env);
-		i++;
-	}
-	priority_level(&token_head);
+	create_tokens(line_of_commands, &token_head, env);
+	//priority_level(&token_head);
 	update_token_types(&token_head);
 	//return (print_list_tokens(&token_head), 1);
 	executor(&token_head, env);
 	free_list(&token_head);
-	free_split(line_of_commands);
+	free_string_array(line_of_commands);
 	return (0);
 }
