@@ -6,18 +6,46 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 16:23:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/13 18:36:34 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/13 20:39:53 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char* extract_content_parenthes(char* str)
+{
+	char*	start_brace;
+	char*	end_brace;
+	char*	content;
+
+	if (ft_strchr(str, '{'))
+		start_brace = ft_strchr(str, '{');
+	else
+		return (str);
+
+	if (start_brace)
+	{
+		end_brace = ft_strchr(start_brace + 1, '}');
+		if (end_brace)
+		{
+			content = malloc(end_brace - start_brace);
+			if(content == NULL)
+				return (perror("Error: malloc"), NULL);
+			my_strncpy(content, start_brace + 1, end_brace - start_brace - 1);
+			content[end_brace - start_brace - 1] = '\0';
+			return (content);
+		}
+	}
+	return (str);
+}
 
 char *expansion_dollary(char *dollar, char **env)
 {
 	char	*key;
 	int		i;
 	int		key_len;
-
+	char *new_dollar = extract_content_parenthes(dollar);
+	printf("dollar: (%s)\n", dollar);
 	if (dollar[0] == '$')
 	{
 		if (dollar[1] == '{')
@@ -26,7 +54,7 @@ char *expansion_dollary(char *dollar, char **env)
 			key = strdup(dollar + 1);
 	}
 	else
-		key = strdup(dollar);
+		key = strdup(new_dollar);
 	i = 0;
 	key_len = strlen(key);
 	while (env[i] != NULL)

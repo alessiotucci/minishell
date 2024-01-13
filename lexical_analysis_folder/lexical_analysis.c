@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/13 14:52:25 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/13 20:24:29 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	create_tokens(char **line_of_commands, t_list_of_tok **token_head, char **e
 		line_of_commands[i] = replace_me(line_of_commands[i], '"', ' ', '\t');
 		line_of_commands[i] = replace_me(line_of_commands[i], 39, ' ', '\t');
 		flag = handling_quotes(line_of_commands[i]);
-		printf("flag: %d\n", flag);
+//		printf("flag: %d\n", flag);
 		create_list_of_tok(token_head, line_of_commands[i], env, flag);
 		i++;
 	}
