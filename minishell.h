@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/13 18:08:53 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/14 17:19:54 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@
 # define BG_YELLOW       "\033[43m"
 # define BG_RED          "\033[41m"
 /* Define the flag for open redirection*/
+// > operator T_REDIR_OUT
 #define OVERWRITE_FLAGS (O_WRONLY | O_CREAT | O_TRUNC)
+// >> operator T_REDIR_APP
 #define APPEND_FLAGS (O_WRONLY | O_CREAT | O_APPEND)
 
 /* Those macro are from a github, they seem
@@ -66,8 +68,8 @@ typedef enum e_type_of_tok
 	T_PARENT, // ( OR )
 	T_DOLLAR, // $
 	T_PIPES, // | 
-	T_REDIR_IN, // >
-	T_REDIR_OUT, // <
+	T_REDIR_IN, // <
+	T_REDIR_OUT, // >
 	T_REDIR_APP, // >>
 	T_HERE_DOC, // << 
 	T_LOGIC_OPERAR,// && or || 

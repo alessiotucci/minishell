@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/13 20:54:43 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/14 16:53:19 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,20 +198,20 @@ t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env, i
 	char	*new_cmd;
 
 	new_cmd = extract_content(cmd);
-	printf("***\nnew cmd: %s\nft_strchr(new_cmd, $): [%s]\n flag: %d\n***\n", new_cmd, ft_strchr(new_cmd, '$'), flag);
+//	printf("***\nnew cmd: %s\nft_strchr(new_cmd, $): [%s]\n flag: %d\n***\n", new_cmd, ft_strchr(new_cmd, '$'), flag);
 	//printf("before:%s%s%s\n extract %s%s%s\n", RED, cmd, RESET, GREEN, new_cmd, RESET);
 	if (valid_wildcard(cmd))
 		new_node = node_for_wildcard(0, cmd);
 	else if ((ft_strchr(new_cmd, '$') != NULL) && (flag != SINGLE_QUOTE))
 	{
-		printf("string for node_for_dollar: (%s)\n", new_cmd);
+//		printf("string for node_for_dollar: (%s)\n", new_cmd);
 		new_cmd = find_and_expand_vars(new_cmd, env);
 		//printf("string after the work: (%s)\n", new_cmd);
 		new_node = create_node(0, new_cmd);
 	}
 	else
 		new_node = create_node(0, new_cmd);
-	printf("new cmd: {%s}\n", new_cmd);
+//	printf("new cmd: {%s}\n", new_cmd);
 	if (*head == NULL)
 		*head = new_node;
 	else
@@ -223,6 +223,6 @@ t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env, i
 		new_node->previous = current;
 		new_node->index = current->index + 1;
 	}
-	printf("%s new node token is this:-> %s %s\n", BG_GREEN, new_node->token, RESET);
+//	printf("%s new node token is this:-> %s %s\n", BG_GREEN, new_node->token, RESET);
 	return (new_node);
 }

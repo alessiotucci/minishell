@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/12 17:39:11 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/14 17:23:33 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,21 @@ const char *namey[] =
 	"File Name "
 };
 
+void	edge_case_found(t_list_of_tok *redirect, t_list_of_tok *filename)
+{
+	(void)redirect;
+	(void)filename;
+	int	fd;
 
+	//printf("edge case found\n");
+	if (redirect->type == T_REDIR_OUT)
+		fd = open(filename->token, OVERWRITE_FLAGS, 0666);
+	else
+		fd = open(filename->token, APPEND_FLAGS, 0666);
+	if (fd == -1)
+		perror("open");
+	close(fd);
+}
 /* 5 function in this file 
  * This function goes throught he list and look for commands,
  * it return the first it finds !
@@ -37,8 +51,16 @@ const char *namey[] =
 t_list_of_tok	*find_command_in_list(t_list_of_tok **head)
 {
 	t_list_of_tok	*cmd_nod;
-
 	cmd_nod = *head;
+
+	if (cmd_nod != NULL && cmd_nod->index == 0 && (cmd_nod->type == T_REDIR_OUT || cmd_nod->type == T_REDIR_APP))
+	{
+		if (cmd_nod->next)
+			edge_case_found(cmd_nod, cmd_nod->next);
+		else
+			printf("error\n");
+		return (NULL);
+	}
 	while (cmd_nod != NULL)
 	{
 		if (cmd_nod->type == T_COMMAND || cmd_nod->type == T_BUILTIN)
