@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/14 17:19:54 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/14 17:37:55 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@
 # define DOUBLE_QUOTE 2
 # define NO_QUOTE 3
 # define SEVERAL_QUOTES 4
+
+/* error string */
+# define PARSE_ERROR "minishesh: parse error near '\\n'\n"
+
 typedef enum e_type_of_tok
 {
 	T_COMMAND,
