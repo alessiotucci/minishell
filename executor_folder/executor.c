@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/14 17:23:33 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/14 17:32:54 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	edge_case_found(t_list_of_tok *redirect, t_list_of_tok *filename)
 	else
 		fd = open(filename->token, APPEND_FLAGS, 0666);
 	if (fd == -1)
-		perror("open");
+		perror(PARSE_ERROR);
 	close(fd);
 }
 /* 5 function in this file 
@@ -58,7 +58,7 @@ t_list_of_tok	*find_command_in_list(t_list_of_tok **head)
 		if (cmd_nod->next)
 			edge_case_found(cmd_nod, cmd_nod->next);
 		else
-			printf("error\n");
+			printf(PARSE_ERROR);
 		return (NULL);
 	}
 	while (cmd_nod != NULL)
