@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 19:50:51 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/13 21:49:03 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/14 14:09:39 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void flag_for_echo(t_list_of_tok **head)
 	current = *head;
 	while (current != NULL)
 	{
-		if (current->type == T_FLAG)
+		if (current->type == T_FLAG && current->previous->type == T_BUILTIN && my_strcmp(current->previous->token, "echo") == 0)
 		{
 			flag = current->token;
 			if (flag[0] == '-' && flag[1] == 'n' && flag[2] != '\0')
@@ -28,7 +28,7 @@ void flag_for_echo(t_list_of_tok **head)
 				// Replace -nnnn with -n
 				new_flag = malloc(3 * sizeof(char));
 				if (new_flag == NULL)
-					fprintf(stderr, "Memory allocation failed\n");
+					printf("Memory allocation failed\n");
 				new_flag[0] = '-';
 				new_flag[1] = 'n';
 				new_flag[2] = '\0';
