@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/14 17:37:55 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/14 19:57:44 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,11 @@ void	token(void);
 void	parser(void);
 int		lexer(char *string, char **envp);
 void	try_builtin(void);
+
+/* found huge vulnerability */
+t_list_of_tok	**update_list_order(t_list_of_tok **head);
+void	find_empty_redirection(t_list_of_tok **head);
+t_list_of_tok	*create_empty_node(void);
 
 /* build in functions */
 void	minishell_pwd(void);
