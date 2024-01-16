@@ -137,5 +137,6 @@ void	find_empty_redirection(t_list_of_tok **head)
 t_list_of_tok	**update_list_order(t_list_of_tok **head)
 {
 	find_empty_redirection(head);
+//	swap_redirect_command(head);
 	return (head);
 }
