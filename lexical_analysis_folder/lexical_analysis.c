@@ -137,11 +137,11 @@ void	create_tokens(char **line_of_commands, t_list_of_tok **token_head, char **e
 int	lexer(char *string, char **env)
 {
 	char			**line_of_commands;
-	int				i;
+	//int				i;
 	t_list_of_tok	*token_head;
 	char			*new_string;
 
-	i = 0;
+	//i = 0;
 	token_head = NULL;
 	if (handle_quotes(string) || first_check_parent(string))
 		return (1);
