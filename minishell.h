@@ -170,6 +170,8 @@ void	try_builtin(void);
 t_list_of_tok	**update_list_order(t_list_of_tok **head);
 void	find_empty_redirection(t_list_of_tok **head);
 t_list_of_tok	*create_empty_node(void);
+void	insert_after_node(t_list_of_tok *node_to_insert_after, t_list_of_tok *new_node);
+void	remove_node(t_list_of_tok **head, t_list_of_tok *node_to_remove);
 
 /* build in functions */
 void	minishell_pwd(void);

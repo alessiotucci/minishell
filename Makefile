@@ -34,6 +34,7 @@ SRC = ./minishell.c \
 	./lexical_analysis_folder/helping_helper.c \
 	./lexical_analysis_folder/parethesis.c \
 	./lexical_analysis_folder/lexer_order_list.c \
+	./lexical_analysis_folder/order_helper.c \
 	./executor_folder/utils.c \
 	./executor_folder/executor.c \
 	./executor_folder/exec_helper.c \

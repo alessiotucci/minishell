@@ -134,9 +134,45 @@ void	find_empty_redirection(t_list_of_tok **head)
 	}
 }
 
+void	swap_redirection_with_command(t_list_of_tok **head)
+{
+    t_list_of_tok *current = *head;
+    t_list_of_tok *redir_node = NULL;
+    t_list_of_tok *file_node = NULL;
+    t_list_of_tok *command_node = NULL;
+
+    // Traverse the list to find the redirection and file nodes
+    while (current)
+	{
+        if (is_a_redirection(current))
+		{
+            redir_node = current;
+            file_node = current->next; // Assuming the file node always follows the redirection node
+        }
+		else if ((current->type == T_COMMAND || current->type == T_BUILTIN) && file_node)
+		{
+            command_node = current;
+            break;
+        }
+        current = current->next;
+    }
+
+    // If we found a command after a file name, perform the swap
+    if (command_node && file_node && redir_node)
+	{
+        // Remove the command node from its current position
+        remove_node(head, command_node);
+        // Insert the command node before the redirection node
+        insert_after_node(redir_node->previous, command_node);
+        // Reconnect the file node to the redirection node
+        insert_after_node(command_node, redir_node);
+    }
+}
+
+
 t_list_of_tok	**update_list_order(t_list_of_tok **head)
 {
 	find_empty_redirection(head);
-//	swap_redirect_command(head);
+	swap_redirection_with_command(head);
 	return (head);
 }
