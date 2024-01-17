@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 19:21:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/17 16:24:57 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/17 16:35:44 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void	find_empty_redirection(t_list_of_tok **head)
 				// Create an "EMPTY" node and insert it before the current node
 				printf("\n%sthe code would insert an empty node%s\n\n\n", YELLOW, RESET);
 				// Insertion logic here
+				// Create an "EMPTY" node and insert it before the current node
 				t_list_of_tok *empty_node = create_empty_node();
 				empty_node->next = current;
 				empty_node->previous = prev;
@@ -130,11 +131,7 @@ void	find_empty_redirection(t_list_of_tok **head)
 					prev->next = empty_node;
 				else
 					*head = empty_node; // Update head if it was the first node
-			}
-			else
-			{
-				printf("\n%sthe code would NOT insert an empty node%s\n\n\n", RED, RESET);
-				prev = current;
+				current->previous = empty_node;
 			}
 		}
 		current = current->next;
@@ -156,7 +153,7 @@ void	swap_redirection_with_command(t_list_of_tok **head)
             redir_node = current;
             file_node = current->next; // Assuming the file node always follows the redirection node
         }
-		else if ((current->type == T_COMMAND || current->type == T_BUILTIN) && file_node)
+		else if ((current->type == T_COMMAND || current->type == T_BUILTIN) && file_node && my_strcmp("EMPTY", current->token) != 0)
 		{
             command_node = current;
             break;
