@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/17 16:13:06 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/17 17:24:53 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,42 @@ void move_node(t_list_of_tok **head, t_list_of_tok *target_node, t_list_of_tok *
 		moving_node->previous = target_node->previous;
 		target_node->previous->next = moving_node;
 		target_node->previous = temp;
+	}
+}
+
+
+void move_node_fix(t_list_of_tok **head, t_list_of_tok *target_node, t_list_of_tok *moving_node)
+{
+	//t_list_of_tok *temp = NULL;
+	t_list_of_tok *sublist_end = moving_node;
+
+	// Find the end of the sublist that should be moved along with the moving node
+	while (sublist_end->next != NULL && sublist_end->next->type == T_COMMAND_ARGS)
+		sublist_end = sublist_end->next;
+
+	// If the moving node is the head of the list, update the head pointer
+	if (*head == moving_node)
+		*head = sublist_end->next;
+	// Disconnect the sublist from the list
+	if (moving_node->previous != NULL)
+		moving_node->previous->next = sublist_end->next;
+	if (sublist_end->next != NULL)
+		sublist_end->next->previous = moving_node->previous;
+
+	// If the target node is the head of the list, move the sublist to the front
+	if (*head == target_node)
+	{
+		sublist_end->next = *head;
+		(*head)->previous = sublist_end;
+		*head = moving_node;
+	}
+	else
+	{
+		// Otherwise, insert the sublist before the target node
+		sublist_end->next = target_node;
+		moving_node->previous = target_node->previous;
+		target_node->previous->next = moving_node;
+		target_node->previous = sublist_end;
 	}
 }
 

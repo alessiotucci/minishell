@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/17 16:13:33 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/17 17:23:36 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ t_list_of_tok	*create_empty_node(void);
 void	insert_after_node(t_list_of_tok *node_to_insert_after, t_list_of_tok *new_node);
 void	remove_node(t_list_of_tok **head, t_list_of_tok *node_to_remove);
 void	move_node(t_list_of_tok **head, t_list_of_tok *target_node, t_list_of_tok *moving_node);
-
+void move_node_fix(t_list_of_tok **head, t_list_of_tok *target_node, t_list_of_tok *moving_node);
 /* build in functions */
 void	minishell_pwd(void);
 void	minishell_cd(char *directory);
