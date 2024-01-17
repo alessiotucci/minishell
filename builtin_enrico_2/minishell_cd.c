@@ -6,50 +6,66 @@
 /*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 18:19:57 by enricogiral       #+#    #+#             */
-/*   Updated: 2023/12/29 15:59:58 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/17 12:49:24 by enricogiral      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 
-void minishell_cd(char *directory)
+#define MAX_PATH_LENGTH 1024
+
+char old_directory[MAX_PATH_LENGTH];
+
+void my_cd(char *directory) 
 {
-    if (directory == NULL) {
-        fprintf(stderr, "cd: missing argument\n");
+    if (directory == NULL) 
+    {
+        printf("Usage: cd <directory>\n");
         return;
     }
 
-    printf("Changing directory to: %s\n", directory);
-
-    // Verifica se il percorso esiste
-    if (access(directory, F_OK) != 0)
-	{
-        perror("cd");
+    // Salva la directory corrente
+    char current_directory[MAX_PATH_LENGTH];
+    if (getcwd(current_directory, sizeof(current_directory)) == NULL) 
+    {
+        perror("getcwd");
         return;
     }
 
-    // Cambia la directory corrente
-    if (chdir(directory) != 0)
-	{
+    // Salva la vecchia directory
+    strcpy(old_directory, current_directory);
+
+    // Cambia la directory
+    if (chdir(directory) != 0) 
+    {
         perror("cd");
-    }
-	else
-	{
-        printf("Directory change successful!\n");
+        // Se il cambio di directory fallisce, ripristina la vecchia directory
+        chdir(old_directory);
+    } 
+    else 
+    {
+        // Stampa il nuovo percorso dopo il cambio di directory
+        if (getcwd(current_directory, sizeof(current_directory)) != NULL) 
+        {
+            printf("%s\n", current_directory);
+        } else {
+            perror("getcwd");
+        }
     }
 }
 
-int main(int argc, char *argv[]) {
-    // Controlla che ci sia almeno un argomento
-    if (argc > 1) {
-        // Passa il primo argomento (il percorso) alla funzione
-        minishell_cd(argv[1]);
-    } else {
-        fprintf(stderr, "Usage: %s <directory>\n", argv[0]);
+int main(int argc, char *argv[]) 
+{
+    if (argc != 2) 
+    {
+        printf("Usage: %s <directory>\n", argv[0]);
+        return 1;
     }
+
+    my_cd(argv[1]);
 
     return 0;
 }
-
