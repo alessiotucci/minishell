@@ -6,7 +6,7 @@
 /*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 18:49:23 by enricogiral       #+#    #+#             */
-/*   Updated: 2024/01/17 11:38:21 by enricogiral      ###   ########.fr       */
+/*   Updated: 2024/01/17 11:46:50 by enricogiral      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@
 
 #define MAX_ENV_VARIABLES 100
 
-void print_export_format(char *var, char *value) {
+void print_export_format(char *var, char *value) 
+{
     printf("declare -x %s=\"%s\"\n", var, value);
 }
 
 void my_export(char *args[], char *env[]) 
 {
-    if (args[1] == NULL) {
+    if (args[1] == NULL) 
+    {
         // Visualizza l'elenco delle variabili d'ambiente
         int i = 0;
         while (env[i] != NULL) 
@@ -114,8 +116,8 @@ void my_export(char *args[], char *env[])
     }
 }
 
-
-int main(int argc, char *argv[], char *env[]) {
+int main(int argc, char *argv[], char *env[]) 
+{
     my_export(argv, env);
     return 0;
 }
