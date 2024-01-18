@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 19:21:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/17 17:25:33 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/18 11:55:37 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ t_list_of_tok	*create_empty_node(void)
 int	is_valid_prev(t_list_of_tok *node)
 {
 	if (node == NULL || (node->type != T_BUILTIN && node->type != T_COMMAND && node->type != T_FLAG && node->type != T_COMMAND_ARGS))
-		return (printf("\tprev is NULL, or different than COMMAND\n"), 0);
+	//	return (printf("\tprev is NULL, or different than COMMAND\n"), 0);
+	return (0);
 	else
-		return (printf("\tprev is not null, or it's command or builtins\n"), 1);
+	//	return (printf("\tprev is not null, or it's command or builtins\n"), 1);
+	return (1);
 }
 
 /* Check if the next node is valid */
@@ -56,31 +58,36 @@ int	is_valid_next(t_list_of_tok *node)
 int	is_command_or_builtin(t_list_of_tok *node)
 {
 	// Print the token of the next node for debugging purposes
+	/*
 	if (node != NULL)
 		printf("\nNEXT is: %s\n", node->token);
 	else
 		printf("\nNEXT is: NULL\n");
-
-	// Check if 'next' is NULL or not a command/built-in
+	*/
 	if (node == NULL || (node->type != T_COMMAND && node->type != T_BUILTIN && node->type != T_FILE_NAME))
-		return (printf("next is null or not a command/built-in, not a filename\n"), 0);
-	// Check if the 'next' node is followed by a command/built-in
+	//	return (printf("next is null or not a command/built-in, not a filename\n"), 0);
+	return (0);
 	else if (node->type == T_FILE_NAME && (node->next->type == T_COMMAND || node->next->type == T_BUILTIN || is_a_redirection(node->next)))
-		return (printf("\tafter file_name there is a command/built-in, or a redirection!!!\n"), 2);
+	//	return (printf("\tafter file_name there is a command/built-in, or a redirection!!!\n"), 2);
+	return (2);
 	else
-		return (printf("\tnext is a command/built-in\n"), 1);
+	//	return (printf("\tnext is a command/built-in\n"), 1);
+	return (1);
 }
 /* Determine what follows a node (filename) after redirection */
 int	what_after_filename(t_list_of_tok *node)
 {
 	if (node == NULL)
-		return (printf("No token after node\n"), 0);
-	printf("Token after node is: %s\n", node->token);
+	//	return (printf("No token after node\n"), 0);
+	return (0);
+	//printf("Token after node is: %s\n", node->token);
 	// Check if the token after the node is a command or built-in
 	if (node->type == T_COMMAND || node->type == T_BUILTIN)
-		return (printf("Command or built-in found after node\n"), 1);
+	//	return (printf("Command or built-in found after node\n"), 1);
+	return (1);
 	// If the next token is not a command or built-in, return 2
-	return (printf("No command or built-in after node\n"), 2);
+	//return (printf("No command or built-in after node\n"), 2);
+	return (2);
 }
 
 
@@ -108,20 +115,20 @@ void	find_empty_redirection(t_list_of_tok **head)
 		// Check if the current node is a redirection
 		if (is_a_redirection(current))
 		{
-			printf("\t%scurrent (%s) index: %d %s\n", BG_YELLOW, current->token, current->index, BG_RESET);
+			/*printf("\t%scurrent (%s) index: %d %s\n", BG_YELLOW, current->token, current->index, BG_RESET);
 			if (prev)
 				printf("has before (%s)", prev->token);
 			if (next)
-				printf("and after (%s)\n", next->token);
+				printf("and after (%s)\n", next->token); */
 			// Check if the previous node is not a command, flag, or command argument
 			// and if the next node is not a command, flag, or command argument
-			printf("\n\t[%sPerforming check on prev and next%s]\n", GREEN, RESET);
+//			printf("\n\t[%sPerforming check on prev and next%s]\n", GREEN, RESET);
 			if (next->next)
 				after_filename = what_after_filename(next->next);
 			if (is_valid_prev(prev) == 0 && is_valid_next(next) == 0 && after_filename != 1)
 			{
 				// Create an "EMPTY" node and insert it before the current node
-				printf("\n%sthe code would insert an empty node%s\n\n\n", YELLOW, RESET);
+//				printf("\n%sthe code would insert an empty node%s\n\n\n", YELLOW, RESET);
 				// Insertion logic here
 				// Create an "EMPTY" node and insert it before the current node
 				t_list_of_tok *empty_node = create_empty_node();
@@ -144,7 +151,7 @@ void	swap_redirection_with_command(t_list_of_tok **head)
 	t_list_of_tok *redir_node = NULL;
 	t_list_of_tok *file_node = NULL;
 	t_list_of_tok *command_node = NULL;
-	printf("swap redirection is being called\n");
+//	printf("swap redirection is being called\n");
 	// Traverse the list to find the redirection and file nodes
 	while (current)
 	{
@@ -164,7 +171,7 @@ void	swap_redirection_with_command(t_list_of_tok **head)
 	// If we found a command after a file name, perform the swap
 	if (command_node && file_node && redir_node)
 	{
-		printf("swap is being performed\n");
+//		printf("swap is being performed\n");
 		move_node(head, redir_node, command_node);
 		//move_node_fix(head, redir_node, command_node);
 		/*
