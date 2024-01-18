@@ -6,7 +6,7 @@
 /*   By: engirald <engirald@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 18:49:23 by enricogiral       #+#    #+#             */
-/*   Updated: 2024/01/18 17:03:48 by engirald         ###   ########.fr       */
+/*   Updated: 2024/01/18 17:12:16 by engirald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,25 +100,32 @@ void my_export(char *args[], char *env[])
             else 
             {
                 // Non contiene un valore, gestisci come se avesse un valore vuoto
-                char *existing_value = getenv(args[i]);
-
-                int j = 0;
-                while (env[j] != NULL) 
+                if (!is_valid_identifier(args[i])) 
                 {
-                    if (existing_value == NULL) 
+                    printf("export: not an identifier: %s\n", args[i]);
+                }
+                else 
+                {
+                    char *existing_value = getenv(args[i]);
+
+                    int j = 0;
+                    while (env[j] != NULL) 
                     {
-                        // Variabile non esistente, cerca spazio libero e imposta manualmente
-                        int k = 0;
-                        while (env[k] != NULL) 
+                        if (existing_value == NULL) 
                         {
-                            k++;
+                            // Variabile non esistente, cerca spazio libero e imposta manualmente
+                            int k = 0;
+                            while (env[k] != NULL) 
+                            {
+                                k++;
+                            }
+                            env[k] = malloc(strlen(args[i]) + 1);
+                            strcpy(env[k], args[i]);
+                            print_export_format(args[i], "");
+                            break;
                         }
-                        env[k] = malloc(strlen(args[i]) + 1);
-                        strcpy(env[k], args[i]);
-                        print_export_format(args[i], "");
-                        break;
+                        j++;
                     }
-                    j++;
                 }
             }
             i++;
