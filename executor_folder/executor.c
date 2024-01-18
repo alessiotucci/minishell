@@ -6,12 +6,14 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/18 11:58:54 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/18 15:08:42 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "time.h"
 #include "../minishell.h"
+int g_exit_status;  // global variable to store exit status
+
 const char *namey[] =
 {
 	"Command",
@@ -138,6 +140,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 	pid_t	fix_pid;
 	int	stdout_copy;
 	int	stdin_copy;
+	int	status;
 
 	stdin_copy = dup(STDIN_FILENO);
 	stdout_copy = dup(STDOUT_FILENO);
@@ -156,7 +159,9 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 			printf("command not found: %s\n", command);
 		}
 		else
-				wait(NULL);
+				waitpid(fix_pid, &status, 0);
+		if (WIFEXITED(status))
+			g_exit_status = WEXITSTATUS(status);
 	}
 restore_original_stdout(stdout_copy, cmd_nod);
 restore_original_stdin(stdin_copy, cmd_nod);

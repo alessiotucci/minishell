@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/17 17:23:36 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/18 15:14:00 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@
 
 /* error string */
 # define PARSE_ERROR "minishesh: parse error near '\\n'\n"
+
+// minishell.h
+extern int g_exit_status;  // declare g_exit_status
 
 typedef enum e_type_of_tok
 {

@@ -6,7 +6,7 @@
 /*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/13 12:39:16 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/18 15:15:02 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ static char	**copy_array(char **env)
 int	main(int ac, char *av[], char *envp[])
 {
 	char	*input;
-	char **env_copy;
+	char	**env_copy;
+	int		g_exit_status;  // define g_exit_status
 
 	(void)ac;
 	(void)av;
