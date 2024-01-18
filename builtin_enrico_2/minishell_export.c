@@ -3,22 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_export.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
+/*   By: engirald <engirald@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 18:49:23 by enricogiral       #+#    #+#             */
-/*   Updated: 2024/01/17 11:46:50 by enricogiral      ###   ########.fr       */
+/*   Updated: 2024/01/18 17:03:48 by engirald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <stdio.h>
 
 #define MAX_ENV_VARIABLES 100
 
 void print_export_format(char *var, char *value) 
 {
     printf("declare -x %s=\"%s\"\n", var, value);
+}
+
+int is_valid_identifier(char *str) 
+{
+    // Controlla se la stringa è un identificatore valido
+    if (!isalpha(str[0]) && str[0] != '_') {
+        return 0;
+    }
+
+    int i = 1;
+    while (str[i] != '\0') {
+        if (!isalnum(str[i]) && str[i] != '_') {
+            return 0;
+        }
+        i++;
+    }
+
+    return 1;
 }
 
 void my_export(char *args[], char *env[]) 
@@ -32,8 +52,7 @@ void my_export(char *args[], char *env[])
             char *equal_sign = strchr(env[i], '=');
             if (equal_sign != NULL) 
             {
-                // Contiene un valore, visualizza nel formato richiesto
-                *equal_sign = '\0';  // Termina la stringa prima dell'uguale
+                *equal_sign = '\0';
                 char *value = equal_sign + 1;
                 print_export_format(env[i], value);
             }
@@ -47,22 +66,26 @@ void my_export(char *args[], char *env[])
         while (args[i] != NULL) 
         {
             char *equal_sign = strchr(args[i], '=');
+
             if (equal_sign != NULL) 
             {
-                // Contiene un valore, imposta/aggiorna manualmente
-                *equal_sign = '\0';  // Termina la stringa prima dell'uguale
+                // Contiene un valore, effettua controlli sull'identificatore
+                *equal_sign = '\0';
                 char *value = equal_sign + 1;
-                char *existing_value = getenv(args[i]);
 
-                if (existing_value != NULL) 
+                if (!is_valid_identifier(args[i])) 
                 {
-                    // Variabile già esistente, cerca e aggiorna manualmente
+                    printf("export: not an identifier: %s\n", args[i]);
+                }
+                else 
+                {
+                    // Controlla e aggiorna manualmente
                     int j = 0;
                     while (env[j] != NULL) 
                     {
                         if (strncmp(env[j], args[i], strlen(args[i])) == 0) 
                         {
-                            free(env[j]);  // Libera la memoria precedente
+                            free(env[j]);
                             env[j] = malloc(strlen(args[i]) + strlen(value) + 2);
                             strcpy(env[j], args[i]);
                             strcat(env[j], "=");
@@ -72,20 +95,6 @@ void my_export(char *args[], char *env[])
                         }
                         j++;
                     }
-                } 
-                else 
-                {
-                    // Variabile non esistente, cerca spazio libero e imposta manualmente
-                    int j = 0;
-                    while (env[j] != NULL) 
-                    {
-                        j++;
-                    }
-                    env[j] = malloc(strlen(args[i]) + strlen(value) + 2);
-                    strcpy(env[j], args[i]);
-                    strcat(env[j], "=");
-                    strcat(env[j], value);
-                    print_export_format(args[i], value);
                 }
             } 
             else 
@@ -94,7 +103,8 @@ void my_export(char *args[], char *env[])
                 char *existing_value = getenv(args[i]);
 
                 int j = 0;
-                while (env[j] != NULL) {
+                while (env[j] != NULL) 
+                {
                     if (existing_value == NULL) 
                     {
                         // Variabile non esistente, cerca spazio libero e imposta manualmente
