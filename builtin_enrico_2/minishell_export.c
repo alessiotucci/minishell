@@ -6,7 +6,7 @@
 /*   By: engirald <engirald@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 18:49:23 by enricogiral       #+#    #+#             */
-/*   Updated: 2024/01/18 17:12:16 by engirald         ###   ########.fr       */
+/*   Updated: 2024/01/18 17:53:18 by engirald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,16 @@ void print_export_format(char *var, char *value)
 int is_valid_identifier(char *str) 
 {
     // Controlla se la stringa è un identificatore valido
-    if (!isalpha(str[0]) && str[0] != '_') {
+    if (!isalpha(str[0]) && str[0] != '_') 
+    {
         return 0;
     }
 
     int i = 1;
-    while (str[i] != '\0') {
-        if (!isalnum(str[i]) && str[i] != '_') {
+    while (str[i] != '\0') 
+    {
+        if (!isalnum(str[i]) && str[i] != '_') 
+        {
             return 0;
         }
         i++;
