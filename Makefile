@@ -65,8 +65,21 @@ RM = rm -f
 
 #------------------------------------------------------------------------------
 # This set the C compiler with the specific warning flags
-CC = gcc -Wall -Werror -Wextra
+#CC = gcc -Wall -Werror -Wextra
 
+#------------------#
+# try with bing ai|#
+# -----------------#
+# This set the C compiler with the specific warning flags
+CC = gcc -Wall -Werror -Wextra -I/usr/local/opt/readline/include
+
+#------------------#
+# try with bing ai|#
+# -----------------#
+# This set the linker flags
+LDFLAGS = -L/usr/local/opt/readline/lib -lreadline
+
+#-------------------------------------------------------------------------------
 # Color codes for echo commands to make the output more visually informative.
 GREEN := \033[1;32m
 CYAN := \033[1;36m
@@ -74,12 +87,14 @@ YELLOW := \033[1;33m
 RED := \033[1;31m
 RESET := \033[0m
 
-#--------------------------------------------------
+#---------------------------------------------------------
+# before instead of the $(LDFLAGS) it was just -lreadline |
+#---------------------------------------------------------
 # Rule for building the "minishell" executable.
 $(NAME): $(OBJS)
 	@echo "$(CYAN)Building $(NAME).$(RESET)"
 	$(MAKE) -C libft
-	${CC} -o $(NAME) $(OBJS) $(LIBFT) -lreadline
+	${CC} -o $(NAME) $(OBJS) $(LIBFT) $(LDFLAGS)
 	@echo "$(GREEN) $(NAME)minishell  created successfully! $(RESET)"
 
 #--------------------------------------------------

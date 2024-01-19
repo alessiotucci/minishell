@@ -153,7 +153,7 @@ int	lexer(char *string, char **env)
 //	print_list_tokens(&token_head);
 	update_list_order(&token_head);
 //	printf("\n***\t\nafter the change\n");
-//	print_list_tokens(&token_head);
+	//print_list_tokens(&token_head);
 	//return (0);
 	executor(&token_head, env);
 	free_list(&token_head);

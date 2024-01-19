@@ -128,7 +128,7 @@ void	find_empty_redirection(t_list_of_tok **head)
 			if (is_valid_prev(prev) == 0 && is_valid_next(next) == 0 && after_filename != 1)
 			{
 				// Create an "EMPTY" node and insert it before the current node
-//				printf("\n%sthe code would insert an empty node%s\n\n\n", YELLOW, RESET);
+				printf("\n%sthe code would insert an empty node%s\n\n\n", YELLOW, RESET);
 				// Insertion logic here
 				// Create an "EMPTY" node and insert it before the current node
 				t_list_of_tok *empty_node = create_empty_node();
@@ -188,7 +188,8 @@ void	swap_redirection_with_command(t_list_of_tok **head)
 
 t_list_of_tok	**update_list_order(t_list_of_tok **head)
 {
-	find_empty_redirection(head);
+	if (find_command_in_list(head) == NULL)
+		find_empty_redirection(head);
 	swap_redirection_with_command(head);
 	return (head);
 }

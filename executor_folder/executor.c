@@ -52,11 +52,27 @@ t_list_of_tok	*find_command_in_list(t_list_of_tok **head)
 
 /* 4) this functinon needs to be written entirely 
  * it has being copy and paste from bingAi again
- *
- * */
-static int	find_redirect(t_list_of_tok *cmd_node)
+*/
+t_list_of_tok *open_file(t_list_of_tok *nod)
+{
+	int	fd;
+
+	if (nod->type == T_REDIR_OUT)
+		fd = open(nod->next->token, OVERWRITE_FLAGS, 0666);
+	else
+		fd = open(nod->next->token, APPEND_FLAGS, 0666);
+	if (fd == -1)
+	{
+		perror("open");
+		exit(EXIT_FAILURE);
+	}
+	close(fd);
+	return (nod);
+}
+int	find_redirect(t_list_of_tok *cmd_node)
 {
 	t_list_of_tok	*iterator;
+	t_list_of_tok	*last_redirect = NULL;
 
 	iterator = cmd_node;
 	while (iterator != NULL)
@@ -64,19 +80,18 @@ static int	find_redirect(t_list_of_tok *cmd_node)
 		if (iterator->type == T_REDIR_OUT || iterator->type == T_REDIR_APP || iterator->type == T_REDIR_IN)
 		{
 			if (iterator->next == NULL)
-			{
-				printf("minishesh: parse error near '\\n\'\n");
-				return (1);
-			}
+				return (set_g_exit(GENERAL_ERROR), printf("minishesh: parse error near '\\n\'\n"), 1);
 			if (iterator->next->type == T_FILE_NAME)
-			{
-				cmd_node->file_name = ft_strdup(iterator->next->token);
-				cmd_node->redirect_type = iterator->type; // latest update we need more variables
-				//printf("cmd_node->token:(%s) and cmd_node->filename:(%s)\n", cmd_node->token, cmd_node->file_name);
-				return (0);
-			}
+				last_redirect = open_file(iterator); // keep track of the last redirect
 		}
 		iterator = iterator->next;
+	}
+	if (last_redirect != NULL) // if a redirect was found
+	{
+		cmd_node->file_name = ft_strdup(last_redirect->next->token);
+		cmd_node->redirect_type = last_redirect->type;
+	//printf("cmd_node->token:(%s) and cmd_node->filename:(%s)\n", cmd_node->token, cmd_node->file_name);
+		return (0);
 	}
 	return (0);
 }
