@@ -11,52 +11,64 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/* Helper function to insert a node after a given node */
-void	insert_after_node(t_list_of_tok *nod_after, t_list_of_tok *new_node)
+/* 4 Check if the previous node is valid */
+int	is_valid_prev(t_list_of_tok *node)
 {
-	if (nod_after == NULL || new_node == NULL)
-		return ;
-	new_node->next = nod_after->next;
-	new_node->previous = nod_after;
-	if (nod_after->next != NULL)
-		nod_after->next->previous = new_node;
-	nod_after->next = new_node;
-}
-
-/* Helper function to remove a node from the list */
-void	remove_node(t_list_of_tok **head, t_list_of_tok *node_to_remove)
-{
-	if (*head == NULL || node_to_remove == NULL)
-		return ;
-	if (node_to_remove->previous != NULL)
-		node_to_remove->previous->next = node_to_remove->next;
+	if (node == NULL || (node->type != T_BUILTIN
+			&& node->type != T_COMMAND
+			&& node->type != T_FLAG
+			&& node->type != T_COMMAND_ARGS))
+		return (0);
 	else
-		*head = node_to_remove->next;
-	if (node_to_remove->next != NULL)
-		node_to_remove->next->previous = node_to_remove->previous;
-	node_to_remove->next = NULL;
-	node_to_remove->previous = NULL;
+		return (1);
 }
 
-void	move_node(t_list_of_tok **head, t_list_of_tok *target, t_list_of_tok *moving)
+/* 3 Check if the next node is valid */
+int	is_valid_next(t_list_of_tok *node)
+{
+	if (node == NULL || (node->type != T_COMMAND
+			&& node->type != T_FLAG
+			&& node->type != T_COMMAND_ARGS))
+		return (0);
+	else
+		return (1);
+}
+
+/* 2 Check if the next node is a command,
+ * built-in, or followed by a command/built-in */
+int	is_command_or_builtin(t_list_of_tok *node)
+{
+	if (node == NULL || (node->type != T_COMMAND
+			&& node->type != T_BUILTIN
+			&& node->type != T_FILE_NAME))
+		return (0);
+	else if (node->type == T_FILE_NAME && (node->next->type == T_COMMAND
+			|| node->next->type == T_BUILTIN
+			|| is_a_redirection(node->next)))
+		return (2);
+	else
+		return (1);
+}
+
+/* 1 */
+void	move_node(t_list_of_tok **head, t_list_of_tok *target, t_list_of_tok *mov)
 {
 	t_list_of_tok	*sublist_end;
 
-	sublist_end = moving;
+	sublist_end = mov;
 	while (sublist_end->next && sublist_end->next->type != T_REDIR_OUT && sublist_end->next->type != T_REDIR_IN && sublist_end->next->type != T_REDIR_APP && sublist_end->next->type != T_PIPES)
 		sublist_end = sublist_end->next;
-	if (*head == moving)
-		*head = moving->next;
-	if (moving->previous != NULL)
-		moving->previous->next = sublist_end->next;
+	if (*head == mov)
+		*head = mov->next;
+	if (mov->previous != NULL)
+		mov->previous->next = sublist_end->next;
 	if (sublist_end->next != NULL)
-		sublist_end->next->previous = moving->previous;
-	moving->previous = target->previous;
+		sublist_end->next->previous = mov->previous;
+	mov->previous = target->previous;
 	sublist_end->next = target;
 	if (target->previous != NULL)
-		target->previous->next = moving;
+		target->previous->next = mov;
 	target->previous = sublist_end;
 	if (*head == target)
-		*head = moving;
+		*head = mov;
 }

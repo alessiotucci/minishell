@@ -14,7 +14,7 @@
 
 int	is_a_redirection(t_list_of_tok *token);
 
-/*2)  Helper function to create a new node */
+/*5)  Helper function to create a new node */
 t_list_of_tok	*create_empty_node(void)
 {
 	t_list_of_tok	*new_node;
@@ -34,36 +34,7 @@ t_list_of_tok	*create_empty_node(void)
 	return (new_node);
 }
 
-/* Check if the previous node is valid */
-int	is_valid_prev(t_list_of_tok *node)
-{
-	if (node == NULL || (node->type != T_BUILTIN && node->type != T_COMMAND && node->type != T_FLAG && node->type != T_COMMAND_ARGS))
-		return (0);
-	else
-		return (1);
-}
-
-/* Check if the next node is valid */
-int	is_valid_next(t_list_of_tok *node)
-{
-	if (node == NULL || (node->type != T_COMMAND && node->type != T_FLAG && node->type != T_COMMAND_ARGS))
-		return (0);
-	else
-		return (1);
-}
-
-/* Check if the next node is a command, built-in, or followed by a command/built-in */
-int	is_command_or_builtin(t_list_of_tok *node)
-{
-	if (node == NULL || (node->type != T_COMMAND && node->type != T_BUILTIN && node->type != T_FILE_NAME))
-		return (0);
-	else if (node->type == T_FILE_NAME && (node->next->type == T_COMMAND || node->next->type == T_BUILTIN || is_a_redirection(node->next)))
-		return (2);
-	else
-		return (1);
-}
-
-/* Determine what follows a node (filename) after redirection */
+/* 4 Determine what follows a node (filename) after redirection */
 int	what_after_filename(t_list_of_tok *node)
 {
 	if (node == NULL)
@@ -73,14 +44,7 @@ int	what_after_filename(t_list_of_tok *node)
 	return (2);
 }
 
-/* always pass a valid pointer, otherwise segfault */
-int	is_a_redirection(t_list_of_tok *token)
-{
-	if (token->type == T_REDIR_OUT || token->type == T_REDIR_IN || token->type == T_REDIR_APP)
-		return (1);
-	else
-		return (0);
-}
+
 /*3) function that looks for empty redirection */
 void	find_empty_redirection(t_list_of_tok **head)
 {

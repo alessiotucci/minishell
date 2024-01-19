@@ -179,6 +179,13 @@ void			insert_after_node(t_list_of_tok *node_to_insert_after, t_list_of_tok *new
 void			remove_node(t_list_of_tok **head, t_list_of_tok *node_to_remove);
 void			move_node(t_list_of_tok **head, t_list_of_tok *target_node, t_list_of_tok *moving_node);
 void			move_node_fix(t_list_of_tok **head, t_list_of_tok *target_node, t_list_of_tok *moving_node);
+/* moving around functino */
+int				is_a_redirection(t_list_of_tok *token);
+int				is_valid_prev(t_list_of_tok *node);
+int				is_valid_next(t_list_of_tok *node);
+int				is_command_or_builtin(t_list_of_tok *node);
+char			*replace_chars(char *string);
+void			free_list(t_list_of_tok **head);
 /* build in functions */
 void			minishell_pwd(void);
 void			minishell_cd(char *directory);

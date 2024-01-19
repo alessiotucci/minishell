@@ -55,8 +55,8 @@ t_list_of_tok	*node_for_dollar(int lvl, char *spitted, char **env)
 	char	*before_dollar;
 
 	printf("spitted: %s\n", spitted);
-	printf("$ strchr: %s\n", dollar_pos);
 	dollar_pos = ft_strchr(spitted, '$');
+	printf("$ strchr: %s\n", dollar_pos);
 	if (dollar_pos != NULL && dollar_pos != spitted)
 	{
 		// Dollar sign is not at the beginning of the string

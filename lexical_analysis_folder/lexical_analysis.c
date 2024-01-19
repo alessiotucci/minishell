@@ -12,21 +12,7 @@
 
 #include "../minishell.h"
 
-/* check carefully what need to be freed */
-static void	free_list(t_list_of_tok **head)
-{
-	t_list_of_tok	*current;
-	t_list_of_tok	*next_node;
 
-	current = *head;
-	while (current != NULL)
-	{
-		next_node = current->next;
-		free(current);
-		current = next_node;
-	}
-	*head = NULL;
-}
 
 int	handling_quotes(char *input)
 {
@@ -79,18 +65,7 @@ int	first_check_parent(char *string)
 	return (0);
 }
 
-/* Function to replace characters in string */
-char	*replace_chars(char *string)
-{
-	char	*new_string;
-
-	new_string = replace_me(string, '"', '\t', ' ');
-	new_string = replace_me(string, 39, '\t', ' ');
-	new_string = add_spaces_around_symbols(string);
-	return (new_string);
-}
-
-/* Function to create list of tokens */
+/*2 Function to create list of tokens */
 void	create_tokens(char **line_of_commands, t_list_of_tok **token_head, char **env)
 {
 	int	i;
@@ -107,7 +82,7 @@ void	create_tokens(char **line_of_commands, t_list_of_tok **token_head, char **e
 	}
 }
 
-/*The main function of the lexer, we use split and get the command line*/
+/*1 The main function of the lexer, we use split and get the command line*/
 int	lexer(char *string, char **env)
 {
 	char			**line_of_commands;

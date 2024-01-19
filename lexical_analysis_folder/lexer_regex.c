@@ -54,3 +54,12 @@ int	is_here_doc(char *str)
 	else
 		return (0);
 }
+
+/* always pass a valid pointer, otherwise segfault */
+int	is_a_redirection(t_list_of_tok *token)
+{
+	if (token->type == T_REDIR_OUT || token->type == T_REDIR_IN || token->type == T_REDIR_APP)
+		return (1);
+	else
+		return (0);
+}

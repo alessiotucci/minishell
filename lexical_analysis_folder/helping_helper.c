@@ -13,6 +13,21 @@
 #include "../minishell.h"
 #include "stdbool.h"
 
+/* check carefully what need to be freed */
+void	free_list(t_list_of_tok **head)
+{
+	t_list_of_tok	*current;
+	t_list_of_tok	*next_node;
+
+	current = *head;
+	while (current != NULL)
+	{
+		next_node = current->next;
+		free(current);
+		current = next_node;
+	}
+	*head = NULL;
+}
 char	*replace_me(char *str, char quote, char replacement, char me)
 {
 	int		i;
@@ -42,22 +57,6 @@ int	is_logical_op(char *str)
 		return (0);
 }
 
-int	is_flag(char *str)
-{
-	if (str[0] == '-')
-		return (1);
-	else
-		return (0);
-}
-
-int	is_dollar(char *str)
-{
-	if (str[0] == '$')
-		return (1);
-	else
-		return (0);
-}
-
 int	is_builtin(char *str)
 {
 	if (my_strcmp(str, "echo") == 0
@@ -70,4 +69,15 @@ int	is_builtin(char *str)
 		return (1);
 	else
 		return (0);
+}
+
+/* Function to replace characters in string */
+char	*replace_chars(char *string)
+{
+	char	*new_string;
+
+	new_string = replace_me(string, '"', '\t', ' ');
+	new_string = replace_me(string, 39, '\t', ' ');
+	new_string = add_spaces_around_symbols(string);
+	return (new_string);
 }

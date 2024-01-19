@@ -28,7 +28,8 @@ SRC = ./minishell.c \
 	./builtin_folder/exec_builtin.c \
 	./dollar_work/dollars.c \
 	./lexical_analysis_folder/lexical_analysis.c \
-	./lexical_analysis_folder/lexer_helper.c \
+	./lexical_analysis_folder/lexer_regex.c \
+	./lexical_analysis_folder/lexer_regex2.c \
 	./lexical_analysis_folder/lexer_list.c \
 	./lexical_analysis_folder/lexer_token.c \
 	./lexical_analysis_folder/helping_helper.c \
