@@ -12,50 +12,21 @@
 
 #include "../minishell.h"
 
-
-
+/* check carefully what need to be freed */
 static void	free_list(t_list_of_tok **head)
 {
-	t_list_of_tok *current;
-	t_list_of_tok *next_node;
+	t_list_of_tok	*current;
+	t_list_of_tok	*next_node;
 
 	current = *head;
 	while (current != NULL)
 	{
 		next_node = current->next;
-//		free(current->token);//  DO I NEED TO USE STRDUP (?)
 		free(current);
 		current = next_node;
 	}
 	*head = NULL;
 }
-/* Handling the quotes 
-int	handling_quotes(char *input)
-{
-	int	count_single;
-	int	count_double;
-	int	i;
-
-	i = 0;
-	count_double = 0;
-	count_single = 0;
-	while (input[i])
-	{
-		if (input[i] == '"' )
-			count_double++;
-		if (input[i] == 39)
-			count_single++;
-		i++;
-	}
-	if (count_single == 0 && count_double == 0)
-		return (NO_QUOTE);
-	else if (count_single != 0 && count_double == 0)
-		return (SINGLE_QUOTE);
-	else if (count_single == 0 && count_double != 0)
-		return (DOUBLE_QUOTE);
-	else
-		return (ERROR_QUOTE);
-} */
 
 int	handling_quotes(char *input)
 {
@@ -63,6 +34,7 @@ int	handling_quotes(char *input)
 	int	count_double;
 	int	i;
 	int	total_quotes;
+
 	i = 0;
 	count_double = 0;
 	count_single = 0;
@@ -106,6 +78,7 @@ int	first_check_parent(char *string)
 		return (set_g_exit(GENERAL_ERROR), printf("syntax error near unexpected token\n"));
 	return (0);
 }
+
 /* Function to replace characters in string */
 char	*replace_chars(char *string)
 {
@@ -122,39 +95,37 @@ void	create_tokens(char **line_of_commands, t_list_of_tok **token_head, char **e
 {
 	int	i;
 	int	flag;
+
 	i = 0;
 	while (line_of_commands[i])
 	{
 		line_of_commands[i] = replace_me(line_of_commands[i], '"', ' ', '\t');
 		line_of_commands[i] = replace_me(line_of_commands[i], 39, ' ', '\t');
 		flag = handling_quotes(line_of_commands[i]);
-//		printf("flag: %d\n", flag);
 		create_list_of_tok(token_head, line_of_commands[i], env, flag);
 		i++;
 	}
 }
+
 /*The main function of the lexer, we use split and get the command line*/
 int	lexer(char *string, char **env)
 {
 	char			**line_of_commands;
-	//int				i;
 	t_list_of_tok	*token_head;
 	char			*new_string;
 
-	//i = 0;
 	token_head = NULL;
 	if (handle_quotes(string) || first_check_parent(string))
 		return (1);
 	new_string = replace_chars(string);
 	line_of_commands = ft_split(new_string, ' ');
 	create_tokens(line_of_commands, &token_head, env);
-	//priority_level(&token_head);
+	priority_level(&token_head);
 	update_token_types(&token_head);
-//	print_list_tokens(&token_head);
+	print_list_tokens(&token_head);
 	update_list_order(&token_head);
-//	printf("\n***\t\nafter the change\n");
-	//print_list_tokens(&token_head);
-	//return (0);
+	printf("\n***\t\nafter the change\n");
+	print_list_tokens(&token_head);
 	executor(&token_head, env);
 	free_list(&token_head);
 //	free_string_array(line_of_commands);

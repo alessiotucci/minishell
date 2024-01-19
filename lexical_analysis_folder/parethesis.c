@@ -55,37 +55,39 @@ void	priority_level(t_list_of_tok **head)
 	return ;
 }
 
-char	*add_spaces_around_symbols(char *command)
+char	*add_spaces_around_symbols(char *cmd)
 {
 	int		length;
-	char	*new_command;
+	char	*new_cmd;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	length = ft_strlen(command);
-	new_command = malloc(length * 2 + 1);
-	while (command[i] != '\0')
+	length = ft_strlen(cmd);
+	new_cmd = malloc(length * 2 + 1);
+	while (cmd[i] != '\0')
 	{
-		if ((command[i] == '>' && command[i + 1] == '>') || (command[i] == '<' && command[i + 1] == '<'))
+		if ((cmd[i] == '>' && cmd[i + 1] == '>')
+			|| (cmd[i] == '<' && cmd[i + 1] == '<'))
 		{
-			new_command[j++] = ' ';
-			new_command[j++] = command[i];
-			new_command[j++] = command[i + 1];
-			new_command[j++] = ' ';
+			new_cmd[j++] = ' ';
+			new_cmd[j++] = cmd[i];
+			new_cmd[j++] = cmd[i + 1];
+			new_cmd[j++] = ' ';
 			i++;
 		}
-		else if (command[i] == '(' || command[i] == ')' || command[i] == '>' || command[i] == '<')
+		else if (cmd[i] == '(' || cmd[i] == ')'
+			|| cmd[i] == '>' || cmd[i] == '<')
 		{
-			new_command[j++] = ' ';
-			new_command[j++] = command[i];
-			new_command[j++] = ' ';
+			new_cmd[j++] = ' ';
+			new_cmd[j++] = cmd[i];
+			new_cmd[j++] = ' ';
 		}
 		else
-			new_command[j++] = command[i];
+			new_cmd[j++] = cmd[i];
 		i++;
 	}
-	new_command[j] = '\0';
-	return (new_command);
+	new_cmd[j] = '\0';
+	return (new_cmd);
 }

@@ -12,20 +12,22 @@
 
 #include "../minishell.h"
 
-void flag_for_echo(t_list_of_tok **head)
+void	flag_for_echo(t_list_of_tok **head)
 {
-	char	*flag;
-	t_list_of_tok *current;
-	char	*new_flag;
+	char			*flag;
+	t_list_of_tok	*current;
+	char			*new_flag;
+
 	current = *head;
 	while (current != NULL)
 	{
-		if (current->type == T_FLAG && current->previous->type == T_BUILTIN && my_strcmp(current->previous->token, "echo") == 0)
+		if (current->type == T_FLAG
+			&& current->previous->type == T_BUILTIN
+			&& my_strcmp(current->previous->token, "echo") == 0)
 		{
 			flag = current->token;
 			if (flag[0] == '-' && flag[1] == 'n' && flag[2] != '\0')
 			{
-				// Replace -nnnn with -n
 				new_flag = malloc(3 * sizeof(char));
 				if (new_flag == NULL)
 					printf("Memory allocation failed\n");
@@ -59,7 +61,10 @@ void	update_token_types(t_list_of_tok **head)
 			&& current->type == T_COMMAND)
 			current->type = T_COMMAND_ARGS;
 		else if (prev != NULL
-			&& (prev->type == T_REDIR_APP || prev->type == T_REDIR_IN || prev->type == T_REDIR_OUT || prev->type == T_HERE_DOC))
+			&& (prev->type == T_REDIR_APP
+				|| prev->type == T_REDIR_IN
+				|| prev->type == T_REDIR_OUT
+				|| prev->type == T_HERE_DOC))
 			current->type = T_FILE_NAME;
 		prev = current;
 		current = current->next;

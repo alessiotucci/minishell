@@ -50,16 +50,17 @@ static char	*expansion_dollar(char *dollar, char **env)
 t_list_of_tok	*node_for_dollar(int lvl, char *spitted, char **env)
 {
 	char	*expanded;
-	char	*dollar_pos = ft_strchr(spitted, '$');
+	char	*dollar_pos;
 	char	*new_str;
-//	printf("spitted: %s\n", spitted);
-//	printf("$ strchr: %s\n", dollar_pos);
-	
+	char	*before_dollar;
+
+	printf("spitted: %s\n", spitted);
+	printf("$ strchr: %s\n", dollar_pos);
+	dollar_pos = ft_strchr(spitted, '$');
 	if (dollar_pos != NULL && dollar_pos != spitted)
 	{
 		// Dollar sign is not at the beginning of the string
-		// Split the string into two parts: before and after the dollar sign
-		char *before_dollar = my_strndup(spitted, dollar_pos - spitted);
+		before_dollar = my_strndup(spitted, dollar_pos - spitted);
 		expanded = expansion_dollar(dollar_pos, env);
 		if (expanded == NULL)
 		{
@@ -67,17 +68,16 @@ t_list_of_tok	*node_for_dollar(int lvl, char *spitted, char **env)
 			new_str = ft_strdup(before_dollar);
 		}
 		else
-		{	// FUCK CHECK THE FUNCTION YOU USE!!!
-			// Concatenate the part before the dollar sign, the expanded value, and the rest of the string
+		{
+			// FUCK CHECK THE FUNCTION YOU USE!!!
 			new_str = malloc(strlen(before_dollar) + strlen(expanded) + 1);
-			strcpy(new_str, before_dollar); // check this
-			strcat(new_str, expanded); // check this one too
+			strcpy(new_str, before_dollar);
+			strcat(new_str, expanded);
 		}
 		free(before_dollar);
 	}
 	else
 	{
-		// Dollar sign is at the beginning of the string or not present
 		expanded = expansion_dollar(spitted, env);
 		if (expanded == NULL)
 		{
@@ -87,14 +87,10 @@ t_list_of_tok	*node_for_dollar(int lvl, char *spitted, char **env)
 		else
 			new_str = ft_strdup(expanded);
 	}
-	
-	if (expanded != NULL) {
+	if (expanded != NULL)
 		free(expanded);
-	}
-	
-	return create_node(lvl, new_str);
+	return (create_node(lvl, new_str));
 }
-
 
 /*3) Helper function to expand the wildcard  */
 static t_list_of_tok	*node_for_wildcard(int level, char *spitted_cmd)
@@ -132,11 +128,11 @@ static t_list_of_tok	*node_for_wildcard(int level, char *spitted_cmd)
 	return (head);
 }
 
-char* extract_content(char* str)
+char	*extract_content(char *str)
 {
-	char*	start_quote;
-	char*	end_quote;
-	char*	content;
+	char	*start_quote;
+	char	*end_quote;
+	char	*content;
 	char	quote_char;
 
 	if (ft_strchr(str, '\"'))
@@ -145,7 +141,6 @@ char* extract_content(char* str)
 		quote_char = '\'';
 	else
 		return (str);
-
 	start_quote = ft_strchr(str, quote_char);
 	if (start_quote)
 	{
@@ -153,17 +148,16 @@ char* extract_content(char* str)
 		if (end_quote)
 		{
 			content = malloc(end_quote - start_quote);
-			if(content == NULL)
+			if (content == NULL)
 				return (perror("Error: malloc"), NULL);
 			my_strncpy(content, start_quote + 1, end_quote - start_quote - 1);
 			content[end_quote - start_quote - 1] = '\0';
-			//printf("content: %s\n", content);
+			printf("content: %s\n", content);
 			return (content);
 		}
 	}
 	return (str);
 }
-
 
 /*2)  Helper function to create a new node */
 t_list_of_tok	*create_node(int level, char *spitted_cmd)
@@ -184,7 +178,7 @@ t_list_of_tok	*create_node(int level, char *spitted_cmd)
 	new_node->index = 0;
 	new_node->file_name = NULL;
 	new_node->in_file = STDIN_FILENO;
-	new_node->out_file = STDOUT_FILENO; // this is the latest updated here
+	new_node->out_file = STDOUT_FILENO;
 	return (new_node);
 }
 
@@ -193,25 +187,25 @@ t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env, i
 {
 	t_list_of_tok	*new_node;
 	t_list_of_tok	*current;
+	char			*new_cmd;
+
 	(void)flag;
 	(void)env;
-	char	*new_cmd;
-
 	new_cmd = extract_content(cmd);
-//	printf("***\nnew cmd: %s\nft_strchr(new_cmd, $): [%s]\n flag: %d\n***\n", new_cmd, ft_strchr(new_cmd, '$'), flag);
-	//printf("before:%s%s%s\n extract %s%s%s\n", RED, cmd, RESET, GREEN, new_cmd, RESET);
+	printf("***\nnew cmd: %s\nft_strchr(new_cmd, $): [%s]\n flag: %d\n***\n", new_cmd, ft_strchr(new_cmd, '$'), flag);
+	printf("before:%s%s%s\n extract %s%s%s\n", RED, cmd, RESET, GREEN, new_cmd, RESET);
 	if (valid_wildcard(cmd))
 		new_node = node_for_wildcard(0, cmd);
 	else if ((ft_strchr(new_cmd, '$') != NULL) && (flag != SINGLE_QUOTE))
 	{
-		//printf("string for node_for_dollar: (%s)\n", new_cmd);
+		printf("string for node_for_dollar: (%s)\n", new_cmd);
 		new_cmd = find_and_expand_vars(new_cmd, env);
-		//printf("string after the work: (%s)\n", new_cmd);
+		printf("string after the work: (%s)\n", new_cmd);
 		new_node = create_node(0, new_cmd);
 	}
 	else
 		new_node = create_node(0, new_cmd);
-//	printf("new cmd: {%s}\n", new_cmd);
+	printf("new cmd: {%s}\n", new_cmd);
 	if (*head == NULL)
 		*head = new_node;
 	else
@@ -223,6 +217,6 @@ t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env, i
 		new_node->previous = current;
 		new_node->index = current->index + 1;
 	}
-//	printf("%s new node token is this:-> %s %s\n", BG_GREEN, new_node->token, RESET);
+	printf("%s new node token is this:-> %s %s\n", BG_GREEN, new_node->token, RESET);
 	return (new_node);
 }
