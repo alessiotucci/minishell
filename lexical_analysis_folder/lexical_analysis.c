@@ -94,7 +94,7 @@ int	handling_quotes(char *input)
 int	handle_quotes(char *string)
 {
 	if (handling_quotes(string) == ERROR_QUOTE)
-		return (printf("Not interpret unclosed quotes\n"));
+		return (set_g_exit(GENERAL_ERROR), printf("Not interpret unclosed quotes\n"));
 	return (0);
 }
 
@@ -103,7 +103,7 @@ int	handle_quotes(char *string)
 int	first_check_parent(char *string)
 {
 	if (check_parentheses(string))
-		return (ft_printf("syntax error near unexpected token\n"));
+		return (set_g_exit(GENERAL_ERROR), printf("syntax error near unexpected token\n"));
 	return (0);
 }
 /* Function to replace characters in string */
@@ -157,6 +157,6 @@ int	lexer(char *string, char **env)
 	//return (0);
 	executor(&token_head, env);
 	free_list(&token_head);
-	free_string_array(line_of_commands);
+//	free_string_array(line_of_commands);
 	return (0);
 }

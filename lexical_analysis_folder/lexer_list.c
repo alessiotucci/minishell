@@ -52,8 +52,8 @@ t_list_of_tok	*node_for_dollar(int lvl, char *spitted, char **env)
 	char	*expanded;
 	char	*dollar_pos = ft_strchr(spitted, '$');
 	char	*new_str;
-	printf("spitted: %s\n", spitted);
-	printf("$ strchr: %s\n", dollar_pos);
+//	printf("spitted: %s\n", spitted);
+//	printf("$ strchr: %s\n", dollar_pos);
 	
 	if (dollar_pos != NULL && dollar_pos != spitted)
 	{
@@ -204,7 +204,7 @@ t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env, i
 		new_node = node_for_wildcard(0, cmd);
 	else if ((ft_strchr(new_cmd, '$') != NULL) && (flag != SINGLE_QUOTE))
 	{
-//		printf("string for node_for_dollar: (%s)\n", new_cmd);
+		//printf("string for node_for_dollar: (%s)\n", new_cmd);
 		new_cmd = find_and_expand_vars(new_cmd, env);
 		//printf("string after the work: (%s)\n", new_cmd);
 		new_node = create_node(0, new_cmd);

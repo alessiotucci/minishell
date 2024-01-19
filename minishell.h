@@ -64,6 +64,15 @@
 /* error string */
 # define PARSE_ERROR "minishesh: parse error near '\\n'\n"
 
+# define EXIT_SUCCESS 0
+# define GENERAL_ERROR 1
+# define BUILTIN_MISUSE 2
+# define COMMAND_NOT_EXECUTABLE 126
+# define COMMAND_NOT_FOUND 127
+# define INVALID_EXIT_ARG 128
+# define FATAL_ERROR_SIGNAL(n) (128 + n)
+# define SCRIPT_TERMINATED 130
+# define EXIT_STATUS_OUT_OF_RANGE 255
 // minishell.h
 // declare g_exit_status
 extern int	g_exit_status;
@@ -156,6 +165,7 @@ void			tree_maker3(void);
 t_type_of_tok	type_of_token(char *spitted);
 t_list_of_tok	*create_node(int level, char *spitted_cmd);
 // MADE THEM STATIC ALRIGHT
+void			set_g_exit(int status);
 // t_list_of_tok	*node_for_dollar(int level, char *spitted_cmd, char **env);
 void			token(void);
 void			parser(void);

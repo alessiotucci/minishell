@@ -45,7 +45,10 @@ char *expansion_dollary(char *dollar, char **env)
 	int		i;
 	int		key_len;
 	char *new_dollar = extract_content_parenthes(dollar);
-	printf("dollar: (%s)\n", dollar);
+	//printf("%sdollar:%s (%s)\n", GREEN, RESET, dollar);
+	//printf("strlen of dollar is [%zu]\n", ft_strlen(dollar));
+	if (ft_strlen(dollar) == 1 && dollar[0] == '?' )
+		return (ft_itoa(g_exit_status));
 	if (dollar[0] == '$')
 	{
 		if (dollar[1] == '{')

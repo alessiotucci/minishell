@@ -19,7 +19,6 @@ static void	handle_signal(void)
 }
 
 //env_copy
-// invece che uscire con errore, ritornare null (?)
 static char	**copy_array(char **env)
 {
 	int		env_count;
@@ -44,15 +43,22 @@ static char	**copy_array(char **env)
 	return (env_copy);
 }
 
+void	set_g_exit(int status)
+{
+	g_exit_status = status;
+}
+
 int	main(int ac, char *av[], char *envp[])
 {
 	char	*input;
 	char	**env_copy;
-	int		g_exit_status;  // define g_exit_status
+	int		g_exit_status = 0;  // define g_exit_status
 
 	(void)ac;
 	(void)av;
+	(void)g_exit_status;
 	env_copy = copy_array(envp);
+	set_g_exit(0);
 	while (1)
 	{
 		handle_signal();
@@ -61,10 +67,7 @@ int	main(int ac, char *av[], char *envp[])
 		if (input == NULL)
 			return (0 * write(1, "\n", 1));
 		if (input != NULL && lexer(input, env_copy) == 1)
-			return (1);
-	// what we need to return for syntax error? 
-	//	token();
-	//	parser();
-	//	try_builtin();
+			continue ;
+			//return (1);
 	}
 }

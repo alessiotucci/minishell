@@ -157,6 +157,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 		{
 			execve(command, args_a, envp);
 			printf("command not found: %s\n", command);
+			set_g_exit(COMMAND_NOT_FOUND);
 		}
 		else
 				waitpid(fix_pid, &status, 0);
