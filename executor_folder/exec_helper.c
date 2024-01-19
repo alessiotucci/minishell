@@ -26,6 +26,7 @@ void	executor3(void)
 {
 	return ;
 }
+
 /* 4) */
 char	*find_path_command(char *token, char **envp)
 {
@@ -39,14 +40,12 @@ char	*find_path_command(char *token, char **envp)
 	while (directs[i] != NULL)
 	{
 		y = ft_strlen(directs[i]) + ft_strlen(token) + 2;
-		possible_command = malloc(y); // +2 for the '/' and '\0'
+		possible_command = malloc(y);
 		ft_strlcpy(possible_command, directs[i], y);
 		ft_strlcat(possible_command, "/", y);
 		ft_strlcat(possible_command, token, y);
 		if (access(possible_command, X_OK) == 0)
-		{ // Check if the command is executable
 			return (possible_command);
-		}
 		free(possible_command);
 		i++;
 	}
@@ -54,23 +53,26 @@ char	*find_path_command(char *token, char **envp)
 }
 
 /*3) Function to get the size of the list */
-static int get_size(t_list_of_tok *head)
+static int	get_size(t_list_of_tok *head)
 {
-	int size = 0;
+	int	size;
+
+	size = 0;
 	while (head != NULL)
 	{
 		size++;
 		head = head->next;
 	}
-	return size;
+	return (size);
 }
 
 /*2) helper function to find the path in the ev */
 char	**find_path_env(char **env)
 {
-	int	i;
-	char *nully = NULL;
-	(void)env;
+	int		i;
+	char	*nully;
+
+	nully = NULL;
 	i = 0;
 	while (env[i] != NULL)
 	{
@@ -81,36 +83,36 @@ char	**find_path_env(char **env)
 		}
 		i++;
 	}
-	//printf("path env: |%s%s%s|\n",YELLOW, nully, RESET);
 	return (ft_split(nully, ':'));
 }
 
 /*1) Function to create argv for execve */
-char **array_from_list(t_list_of_tok **head)
+char	**array_from_list(t_list_of_tok **head)
 {
-	int		size;
-	char	**argv;
-	int		i;
+	int				size;
+	char			**argv;
+	t_list_of_tok	*current;
+	int				i;
 
 	size = get_size(*head);
 	argv = malloc((size + 1) * sizeof(char *));
 	if (!argv)
 		return (NULL);
-	t_list_of_tok *current = *head;
+	current = *head;
 	i = 0;
 	while (current != NULL)
 	{
 		if (current->type == T_COMMAND || current->type == T_BUILTIN || current->type == T_COMMAND_ARGS || current->type == T_FLAG)
 		{
-			argv[i] = ft_strdup(current->token); // duplicate the string
+			argv[i] = ft_strdup(current->token);
 			if (!argv[i])
-				return NULL; // return NULL if memory allocation fails
+				return (NULL);
 			i++;
 		}
 		else if (current->type == T_PIPES || current->type == T_REDIR_IN || current->type == T_REDIR_OUT || current->type == T_REDIR_APP || current->type == T_HERE_DOC)
-			break;
+			break ;
 		current = current->next;
 	}
-	argv[i] = NULL; // NULL terminate the argv array
+	argv[i] = (NULL);
 	return (argv);
 }

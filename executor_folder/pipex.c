@@ -47,4 +47,3 @@ void	find_pipes(t_list_of_tok *head)
 		current = current->next;
 	}
 }
-

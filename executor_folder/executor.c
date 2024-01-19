@@ -12,25 +12,7 @@
 
 #include "time.h"
 #include "../minishell.h"
-int g_exit_status;  // global variable to store exit status
-
-const char *namey[] =
-{
-	"Command",
-	"Flag",
-	"Builtin",
-	"Parenthesis",
-	"Dollar",
-	"Pipes",
-	"Redirection in",
-	"Redirection out",
-	"Redirection appender",
-	"Here Documents",
-	"Logical Operator",
-	"Command Arguments",
-	"File Name "
-};
-
+int	g_exit_status;
 
 /* 5 function in this file 
  * This function goes throught he list and look for commands,
@@ -53,7 +35,7 @@ t_list_of_tok	*find_command_in_list(t_list_of_tok **head)
 /* 4) this functinon needs to be written entirely 
  * it has being copy and paste from bingAi again
 */
-t_list_of_tok *open_file(t_list_of_tok *nod)
+t_list_of_tok	*open_file(t_list_of_tok *nod)
 {
 	int	fd;
 
@@ -69,11 +51,14 @@ t_list_of_tok *open_file(t_list_of_tok *nod)
 	close(fd);
 	return (nod);
 }
+
+/* function to find the last redirection, if there is more, open empty file */
 int	find_redirect(t_list_of_tok *cmd_node)
 {
 	t_list_of_tok	*iterator;
-	t_list_of_tok	*last_redirect = NULL;
+	t_list_of_tok	*last_redirect;
 
+	last_redirect = NULL;
 	iterator = cmd_node;
 	while (iterator != NULL)
 	{
@@ -82,15 +67,14 @@ int	find_redirect(t_list_of_tok *cmd_node)
 			if (iterator->next == NULL)
 				return (set_g_exit(GENERAL_ERROR), printf("minishesh: parse error near '\\n\'\n"), 1);
 			if (iterator->next->type == T_FILE_NAME)
-				last_redirect = open_file(iterator); // keep track of the last redirect
+				last_redirect = open_file(iterator);
 		}
 		iterator = iterator->next;
 	}
-	if (last_redirect != NULL) // if a redirect was found
+	if (last_redirect != NULL)
 	{
 		cmd_node->file_name = ft_strdup(last_redirect->next->token);
 		cmd_node->redirect_type = last_redirect->type;
-	//printf("cmd_node->token:(%s) and cmd_node->filename:(%s)\n", cmd_node->token, cmd_node->file_name);
 		return (0);
 	}
 	return (0);
@@ -102,7 +86,6 @@ int	find_redirect(t_list_of_tok *cmd_node)
  */
 int	redirection_process(char *file_name, t_type_of_tok type)
 {
-	//printf("%sFUNCTION-> redirection_process()%s;\n\tfile_name: [%s] type_parameter {%s}\n", BG_RED, BG_RESET, file_name, namey[type]);
 	if (type == T_REDIR_IN)
 		if (redirect_input(file_name))
 			return (1);
@@ -118,13 +101,12 @@ int	redirection_process(char *file_name, t_type_of_tok type)
 */
 void	piping_process(t_list_of_tok *cmd_nod)
 {
-
 	if (cmd_nod->in_file != 0)
 	{
 		dup2(cmd_nod->in_file, STDIN_FILENO);
 		close(cmd_nod->in_file);
 	}
-	if (cmd_nod->out_file!= 1)
+	if (cmd_nod->out_file != 1)
 	{
 		dup2(cmd_nod->out_file, STDOUT_FILENO);
 		close(cmd_nod->out_file);
@@ -134,17 +116,18 @@ void	piping_process(t_list_of_tok *cmd_nod)
 /* last change */
 void	restore_original_stdout(int copy, t_list_of_tok *cmd_nod)
 {
-		(void)cmd_nod;
-		dup2(copy, STDOUT_FILENO);
-		close(copy);
+	(void)cmd_nod;
+	dup2(copy, STDOUT_FILENO);
+	close(copy);
 }
 
 void	restore_original_stdin(int copy, t_list_of_tok *cmd_nod)
 {
-		(void)cmd_nod;
-		dup2(copy, STDIN_FILENO);
-		close(copy);
+	(void)cmd_nod;
+	dup2(copy, STDIN_FILENO);
+	close(copy);
 }
+
 /* 2)
  * first handle the redirection
  * then check for builtins, after perform built in, restore fd (?)
@@ -153,9 +136,9 @@ void	restore_original_stdin(int copy, t_list_of_tok *cmd_nod)
 void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *cmd_nod)
 {
 	pid_t	fix_pid;
-	int	stdout_copy;
-	int	stdin_copy;
-	int	status;
+	int		stdout_copy;
+	int		stdin_copy;
+	int		status;
 
 	stdin_copy = dup(STDIN_FILENO);
 	stdout_copy = dup(STDOUT_FILENO);
@@ -164,10 +147,10 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 			return (NULL);
 	piping_process(cmd_nod);
 	if (cmd_nod->type == T_BUILTIN)
-			which_built_in(cmd_nod, args_a, envp);
+		which_built_in(cmd_nod, args_a, envp);
 	else
 	{
-			fix_pid = fork();
+		fix_pid = fork();
 		if (fix_pid == 0)
 		{
 			execve(command, args_a, envp);
@@ -175,13 +158,13 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 			set_g_exit(COMMAND_NOT_FOUND);
 		}
 		else
-				waitpid(fix_pid, &status, 0);
+			waitpid(fix_pid, &status, 0);
 		if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);
 	}
-restore_original_stdout(stdout_copy, cmd_nod);
-restore_original_stdin(stdin_copy, cmd_nod);
-return (NULL);
+	restore_original_stdout(stdout_copy, cmd_nod);
+	restore_original_stdin(stdin_copy, cmd_nod);
+	return (NULL);
 }
 
 /*
