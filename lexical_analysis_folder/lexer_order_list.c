@@ -172,8 +172,8 @@ void	swap_redirection_with_command(t_list_of_tok **head)
 	if (command_node && file_node && redir_node)
 	{
 //		printf("swap is being performed\n");
-		move_node(head, redir_node, command_node);
-		//move_node_fix(head, redir_node, command_node);
+//		move_node(head, redir_node, command_node);
+		move_node_fix(head, redir_node, command_node);
 		/*
 		// Remove the command node from its current position
 		remove_node(head, command_node);

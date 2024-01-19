@@ -76,37 +76,32 @@ void move_node(t_list_of_tok **head, t_list_of_tok *target_node, t_list_of_tok *
 
 void move_node_fix(t_list_of_tok **head, t_list_of_tok *target_node, t_list_of_tok *moving_node)
 {
-	//t_list_of_tok *temp = NULL;
-	t_list_of_tok *sublist_end = moving_node;
+    //t_list_of_tok *temp = NULL;
+    t_list_of_tok *sublist_end = moving_node;
 
-	// Find the end of the sublist that should be moved along with the moving node
-	while (sublist_end->next != NULL && sublist_end->next->type == T_COMMAND_ARGS)
-		sublist_end = sublist_end->next;
+    // Find the end of the sublist starting at moving_node, stopping at redirection or pipe
+    while (sublist_end->next && sublist_end->next->type != T_REDIR_OUT && sublist_end->next->type != T_REDIR_IN && sublist_end->next->type != T_REDIR_APP && sublist_end->next->type != T_PIPES)
+        sublist_end = sublist_end->next;
 
-	// If the moving node is the head of the list, update the head pointer
-	if (*head == moving_node)
-		*head = sublist_end->next;
-	// Disconnect the sublist from the list
-	if (moving_node->previous != NULL)
-		moving_node->previous->next = sublist_end->next;
-	if (sublist_end->next != NULL)
-		sublist_end->next->previous = moving_node->previous;
+    // If the moving node is the head of the list, update the head pointer
+    if (*head == moving_node)
+        *head = moving_node->next;
 
-	// If the target node is the head of the list, move the sublist to the front
-	if (*head == target_node)
-	{
-		sublist_end->next = *head;
-		(*head)->previous = sublist_end;
-		*head = moving_node;
-	}
-	else
-	{
-		// Otherwise, insert the sublist before the target node
-		sublist_end->next = target_node;
-		moving_node->previous = target_node->previous;
-		target_node->previous->next = moving_node;
-		target_node->previous = sublist_end;
-	}
+    // Disconnect the moving node and all nodes after it from the list
+    if (moving_node->previous != NULL)
+        moving_node->previous->next = sublist_end->next;
+    if (sublist_end->next != NULL)
+        sublist_end->next->previous = moving_node->previous;
+
+    // Insert the moving node before the target node
+    moving_node->previous = target_node->previous;
+    sublist_end->next = target_node;
+    if (target_node->previous != NULL)
+        target_node->previous->next = moving_node;
+    target_node->previous = sublist_end;
+
+    // If the target node was the head of the list, update the head pointer
+    if (*head == target_node)
+        *head = moving_node;
 }
-
 
