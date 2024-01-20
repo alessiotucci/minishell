@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 19:21:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/20 17:52:29 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/20 18:38:03 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,37 @@ void	swap_redirection_with_command(t_list_of_tok **head)
 		move_node(head, redir_node, command_node);
 }
 
+int should_swap(t_list_of_tok *head)
+{
+	t_list_of_tok *current = head;
+	while (current != NULL)
+	{
+		if (is_a_redirection(current) && current->next != NULL && current->next->type == T_FILE_NAME)
+		{
+			t_list_of_tok *command_node = current->next->next;
+			if (command_node != NULL && (command_node->type == T_COMMAND || command_node->type == T_BUILTIN))
+			{
+				t_list_of_tok *next_node = command_node->next;
+				if (next_node == NULL || !is_a_redirection(next_node))
+				{
+					printf("the code would swap a node\n");
+					return 1;
+				}
+			}
+		}
+		else if ((current->type == T_COMMAND || current->type == T_BUILTIN) && current->next != NULL && is_a_redirection(current->next))
+		{
+			// If a command node is followed by a redirection node, also return 1
+			printf("the code would swap a node\n");
+			return 1;
+		}
+		current = current->next;
+	}
+	printf("the code would NOT swap node\n");
+	return 0;
+}
+
+
 /*1) function to update the order of the list */
 t_list_of_tok	**update_list_order(t_list_of_tok **head)
 {
@@ -118,6 +149,7 @@ t_list_of_tok	**update_list_order(t_list_of_tok **head)
 		find_empty_redirection(head);
 //	printf("swapping when there is no need\n");
 //	printf("I should check the order of command and redirection\n");
+	if (should_swap(*head))
 	swap_redirection_with_command(head);
 	return (head);
 }
