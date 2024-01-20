@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:29:34 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/20 16:41:15 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/20 17:53:23 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	find_pipes(t_list_of_tok *head)
 	first_cmd = find_command_in_list(&head);
 	current = head;
 //	printf("first command token: [%s]\n", first_cmd->token);
+//	printf("find-pipe, now exiting\n");
+//	exit(0);
 	while (current != NULL)
 	{
 		if (current->type == T_PIPES)

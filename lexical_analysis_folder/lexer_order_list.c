@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 19:21:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/18 11:55:37 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/20 17:52:29 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ t_list_of_tok	**update_list_order(t_list_of_tok **head)
 {
 	if (find_command_in_list(head) == NULL)
 		find_empty_redirection(head);
+//	printf("swapping when there is no need\n");
+//	printf("I should check the order of command and redirection\n");
 	swap_redirection_with_command(head);
 	return (head);
 }

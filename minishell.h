@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/18 15:14:00 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/20 17:45:11 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ int				is_parent(char *str);
 /*Starting working on the parsing*/
 t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *spitted_cmd, char **env, int flag);
 void			print_list_tokens(t_list_of_tok **head);
+void			print_list_tokeny(t_list_of_tok **head);
+/* this is the last print function */
 void			print_node(t_list_of_tok *node);
 //void			type_of_token(char *spitted);
 void			update_token_types(t_list_of_tok **head);
@@ -191,10 +193,12 @@ void			minishell_pwd(void);
 void			minishell_cd(char *directory);
 void			minishell_echo(char *args[]);
 void			minishell_export(char *args[]);
+void			my_export(char *args[], char *env[]);
 void			minishell_env(char **env);
 void			minishell_unset(char *variable_name, char *envp[]);
 void			minishell_exit(char **args);
 void			*which_built_in(t_list_of_tok *node, char **args, char **env);
+
 /* DOLLAR HAS BEGUN */
 char			*expansion_dollary(char *dollar, char **env);
 char			*replace_substr(char *str, char *substr, char *replacement);

@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:51:40 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/12 17:39:14 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/20 17:45:48 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	*which_built_in(t_list_of_tok *node, char **args, char **env)
 	else if (my_strcmp(node->token, "pwd") == 0)
 		minishell_pwd();
 	else if (my_strcmp(node->token, "export") == 0)
-		minishell_export(args);
+//		minishell_export(args);
+		my_export(args, env);
 	else if (my_strcmp(node->token, "unset") == 0)
 		minishell_unset(args[1], env);
 	else if (my_strcmp(node->token, "env") == 0)

@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/20 16:45:55 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/20 17:53:47 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	redirection_process(char *file_name, t_type_of_tok type)
 */
 void	piping_process(t_list_of_tok *cmd_nod)
 {
-	printf("piping process\n");
+	//printf("piping process\n");
 	if (cmd_nod->in_file != 0)
 	{
 		dup2(cmd_nod->in_file, STDIN_FILENO);
