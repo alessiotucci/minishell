@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:47:07 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/12 17:43:39 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/20 16:19:36 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ void	print_node(t_list_of_tok *node)
 	printf("|%sPRIORITY %s%d\n", RED, RESET, node->priority_lev);
 	printf("|PREV %p \n",node->previous);
 	printf("|NEXT %p \n",node->next);
+//	printf("|file_name (%s) \n",node->file_name);
+
+//	printf("|redirection type %s%s%s \n",colors[node->redirect_type], names[node->redirect_type], RESET);
 //	if (node->next != NULL)
 //	printf("|NEXT-Type %d,  %s%s%s \n",node->next->type, colors[node->next->type], names[node->next->type], RESET);
 	printf("|INDEX %d\n", node->index);

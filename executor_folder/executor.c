@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/18 15:08:42 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/20 16:45:55 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	find_redirect(t_list_of_tok *cmd_node)
 	iterator = cmd_node;
 	while (iterator != NULL)
 	{
-		if (iterator->type == T_REDIR_OUT || iterator->type == T_REDIR_APP || iterator->type == T_REDIR_IN)
+		if (iterator->type == T_REDIR_OUT || iterator->type == T_REDIR_APP || iterator->type == T_REDIR_IN || iterator->type == T_HERE_DOC)
 		{
 			if (iterator->next == NULL)
 				return (set_g_exit(GENERAL_ERROR), printf("minishesh: parse error near '\\n\'\n"), 1);
@@ -92,7 +92,10 @@ int	redirection_process(char *file_name, t_type_of_tok type)
 	if (type == T_REDIR_OUT || type == T_REDIR_APP)
 		redirect_output(file_name, type);
 	if (type == T_HERE_DOC)
+	{
+		printf("here doc \n");
 		here_document(file_name);
+	}
 	return (0);
 }
 
@@ -101,6 +104,7 @@ int	redirection_process(char *file_name, t_type_of_tok type)
 */
 void	piping_process(t_list_of_tok *cmd_nod)
 {
+	printf("piping process\n");
 	if (cmd_nod->in_file != 0)
 	{
 		dup2(cmd_nod->in_file, STDIN_FILENO);
@@ -142,10 +146,10 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 
 	stdin_copy = dup(STDIN_FILENO);
 	stdout_copy = dup(STDOUT_FILENO);
+	piping_process(cmd_nod);
 	if (cmd_nod->file_name != NULL)
 		if (redirection_process(cmd_nod->file_name, cmd_nod->redirect_type))
 			return (NULL);
-	piping_process(cmd_nod);
 	if (cmd_nod->type == T_BUILTIN)
 		which_built_in(cmd_nod, args_a, envp);
 	else

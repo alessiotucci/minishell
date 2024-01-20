@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 09:14:57 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/11 19:11:21 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/20 16:10:51 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,33 @@
 /* this function handles the here_doc  */
 void	*here_document(char *delimiter)
 {
-	char	file_name[] = "heredoc";
+	char	*line;
 	int		temp_fd;
-	int		new_fd;
-
 	(void)delimiter;
-	temp_fd = open(file_name, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+
+	temp_fd = open(".txt", O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (temp_fd == -1)
 		return (perror("open"), NULL);
-	new_fd = open(file_name, O_RDONLY);
-	if (new_fd == -1)
+	while (1)
+	{
+		line = readline(YELLOW"HEREDOC "RESET);
+		if (my_strcmp(line, delimiter) == 0)
+		{
+			free(line);
+			break ;
+		}
+		write(temp_fd, line, ft_strlen(line));
+		write(temp_fd, "\n", 1);
+		free(line);
+	}
+	close(temp_fd);
+	temp_fd  = open(".txt", O_RDONLY);
+	if (temp_fd == -1)
 		return (perror("open"), NULL);
-	if (dup2(new_fd, STDIN_FILENO) == -1)
+	if (dup2(temp_fd, STDIN_FILENO) == -1) // this need to be changed
 		return (perror("dup2"), NULL);
 	close(temp_fd);
-	close(new_fd);
-	unlink(file_name);
+	unlink(".txt");
 	return (NULL);
 }
 
