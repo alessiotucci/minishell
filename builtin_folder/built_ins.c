@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:13:21 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/09 19:36:34 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/20 17:38:23 by enricogiral      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void	minishell_exit(char **arg)
 		exit_code = 0;
 	cleanup_resources();
 	while ((childPid = waitpid(-1, NULL, WNOHANG)) > 0)
-		printf("Processo figlio %d terminato\n", childPid);
-	printf("Uscita con codice %d\n", exit_code);
+		printf("children process %d finished\n", childPid);
+	printf("exit with code %d\n", exit_code);
 	exit(exit_code);
 }
