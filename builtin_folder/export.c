@@ -6,112 +6,142 @@
 /*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:42:59 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/20 18:47:12 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/21 00:07:53 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-
 #define MAX_ENV_VARIABLES 100
-
-void print_export_format(char *var, char *value)
+/* 8 */
+void	print_export_format(char *var, char *value)
 {
 	printf("declare -x %s=\"%s\"\n", var, value);
 }
 
-int is_valid_identifier(char *str)
+/* 7 */
+int	is_valid_identifier(char *str)
 {
 	int	i;
 
 	i = 1;
-	// Check if the string is a valid identifier
 	if (!ft_isalpha(str[0]) && str[0] != '_')
-		return 0;
+		return (0);
 	while (str[i] != '\0')
 	{
 		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return 0;
+			return (0);
 		i++;
 	}
-	return 1;
+	return (1);
 }
 
-void my_export(char *args[], char *env[])
+/* 6 */
+void	handle_null_arg(char *env[])
 {
-	if (args[1] == NULL)
+	int		i;
+	char	*equal_sign;
+	char	*value;
+
+	i = 0;
+	while (env[i] != NULL)
 	{
-		// Display the list of environment variables
-		int i = 0;
-		while (env[i] != NULL)
+		equal_sign = ft_strchr(env[i], '=');
+		if (equal_sign != NULL)
 		{
-			char *equal_sign = strchr(env[i], '=');
-			if (equal_sign != NULL)
-			{
-				*equal_sign = '\0';
-				char *value = equal_sign + 1;
-				print_export_format(env[i], value);
-				*equal_sign = '=';  // Restore the original content
-			}
-			i++;
+			*equal_sign = '\0';
+			value = equal_sign + 1;
+			print_export_format(env[i], value);
+			*equal_sign = '=';
 		}
+		i++;
 	}
+}
+
+/* 5 */
+void	update_env_var(char *env[], char *key, char *value)
+{
+	int	j;
+
+	j = 0;
+	while (env[j] != NULL)
+	{
+		if (ft_strncmp(env[j], key, ft_strlen(key)) == 0)
+		{
+			free(env[j]);
+			env[j] = malloc(ft_strlen(key) + ft_strlen(value) + 2);
+			strcpy(env[j], key);
+			strcat(env[j], "=");
+			strcat(env[j], value);
+			print_export_format(key, value);
+			break ;
+		}
+		j++;
+	}
+}
+
+/* 4 */
+void	handle_value_case(char *arg, char *env[])
+{
+	char	*equal_sign;
+	char	*value;
+
+	equal_sign = ft_strchr(arg, '=');
+	*equal_sign = '\0';
+	value = equal_sign + 1;
+	if (!is_valid_identifier(arg))
+		printf("export: not an identifier: %s\n", arg);
+	else
+		update_env_var(env, arg, value);
+	*equal_sign = '=';
+}
+
+/* 3 */
+void	handle_empty_value_case(char *arg, char *env[])
+{
+	char	*existing_value;
+	int		k;
+
+	if (!is_valid_identifier(arg))
+		printf("export: not an identifier: %s\n", arg);
 	else
 	{
-		// Parse and set/update environment variables
-		int i = 1;
-		while (args[i] != NULL) {
-			char *equal_sign = strchr(args[i], '=');
-
-			if (equal_sign != NULL) {
-				// Contains a value, perform checks on the identifier
-				*equal_sign = '\0';
-				char *value = equal_sign + 1;
-
-				if (!is_valid_identifier(args[i])) {
-					printf("export: not an identifier: %s\n", args[i]);
-				} else {
-					// Check and update manually
-					int j = 0;
-					while (env[j] != NULL) {
-						if (strncmp(env[j], args[i], strlen(args[i])) == 0) {
-							free(env[j]);
-							env[j] = malloc(strlen(args[i]) + strlen(value) + 2);
-							strcpy(env[j], args[i]);
-							strcat(env[j], "=");
-							strcat(env[j], value);
-							print_export_format(args[i], value);
-							break;
-						}
-						j++;
-					}
-				}
-				*equal_sign = '=';  // Restore the original content
-			} else {
-				// Does not contain a value, handle as if it has an empty value
-				if (!is_valid_identifier(args[i])) {
-					printf("export: not an identifier: %s\n", args[i]);
-				} else {
-					char *existing_value = getenv(args[i]);
-
-					int j = 0;
-					while (env[j] != NULL) {
-						if (existing_value == NULL) {
-							// Variable does not exist, find free space and set manually
-							int k = 0;
-							while (env[k] != NULL) {
-								k++;
-							}
-							env[k] = malloc(strlen(args[i]) + 1);
-							strcpy(env[k], args[i]);
-							print_export_format(args[i], "");
-							break;
-						}
-						j++;
-					}
-				}
-			}
-			i++;
+		existing_value = getenv(arg);
+		if (existing_value == NULL)
+		{
+			k = 0;
+			while (env[k] != NULL)
+				k++;
+			env[k] = malloc(strlen(arg) + 1);
+			strcpy(env[k], arg);
+			printf("start ok\n");
+			print_export_format(arg, "");
 		}
 	}
+}
+
+/* 2 */
+void	handle_non_null_arg(char *args[], char *env[])
+{
+	int	i;
+
+	i = 1;
+	while (args[i] != NULL)
+	{
+		if (strchr(args[i], '=') != NULL)
+			handle_value_case(args[i], env);
+		else
+			handle_empty_value_case(args[i], env);
+		i++;
+	}
+}
+
+/* 1 */
+void	my_export(char *args[], char *env[])
+{
+	printf("args in position [1]: %s\n", args[1]);
+	if (args[1] == NULL)
+		handle_null_arg(env);
+	else
+		handle_non_null_arg(args, env);
+	printf("finished execution\n");
 }

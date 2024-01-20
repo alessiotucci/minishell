@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/20 17:53:47 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/20 23:33:48 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,7 @@ int	redirection_process(char *file_name, t_type_of_tok type)
 */
 void	piping_process(t_list_of_tok *cmd_nod)
 {
-	//printf("piping process\n");
-	if (cmd_nod->in_file != 0)
+	if (cmd_nod->index != 0)
 	{
 		dup2(cmd_nod->in_file, STDIN_FILENO);
 		close(cmd_nod->in_file);
@@ -142,7 +141,6 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 	pid_t	fix_pid;
 	int		stdout_copy;
 	int		stdin_copy;
-	int		status;
 
 	stdin_copy = dup(STDIN_FILENO);
 	stdout_copy = dup(STDOUT_FILENO);
@@ -156,15 +154,23 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 	{
 		fix_pid = fork();
 		if (fix_pid == 0)
-		{
+		{	
+			//if (cmd_nod->index <= 2)
+			if (my_strcmp(cmd_nod->token, "cat") == 0 && cmd_nod->next) // work on this edge cases
+			{
+				// penultimo comando ...
+				ft_putstr_fd("Next->next token [ ", stdout_copy);
+				ft_putstr_fd(cmd_nod->next->next->token, stdout_copy);
+				ft_putstr_fd(" ] \n", stdout_copy);
+				//printf("closing the infile of node: (%s)\n", cmd_nod->next->next->token);
+				close(cmd_nod->next->next->in_file);
+			}
+			close(stdin_copy);
+			close(stdout_copy);
 			execve(command, args_a, envp);
 			printf("command not found: %s\n", command);
 			set_g_exit(COMMAND_NOT_FOUND);
 		}
-		else
-			waitpid(fix_pid, &status, 0);
-		if (WIFEXITED(status))
-			g_exit_status = WEXITSTATUS(status);
 	}
 	restore_original_stdout(stdout_copy, cmd_nod);
 	restore_original_stdin(stdin_copy, cmd_nod);
@@ -179,6 +185,16 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
  * token of the node 
  * 
  */
+void	update_exit_status()
+{
+	int	status;
+	while (waitpid(-1, &status, 0) > 0)
+	{
+		if (WIFEXITED(status))
+			g_exit_status = WEXITSTATUS(status);
+	}
+}
+
 int	executor(t_list_of_tok **head, char **envp)
 {
 	char			*command;
@@ -202,5 +218,6 @@ int	executor(t_list_of_tok **head, char **envp)
 		execute_command(command, argoums, envp, cmd_node);
 		cmd_node = find_command_in_list(&cmd_node->next);
 	}
+	update_exit_status(); // osema extra work
 	return (0);
 }

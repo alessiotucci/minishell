@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:29:34 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/20 17:53:23 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/20 20:50:10 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  */
 void	set_pipes(t_list_of_tok *first_cmd, t_list_of_tok *secnd_cmd)
 {
-//	printf("We are piping %s with %s\n", first_cmd->token, secnd_cmd->token);
+	//printf("We are piping %s with %s\n", first_cmd->token, secnd_cmd->token);
 	int	fd[2];
 
 	if (pipe(fd) == -1)
@@ -46,7 +46,7 @@ void	find_pipes(t_list_of_tok *head)
 		{
 			second_cmd = find_command_in_list(&(current->next));
 			if (second_cmd == NULL)
-				printf("NULL\n");
+				break ;
 			//printf("second command token: [%s]\n", second_cmd->token);
 			set_pipes(first_cmd, second_cmd);
 			break ;

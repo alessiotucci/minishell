@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/20 18:48:25 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/20 23:26:27 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,12 @@ int	lexer(char *string, char **env)
 	create_tokens(line_of_commands, &token_head, env);
 	priority_level(&token_head);
 	update_token_types(&token_head);
-//	print_list_tokens(&token_head);
+//	printf("do you want to perfomr some check here!\n");
+	//print_list_tokens(&token_head);
 	update_list_order(&token_head);
 //	printf("\n***\t\nafter the change\n");
 //	print_list_tokens(&token_head);
-	print_list_tokeny(&token_head);
+//	print_list_tokeny(&token_head);
 //	return (1);
 	executor(&token_head, env);
 	free_list(&token_head);

@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 19:21:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/20 18:38:03 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/20 18:50:29 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int should_swap(t_list_of_tok *head)
 				t_list_of_tok *next_node = command_node->next;
 				if (next_node == NULL || !is_a_redirection(next_node))
 				{
-					printf("the code would swap a node\n");
+					//printf("the code would swap a node\n");
 					return 1;
 				}
 			}
@@ -132,12 +132,12 @@ int should_swap(t_list_of_tok *head)
 		else if ((current->type == T_COMMAND || current->type == T_BUILTIN) && current->next != NULL && is_a_redirection(current->next))
 		{
 			// If a command node is followed by a redirection node, also return 1
-			printf("the code would swap a node\n");
+			//printf("the code would swap a node\n");
 			return 1;
 		}
 		current = current->next;
 	}
-	printf("the code would NOT swap node\n");
+	//printf("the code would NOT swap node\n");
 	return 0;
 }
 
