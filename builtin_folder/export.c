@@ -6,7 +6,7 @@
 /*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:42:59 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/21 00:24:06 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/21 17:20:20 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	handle_null_arg(char *env[])
 }
 
 /* 5 */
-/* Modified to take a pointer to the env array */
+/* Modified to take a pointer to the env array 
 void	update_env_var(char ***env, char *key, char *value)
 {
 	int	j;
@@ -79,7 +79,25 @@ void	update_env_var(char ***env, char *key, char *value)
 		}
 		j++;
 	}
+}*/
+void	update_env_var(char ***env, char *key, char *value)
+{
+	int	j = 0;
+	int	found = 0;
+
+	while ((*env)[j] != NULL)
+	{
+		if (strncmp((*env)[j], key, strlen(key)) == 0 && (*env)[j][strlen(key)] == '=')
+		{
+			found = 1;
+			break;
+		}
+		j++;
+	}
+	*env = my_setenv(*env, key, value, found);
+	print_export_format(key, value);
 }
+
 
 /* 4 */
 /* Extracted logic for handling case when arg contains a value */
