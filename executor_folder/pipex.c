@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:29:34 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/21 13:43:35 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/21 19:21:58 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  */
 void	set_pipes(t_list_of_tok *first_cmd, t_list_of_tok *secnd_cmd)
 {
-	printf("We are piping [%s] with [%s]\n", first_cmd->token, secnd_cmd->token);
+	//printf("We are piping [%s] with [%s]\n", first_cmd->token, secnd_cmd->token);
 	int	fd[2];
 
 	if (pipe(fd) == -1)
@@ -46,12 +46,13 @@ int	find_pipes(t_list_of_tok *head)
 		{
 			//if (current->next == NULL)
 			//	return (print_and_update("1minishesh: parse error near '\\n\'\n", GENERAL_ERROR), 1);
-			printf("Pipex: current->token (%s)\n", current->token);
+			
+			//printf("Pipex: current->token (%s)\n", current->token);
 			second_cmd = find_command_in_list(&(current->next));
 			//printf("second_command->token [%s]\n", second_cmd->token);
 			if (second_cmd == NULL)
 			{
-				printf("second command is null\n");
+				//printf("second command is null\n");
 				break ;
 			}
 			//	return (printf("no node after pipe\n"), 1);

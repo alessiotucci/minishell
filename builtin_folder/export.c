@@ -6,7 +6,7 @@
 /*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:42:59 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/21 17:20:20 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/21 19:17:42 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,10 +173,10 @@ void	my_export(char *args[], char *env[])
 		handle_non_null_arg(args, &env);
 		f = 1;
 	}
-	printf("***\n");
+	/*printf("***\n");
 	if (f == 1)
 		print_string_array(env);
 	printf("***\n");
-	printf("finished execution\n");
+	printf("finished execution\n");*/
 }
 

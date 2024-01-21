@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:33:57 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/21 18:09:42 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/21 20:24:51 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	minishell_pwd(void)
 {
-//	printf("%sour implementation of pwd:%s\n", GREEN, RESET);
 	char	cwd[1024];
 
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
@@ -23,39 +22,27 @@ void	minishell_pwd(void)
 		perror("getcwd");
 }
 
-/* Verifica se il percorso esiste, Cambia la directory corrente
- Se non viene specificato un percorso, porta alla directory home
- TO_DO: we need to update the env for the current folder
+/* Get the current working directory before changing directories
+ * TO_DO: we need to update the env for the current folder
  */
 void	minishell_cd(char *directory, char **env)
 {
 	char	cwd[1024];
 
-//	my_setenv(env, "OLDPWD", getcwd(cwd, sizeof(cwd)), 0);
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		my_setenv(env, "OLDPWD", cwd, 0);
 	if (directory == NULL)
-	{
-		fprintf(stderr, "cd: missing argument\n");
-		return ;
-	}
-	printf("Changing directory to: %s%s%s\n",YELLOW, directory, RESET);
+		return (print_and_update("cd: missing argument\n", 1));
 	if (access(directory, F_OK) != 0)
-	{
-		perror("cd");
-		return ;
-	}
+		return (print_and_update("cd: no such file or directory\n", 1));
 	if (chdir(directory) != 0)
-		perror("cd");
-	//else
-		printf("%sDirectory change successful!%s\n", GREEN, RESET);
-		/*my_setenv(env, "PWD", directory, 0);
-		printf("set env\n");*/
-		if (getcwd(cwd, sizeof(cwd)) != NULL)
-		{
-			my_setenv(env, "PWD", cwd, 0);
-			printf("set env\n");
-		}
+		print_and_update("cd: error changing directory\n", 1);
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		my_setenv(env, "PWD", cwd, 0);
 }
-/* adding the support for the -nnn and the -n */
+
+/* the flag is being check in the parsing process
+ * adding the support for the -nnn and the -n */
 void	minishell_echo(char *args[])
 {
 	int	i;

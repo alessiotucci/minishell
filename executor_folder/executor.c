@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/21 14:46:59 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/21 19:20:20 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 
 	stdin_copy = dup(STDIN_FILENO);
 	stdout_copy = dup(STDOUT_FILENO);
-	printf("executing command: (%s)\n", command);
+	//printf("executing command: (%s)\n", command);
 	piping_process(cmd_nod);
 	if (cmd_nod->file_name != NULL)
 		if (redirection_process(cmd_nod->file_name, cmd_nod->redirect_type))
@@ -173,7 +173,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 			close(stdout_copy);
 			execve(command, args_a, envp);
 			print_and_update("command not found", COMMAND_NOT_FOUND);
-			printf("%s\n", command);
+			//printf("%s\n", command);
 		}
 	}
 	restore_original_stdout(stdout_copy, cmd_nod);

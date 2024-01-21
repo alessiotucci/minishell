@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/21 14:31:32 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/21 20:25:36 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	create_tokens(char **line_of_commands, t_list_of_tok **token_head, char **e
 	int	flag;
 
 	i = 0;
+	flag = 0;
 	while (line_of_commands[i])
 	{
 		line_of_commands[i] = replace_me(line_of_commands[i], '"', ' ', '\t');
@@ -101,11 +102,12 @@ int	lexer(char *string, char **env)
 	//print_list_tokens(&token_head);
 	//update_list_order(&token_head);
 //	printf("\n***\t\nafter the change\n");
-//	print_list_tokens(&token_head);
-	print_list_tokeny(&token_head);
-//	return (1);
+	//print_list_tokens(&token_head);
+	//print_list_tokeny(&token_head);
 	executor(&token_head, env);
 	free_list(&token_head);
 	free_string_array(line_of_commands);
 	return (0);
 }
+
+
