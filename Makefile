@@ -6,7 +6,7 @@
 #    By: atucci <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 09:05:05 by atucci            #+#    #+#              #
-#    Updated: 2024/01/20 17:43:41 by atucci           ###   ########.fr        #
+#    Updated: 2024/01/21 16:35:17 by atucci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,8 @@ NAME = minishell
 SRC = ./minishell.c \
 	./signals.c \
 	./extra.c \
+	./setenv.c \
+	./error_handling.c \
 	./builtin_folder/builtin_helper.c \
 	./builtin_folder/easy_built_ins.c \
 	./builtin_folder/built_ins.c \

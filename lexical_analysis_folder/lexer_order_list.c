@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 19:21:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/20 18:50:29 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/21 14:24:01 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ t_list_of_tok	*create_empty_node(void)
 }
 
 /* 4 Determine what follows a node (filename) after redirection */
-int	what_after_filename(t_list_of_tok *node)
+/* called with the node afte the filename */
+int	what_after_filename(t_list_of_tok *file_node)
 {
-	if (node == NULL)
-		return (0);
-	if (node->type == T_COMMAND || node->type == T_BUILTIN)
+	if (file_node == NULL)
+		return (0); // dopo il filename non cé nulla;
+	if (file_node->type == T_COMMAND || file_node->type == T_BUILTIN)
 		return (1);
 	return (2);
 }
@@ -119,25 +120,28 @@ int should_swap(t_list_of_tok *head)
 		if (is_a_redirection(current) && current->next != NULL && current->next->type == T_FILE_NAME)
 		{
 			t_list_of_tok *command_node = current->next->next;
+			printf("command_node token [%s]\n", command_node->token);
 			if (command_node != NULL && (command_node->type == T_COMMAND || command_node->type == T_BUILTIN))
 			{
 				t_list_of_tok *next_node = command_node->next;
-				if (next_node == NULL || !is_a_redirection(next_node))
+				if (next_node == NULL || is_a_redirection(next_node) || next_node->type == T_PIPES || next_node->type == T_FLAG || next_node->type == T_COMMAND_ARGS)
 				{
-					//printf("the code would swap a node\n");
+					printf("the code would swap a node\n");
 					return 1;
 				}
 			}
 		}
-		else if ((current->type == T_COMMAND || current->type == T_BUILTIN) && current->next != NULL && is_a_redirection(current->next))
+		else if ((current->type == T_COMMAND || current->type == T_BUILTIN)
+			&& current->next != NULL && is_a_redirection(current->next) && what_after_filename(current->next->next->next) == 1)
 		{
+			printf("else\n");
 			// If a command node is followed by a redirection node, also return 1
-			//printf("the code would swap a node\n");
+			//printf("1the code would swap a node\n");
 			return 1;
 		}
 		current = current->next;
 	}
-	//printf("the code would NOT swap node\n");
+	printf("the code would NOT swap node\n");
 	return 0;
 }
 

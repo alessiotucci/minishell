@@ -6,12 +6,13 @@
 /*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:42:59 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/21 00:07:53 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/21 00:24:06 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #define MAX_ENV_VARIABLES 100
+
 /* 8 */
 void	print_export_format(char *var, char *value)
 {
@@ -58,20 +59,21 @@ void	handle_null_arg(char *env[])
 }
 
 /* 5 */
-void	update_env_var(char *env[], char *key, char *value)
+/* Modified to take a pointer to the env array */
+void	update_env_var(char ***env, char *key, char *value)
 {
 	int	j;
 
 	j = 0;
-	while (env[j] != NULL)
+	while ((*env)[j] != NULL)
 	{
-		if (ft_strncmp(env[j], key, ft_strlen(key)) == 0)
+		if (ft_strncmp((*env)[j], key, ft_strlen(key)) == 0)
 		{
-			free(env[j]);
-			env[j] = malloc(ft_strlen(key) + ft_strlen(value) + 2);
-			strcpy(env[j], key);
-			strcat(env[j], "=");
-			strcat(env[j], value);
+			free((*env)[j]);
+			(*env)[j] = malloc(ft_strlen(key) + ft_strlen(value) + 2);
+			strcpy((*env)[j], key);
+			strcat((*env)[j], "=");
+			strcat((*env)[j], value);
 			print_export_format(key, value);
 			break ;
 		}
@@ -80,7 +82,8 @@ void	update_env_var(char *env[], char *key, char *value)
 }
 
 /* 4 */
-void	handle_value_case(char *arg, char *env[])
+/* Extracted logic for handling case when arg contains a value */
+void	handle_value_case(char *arg, char ***env)
 {
 	char	*equal_sign;
 	char	*value;
@@ -96,7 +99,8 @@ void	handle_value_case(char *arg, char *env[])
 }
 
 /* 3 */
-void	handle_empty_value_case(char *arg, char *env[])
+/* Extracted logic for handling case when arg does not contain a value */
+void	handle_empty_value_case(char *arg, char ***env)
 {
 	char	*existing_value;
 	int		k;
@@ -109,10 +113,10 @@ void	handle_empty_value_case(char *arg, char *env[])
 		if (existing_value == NULL)
 		{
 			k = 0;
-			while (env[k] != NULL)
+			while ((*env)[k] != NULL)
 				k++;
-			env[k] = malloc(strlen(arg) + 1);
-			strcpy(env[k], arg);
+			(*env)[k] = malloc(strlen(arg) + 1);
+			strcpy((*env)[k], arg);
 			printf("start ok\n");
 			print_export_format(arg, "");
 		}
@@ -120,7 +124,8 @@ void	handle_empty_value_case(char *arg, char *env[])
 }
 
 /* 2 */
-void	handle_non_null_arg(char *args[], char *env[])
+/* Modified to use the new handle_value_case and handle_empty_value_case functions */
+void	handle_non_null_arg(char *args[], char ***env)
 {
 	int	i;
 
@@ -136,12 +141,24 @@ void	handle_non_null_arg(char *args[], char *env[])
 }
 
 /* 1 */
+/* Modified to pass a pointer to the env array to handle_non_null_arg */
 void	my_export(char *args[], char *env[])
 {
+	int	f;
+
+	f = 0;
 	printf("args in position [1]: %s\n", args[1]);
 	if (args[1] == NULL)
 		handle_null_arg(env);
 	else
-		handle_non_null_arg(args, env);
+	{
+		handle_non_null_arg(args, &env);
+		f = 1;
+	}
+	printf("***\n");
+	if (f == 1)
+		print_string_array(env);
+	printf("***\n");
 	printf("finished execution\n");
 }
+

@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/20 22:42:00 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/21 16:34:53 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ char			*my_strndup(const char *src_str, size_t max_len);
 char			*my_strncpy(char *dst, const char *src, size_t len);
 void			print_string_array(char **array);
 int				free_string_array(char **array);
+char			**copy_array(char **env, int extra_space);
 /* Advanced utils for builtins or Wildcard */
 int				lenght_string_array(char **array);
 char			**sort_string_array(char **array);
@@ -220,7 +221,7 @@ void			executor2(void);
 void			executor3(void);
 /* setting up pipes */
 void			set_pipes(t_list_of_tok *first_cmd, t_list_of_tok *secnd_cmd);
-void			find_pipes(t_list_of_tok *head);
+int				find_pipes(t_list_of_tok *head);
 void			piping_process(t_list_of_tok *cmd_nod);
 // function to handle signals
 void			handle_ctrl_c(int sig);
@@ -229,4 +230,7 @@ void			handle_ctrl_backlash(int sig);
 /*function to handle the * wildcards */
 int				valid_wildcard(const char *str);
 char			**expansion_wildcard(char *wildcard);
+/* handling errors */
+void	set_g_exit(int status);
+void	print_and_update(char *str, int status);
 #endif

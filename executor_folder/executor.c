@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/20 23:33:48 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/21 14:46:59 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	find_redirect(t_list_of_tok *cmd_node)
 		if (iterator->type == T_REDIR_OUT || iterator->type == T_REDIR_APP || iterator->type == T_REDIR_IN || iterator->type == T_HERE_DOC)
 		{
 			if (iterator->next == NULL)
-				return (set_g_exit(GENERAL_ERROR), printf("minishesh: parse error near '\\n\'\n"), 1);
+				return (print_and_update("minishesh: parse error near '\\n\'\n", GENERAL_ERROR), 1);
 			if (iterator->next->type == T_FILE_NAME)
 				last_redirect = open_file(iterator);
 		}
@@ -84,7 +84,9 @@ int	find_redirect(t_list_of_tok *cmd_node)
  this fuction handle the redirection process
  redirection_process(current, current->next->type);
  */
+// (redirection_process(cmd_nod->file_name, cmd_nod->redirect_type)
 int	redirection_process(char *file_name, t_type_of_tok type)
+//int	redirection_process(t_list_of_tok *cmd)
 {
 	if (type == T_REDIR_IN)
 		if (redirect_input(file_name))
@@ -144,9 +146,11 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 
 	stdin_copy = dup(STDIN_FILENO);
 	stdout_copy = dup(STDOUT_FILENO);
+	printf("executing command: (%s)\n", command);
 	piping_process(cmd_nod);
 	if (cmd_nod->file_name != NULL)
 		if (redirection_process(cmd_nod->file_name, cmd_nod->redirect_type))
+		// if (redirection_process(cmd_nod))
 			return (NULL);
 	if (cmd_nod->type == T_BUILTIN)
 		which_built_in(cmd_nod, args_a, envp);
@@ -155,8 +159,8 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 		fix_pid = fork();
 		if (fix_pid == 0)
 		{	
-			//if (cmd_nod->index <= 2)
-			if (my_strcmp(cmd_nod->token, "cat") == 0 && cmd_nod->next) // work on this edge cases
+			/*if (cmd_nod->index <= 2)
+			if (my_strcmp(cmd_nod->token, "cat") == 0 && cmd_nod->next != NULL) // work on this edge cases
 			{
 				// penultimo comando ...
 				ft_putstr_fd("Next->next token [ ", stdout_copy);
@@ -164,12 +168,12 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 				ft_putstr_fd(" ] \n", stdout_copy);
 				//printf("closing the infile of node: (%s)\n", cmd_nod->next->next->token);
 				close(cmd_nod->next->next->in_file);
-			}
+			}*/
 			close(stdin_copy);
 			close(stdout_copy);
 			execve(command, args_a, envp);
-			printf("command not found: %s\n", command);
-			set_g_exit(COMMAND_NOT_FOUND);
+			print_and_update("command not found", COMMAND_NOT_FOUND);
+			printf("%s\n", command);
 		}
 	}
 	restore_original_stdout(stdout_copy, cmd_nod);
@@ -185,7 +189,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
  * token of the node 
  * 
  */
-void	update_exit_status()
+void	wait_exit_status()
 {
 	int	status;
 	while (waitpid(-1, &status, 0) > 0)
@@ -206,7 +210,8 @@ int	executor(t_list_of_tok **head, char **envp)
 	{
 		if (find_redirect(cmd_node) == 1)
 			break ;
-		find_pipes(cmd_node);
+		if (find_pipes(cmd_node) == 1)
+			break ;
 		command = cmd_node->token;
 		if (cmd_node->type != T_BUILTIN)
 		{
@@ -218,6 +223,7 @@ int	executor(t_list_of_tok **head, char **envp)
 		execute_command(command, argoums, envp, cmd_node);
 		cmd_node = find_command_in_list(&cmd_node->next);
 	}
-	update_exit_status(); // osema extra work
+	wait_exit_status();
+	// I should free all the memory allocated during the process
 	return (0);
 }
