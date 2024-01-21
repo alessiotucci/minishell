@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/21 16:34:53 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/21 17:08:16 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,9 @@ char			*replace_chars(char *string);
 void			free_list(t_list_of_tok **head);
 /* build in functions */
 void			minishell_pwd(void);
-void			minishell_cd(char *directory);
+//void			minishell_cd(char *directory);
+char			**my_setenv(char **old_copy, char *key, char *new_value, int append_flag);
+void			minishell_cd(char *directory, char **env);
 void			minishell_echo(char *args[]);
 void			minishell_export(char *args[]);
 void			my_export(char *args[], char *env[]);

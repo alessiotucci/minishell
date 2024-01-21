@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:33:57 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/09 16:30:56 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/21 17:16:41 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,17 @@ void	minishell_pwd(void)
  Se non viene specificato un percorso, porta alla directory home
  TO_DO: we need to update the env for the current folder
  */
-void	minishell_cd(char *directory)
+void	minishell_cd(char *directory, char **env)
 {
+//	char	cwd[1024];
+
+//	my_setenv(env, "OLDPWD", getcwd(cwd, sizeof(cwd)), 0);
 	if (directory == NULL)
 	{
 		fprintf(stderr, "cd: missing argument\n");
 		return ;
 	}
-	//printf("Changing directory to: %s%s%s\n",YELLOW, directory, RESET);
+	printf("Changing directory to: %s%s%s\n",YELLOW, directory, RESET);
 	if (access(directory, F_OK) != 0)
 	{
 		perror("cd");
@@ -43,7 +46,9 @@ void	minishell_cd(char *directory)
 	if (chdir(directory) != 0)
 		perror("cd");
 	//else
-	//	printf("%sDirectory change successful!%s\n", GREEN, RESET);
+		printf("%sDirectory change successful!%s\n", GREEN, RESET);
+		my_setenv(env, "PWD", directory, 0);
+		printf("set env\n");
 }
 /* adding the support for the -nnn and the -n */
 void	minishell_echo(char *args[])
