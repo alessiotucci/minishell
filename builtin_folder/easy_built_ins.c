@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:33:57 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/21 17:16:41 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/21 18:09:42 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	minishell_pwd(void)
  */
 void	minishell_cd(char *directory, char **env)
 {
-//	char	cwd[1024];
+	char	cwd[1024];
 
 //	my_setenv(env, "OLDPWD", getcwd(cwd, sizeof(cwd)), 0);
 	if (directory == NULL)
@@ -47,8 +47,13 @@ void	minishell_cd(char *directory, char **env)
 		perror("cd");
 	//else
 		printf("%sDirectory change successful!%s\n", GREEN, RESET);
-		my_setenv(env, "PWD", directory, 0);
-		printf("set env\n");
+		/*my_setenv(env, "PWD", directory, 0);
+		printf("set env\n");*/
+		if (getcwd(cwd, sizeof(cwd)) != NULL)
+		{
+			my_setenv(env, "PWD", cwd, 0);
+			printf("set env\n");
+		}
 }
 /* adding the support for the -nnn and the -n */
 void	minishell_echo(char *args[])
