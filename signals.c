@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 15:02:56 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/20 15:03:58 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/22 17:06:24 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
  It clears the current line in the readline buffer,
  moves the cursor to a new line, and redraws the prompt.
  This gives you a new prompt on a new line when you press Ctrl+C
-*/ 
 void	handle_ctrl_c(int sig)
 {
 	(void)sig;
@@ -39,7 +38,7 @@ void	handle_ctrl_backlash(int sig)
 		printf("handling signal with ctrl-boh \n");
 		exit(0);
 }
-/*
+*/
 void handle_ctrl_c(int sig) 
 {
 	(void)sig;
@@ -57,13 +56,12 @@ void handle_ctrl_backlash(int sig)
 }
 
 // Signal handler for SIGTERM (default termination signal)
-void handle_termination(int sig) 
+void handle_ctrl_d(int sig) 
 {
 	(void)sig;
 	printf("\nHandling termination signal \n");
 	exit(0);  // Adjust exit_code as needed
 }
-*/
 /*
 		TO DO 
 		* include the global variable for exit code
