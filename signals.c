@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 15:02:56 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/22 17:06:24 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/22 17:45:43 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void handle_ctrl_c(int sig)
 	(void)sig;
 	rl_replace_line("", 0);  // Clear the current line
 	rl_on_new_line();		// Move the cursor to a new line
+	printf("\n");
 	rl_redisplay();		  // Redisplay the prompt
 }
 
