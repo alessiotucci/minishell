@@ -1,0 +1,74 @@
+command not found[1;31mminishell% [0m
+^Ilol.c"                 builtin_enrico_2/        extra.c                  libft/                   notes/                   signals.c
+.Makefile.swp            builtin_folder/          extra.o                  minishell                printf_for_debug/        signals.o
+.git/                    dollar_work/             fi                       minishell.c              readme.md                signals_enrico.c
+.minishell.h.swp         error_handling.c         fil                      minishell.h              recursive_parsing_tree/  srcs/
+Makefile                 error_handling.o         file                     minishell.o              setenv.c                 type
+README.md                executor_folder/         lexical_analysis_folder/ minishellSubject.pdf     setenv.o                 wildcard_bonus/
+[1;31mminishell% [0m
+^Ilol.c"                 builtin_enrico_2/        extra.c                  libft/                   notes/                   signals.c
+.Makefile.swp            builtin_folder/          extra.o                  minishell                printf_for_debug/        signals.o
+.git/                    dollar_work/             fi                       minishell.c              readme.md                signals_enrico.c
+.minishell.h.swp         error_handling.c         fil                      minishell.h              recursive_parsing_tree/  srcs/
+Makefile                 error_handling.o         file                     minishell.o              setenv.c                 type
+README.md                executor_folder/         lexical_analysis_folder/ minishellSubject.pdf     setenv.o                 wildcard_bonus/
+[1;31mminishell% [0mreturn (current);
+swapping when there is no need
+I should check the order of command and redirection
+the code would NOT swap node
+  [return]    [(]    [current]    [)]    [;]  
+command not found[1;31mminishell% [0m
+command not foundcommand not found[1;31mminishell% [0m
+command not foundcommand not foundcommand not found[1;31mminishell% [0m
+command not foundcommand not found[1;31mminishell% [0m
+command not foundcommand not found[1;31mminishell% [0mcommand not found[1;31mminishell% [0m
+
+command not found[1;31mminishell% [0m
+^Ilol.c"                 builtin_enrico_2/        extra.c                  libft/                   notes/                   signals.c
+.Makefile.swp            builtin_folder/          extra.o                  minishell                printf_for_debug/        signals.o
+.git/                    dollar_work/             fi                       minishell.c              readme.md                signals_enrico.c
+.minishell.h.swp         error_handling.c         fil                      minishell.h              recursive_parsing_tree/  srcs/
+Makefile                 error_handling.o         file                     minishell.o              setenv.c                 type
+README.md                executor_folder/         lexical_analysis_folder/ minishellSubject.pdf     setenv.o                 wildcard_bonus/
+[1;31mminishell% [0mcurrent = current->next;
+swapping when there is no need
+I should check the order of command and redirection
+[1;31mminishell% [0m}
+swapping when there is no need
+I should check the order of command and redirection
+the code would NOT swap node
+  [}]  
+command not found[1;31mminishell% [0mreturn (NULL);
+swapping when there is no need
+I should check the order of command and redirection
+the code would NOT swap node
+  [return]    [(]    [NULL]    [)]    [;]  
+command not found[1;31mminishell% [0m
+command not foundcommand not found[1;31mminishell% [0m
+command not foundcommand not found[1;31mminishell% [0m
+command not foundcommand not foundcommand not found[1;31mminishell% [0m
+command not found[1;31mminishell% [0mcommand not foundcommand not found[1;31mminishell% [0m
+
+command not found[1;31mminishell% [0m}
+swapping when there is no need
+I should check the order of command and redirection
+the code would NOT swap node
+  [}]  
+command not found[1;31mminishell% [0m
+swapping when there is no need
+I should check the order of command and redirection
+the code would NOT swap node
+
+[1;31mminishell% [0m
+swapping when there is no need
+I should check the order of command and redirection
+the code would NOT swap node
+
+[1;31mminishell% [0mhandling signales with ctrl-c
+handling signales with ctrl-c
+handling signales with ctrl-c
+
+
+
+^Chandling signales with ctrl-c
+

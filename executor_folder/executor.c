@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/21 19:20:20 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/22 15:01:37 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 			close(stdin_copy);
 			close(stdout_copy);
 			execve(command, args_a, envp);
-			print_and_update("command not found", COMMAND_NOT_FOUND);
+			print_and_update("command not found\n", COMMAND_NOT_FOUND);
 			//printf("%s\n", command);
 		}
 	}

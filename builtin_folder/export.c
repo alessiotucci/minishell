@@ -6,7 +6,7 @@
 /*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:42:59 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/21 19:17:42 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/22 12:38:31 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,16 +162,16 @@ void	handle_non_null_arg(char *args[], char ***env)
 /* Modified to pass a pointer to the env array to handle_non_null_arg */
 void	my_export(char *args[], char *env[])
 {
-	int	f;
+	//int	f;
 
-	f = 0;
+	//f = 0;
 	printf("args in position [1]: %s\n", args[1]);
 	if (args[1] == NULL)
 		handle_null_arg(env);
 	else
 	{
 		handle_non_null_arg(args, &env);
-		f = 1;
+		//f = 1;
 	}
 	/*printf("***\n");
 	if (f == 1)

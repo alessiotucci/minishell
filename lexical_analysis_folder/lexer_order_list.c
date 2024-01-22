@@ -6,13 +6,11 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 19:21:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/21 14:24:01 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/22 14:35:17 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	is_a_redirection(t_list_of_tok *token);
 
 /*5)  Helper function to create a new node */
 t_list_of_tok	*create_empty_node(void)
@@ -112,8 +110,9 @@ void	swap_redirection_with_command(t_list_of_tok **head)
 		move_node(head, redir_node, command_node);
 }
 
-int should_swap(t_list_of_tok *head)
+int	should_swap(t_list_of_tok *head)
 {
+	printf("I should check the order of command and redirection\n");
 	t_list_of_tok *current = head;
 	while (current != NULL)
 	{
@@ -132,7 +131,7 @@ int should_swap(t_list_of_tok *head)
 			}
 		}
 		else if ((current->type == T_COMMAND || current->type == T_BUILTIN)
-			&& current->next != NULL && is_a_redirection(current->next) && what_after_filename(current->next->next->next) == 1)
+			&& current->next != NULL && is_a_redirection(current->next) > 0 && what_after_filename(current->next->next->next) == 1)
 		{
 			printf("else\n");
 			// If a command node is followed by a redirection node, also return 1
@@ -151,9 +150,11 @@ t_list_of_tok	**update_list_order(t_list_of_tok **head)
 {
 	if (find_command_in_list(head) == NULL)
 		find_empty_redirection(head);
-//	printf("swapping when there is no need\n");
-//	printf("I should check the order of command and redirection\n");
-	if (should_swap(*head))
-	swap_redirection_with_command(head);
+	/*if (find_first_occurrence(*head, T_REDIR_APP)
+		&& find_first_occurrence(*head, T_REDIR_IN)
+		&& find_first_occurrence(*head, T_REDIR_OUT)) */
+		printf("swapping when there is no need\n");
+		if (should_swap(*head))
+		swap_redirection_with_command(head);
 	return (head);
 }

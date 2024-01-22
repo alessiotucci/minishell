@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 21:50:00 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/21 20:23:51 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/22 13:55:56 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ char	*replace_chars(char *string)
 	char	*new_string;
 
 	new_string = add_spaces_around_symbols(string);
-	new_string = replace_me(string, '"', '\t', ' ');
-	new_string = replace_me(string, 39, '\t', ' ');
+//	new_string = replace_me(string, '"', '\t', ' ');
+//	new_string = replace_me(string, 39, '\t', ' ');
+	//new_string = add_spaces_around_symbols(string);
 	return (new_string);
 }

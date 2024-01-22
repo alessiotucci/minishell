@@ -6,11 +6,27 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/17 17:24:53 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/22 14:11:08 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+/* 5 */
+t_list_of_tok	*find_first_occurrence(t_list_of_tok *head, t_type_of_tok enum_value)
+{
+	t_list_of_tok	*current;
+
+	current = head;
+	while (current != NULL)
+	{
+		if (current->type == enum_value)
+			return (current);
+		current = current->next;
+	}
+	return (NULL);
+}
+
 /* 4 Check if the previous node is valid */
 int	is_valid_prev(t_list_of_tok *node)
 {

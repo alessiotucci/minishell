@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:37:59 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/01 15:58:43 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/22 15:00:56 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ int	is_here_doc(char *str)
 /* always pass a valid pointer, otherwise segfault */
 int	is_a_redirection(t_list_of_tok *token)
 {
+	//printf("seggy faulty\n");
+	if (token == NULL)
+		return (-1);
 	if (token->type == T_REDIR_OUT || token->type == T_REDIR_IN || token->type == T_REDIR_APP)
 		return (1);
 	else

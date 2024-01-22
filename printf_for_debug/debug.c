@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 14:47:07 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/20 20:02:26 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/22 13:50:41 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	print_list_tokeny(t_list_of_tok **head)
 	t_list_of_tok *current = *head;
 	while (current != NULL)
 	{
-		printf("  %s  ", current->token);
+		printf("  [%s]  ", current->token);
 		current = current->next;
 	}
 	printf("\n");

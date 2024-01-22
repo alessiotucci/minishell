@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/21 20:25:36 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/22 13:59:47 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,20 @@ int	lexer(char *string, char **env)
 	if (handle_quotes(string) || first_check_parent(string))
 		return (1);
 	new_string = replace_chars(string);
+	/* this is a fix ? */
+	new_string = replace_me(new_string, '"', '\t', ' ');
+	new_string = replace_me(new_string, 39, '\t', ' ');
+	/* maybe not */
 	line_of_commands = ft_split(new_string, ' ');
 	create_tokens(line_of_commands, &token_head, env);
 //	priority_level(&token_head);
 	update_token_types(&token_head);
 //	printf("do you want to perfomr some check here!\n");
 	//print_list_tokens(&token_head);
-	//update_list_order(&token_head);
+	update_list_order(&token_head);
 //	printf("\n***\t\nafter the change\n");
 	//print_list_tokens(&token_head);
-	//print_list_tokeny(&token_head);
+	print_list_tokeny(&token_head);
 	executor(&token_head, env);
 	free_list(&token_head);
 	free_string_array(line_of_commands);

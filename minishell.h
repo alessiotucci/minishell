@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/21 17:08:16 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/22 14:30:40 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,8 @@ void			try_builtin(void);
 t_list_of_tok	**update_list_order(t_list_of_tok **head);
 void			find_empty_redirection(t_list_of_tok **head);
 t_list_of_tok	*create_empty_node(void);
+t_list_of_tok	*find_first_occurrence(t_list_of_tok *head, t_type_of_tok enum_value);
+int				is_a_redirection(t_list_of_tok *node);
 void			insert_after_node(t_list_of_tok *node_to_insert_after, t_list_of_tok *new_node);
 void			remove_node(t_list_of_tok **head, t_list_of_tok *node_to_remove);
 void			move_node(t_list_of_tok **head, t_list_of_tok *target_node, t_list_of_tok *moving_node);
