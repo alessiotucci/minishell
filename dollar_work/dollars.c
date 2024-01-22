@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 16:23:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/13 20:39:53 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/22 17:22:42 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,27 +45,29 @@ char *expansion_dollary(char *dollar, char **env)
 	int		i;
 	int		key_len;
 	char *new_dollar = extract_content_parenthes(dollar);
-	//printf("%sdollar:%s (%s)\n", GREEN, RESET, dollar);
-	//printf("strlen of dollar is [%zu]\n", ft_strlen(dollar));
+
+	printf("%sdollar:%s (%s)\n", GREEN, RESET, dollar);
+	printf("strlen of dollar is [%s%zu%s]\n",YELLOW, ft_strlen(dollar), RESET);
 	if (ft_strlen(dollar) == 1 && dollar[0] == '?' )
 		return (ft_itoa(g_exit_status));
 	if (dollar[0] == '$')
 	{
 		if (dollar[1] == '{')
-			key = strndup(dollar + 2, strlen(dollar) - 3);
+			key = my_strndup(dollar + 2, ft_strlen(dollar) - 3);
 		else
-			key = strdup(dollar + 1);
+			key = ft_strdup(dollar + 1);
 	}
 	else
-		key = strdup(new_dollar);
+		key = ft_strdup(new_dollar);
 	i = 0;
-	key_len = strlen(key);
+	key_len = ft_strlen(key);
 	while (env[i] != NULL)
 	{
 		if (strncmp(env[i], key, key_len) == 0 && env[i][key_len] == '=')
 		{
+			printf("%sthe env[%d]: is %s%s\n", YELLOW, i, env[i], RESET);
 			free(key);
-			return (strdup(env[i] + strlen(key) + 1));
+			return (ft_strdup(env[i] + key_len + 1));
 		}
 		i++;
 	}

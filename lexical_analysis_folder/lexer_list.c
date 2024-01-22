@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:55:46 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/20 15:15:13 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/22 17:11:44 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static char	*expansion_dollar(char *dollar, char **env)
 	int		i;
 	int		key_len;
 
+	printf("%s EXPANSION FOR DOLLAR %s\n", GREEN, RESET);
 	if (dollar[0] == '$')
 	{
 		if (dollar[1] == '{')
@@ -198,9 +199,9 @@ t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env, i
 		new_node = node_for_wildcard(0, cmd);
 	else if ((ft_strchr(new_cmd, '$') != NULL) && (flag != SINGLE_QUOTE))
 	{
-//		printf("string for node_for_dollar: (%s)\n", new_cmd);
+		printf("string for node_for_dollar: (%s)\n", new_cmd);
 		new_cmd = find_and_expand_vars(new_cmd, env);
-//		printf("string after the work: (%s)\n", new_cmd);
+		printf("string after the work: (%s)\n", new_cmd);
 		new_node = create_node(0, new_cmd);
 	}
 	else
