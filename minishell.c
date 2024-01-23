@@ -71,4 +71,5 @@ int	main(int ac, char *av[], char *envp[])
 			continue ;
 			//return (1);
 	}
+	free_string_array(env_copy);
 }

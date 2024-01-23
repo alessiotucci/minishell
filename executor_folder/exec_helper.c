@@ -45,11 +45,11 @@ char	*find_path_command(char *token, char **envp)
 		ft_strlcat(possible_command, "/", y);
 		ft_strlcat(possible_command, token, y);
 		if (access(possible_command, X_OK) == 0)
-			return (possible_command);
+			return (free_string_array(directs), possible_command);
 		free(possible_command);
 		i++;
 	}
-	return (NULL);
+	return (free_string_array(directs), NULL);
 }
 
 /*3) Function to get the size of the list */

@@ -169,8 +169,8 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 				//printf("closing the infile of node: (%s)\n", cmd_nod->next->next->token);
 				close(cmd_nod->next->next->in_file);
 			} */
-			close(stdin_copy);
-			close(stdout_copy);
+			//close(stdin_copy);
+			//close(stdout_copy);
 			execve(command, args_a, envp);
 			print_and_update("command not found\n", COMMAND_NOT_FOUND);
 			//printf("%s\n", command);
@@ -204,7 +204,9 @@ int	executor(t_list_of_tok **head, char **envp)
 	char			*command;
 	char			**argoums;
 	t_list_of_tok	*cmd_node;
+	int				flag;
 
+	flag = 0;
 	cmd_node = find_command_in_list(head);
 	while (cmd_node != NULL)
 	{
@@ -215,9 +217,10 @@ int	executor(t_list_of_tok **head, char **envp)
 		command = cmd_node->token;
 		if (cmd_node->type != T_BUILTIN)
 		{
+			flag = 1;
 			command = find_path_command(cmd_node->token, envp);
 			if (command == NULL)
-				command = cmd_node->token;
+				command = ft_strdup(cmd_node->token);
 		}
 		argoums = array_from_list(&cmd_node);
 		execute_command(command, argoums, envp, cmd_node);
@@ -225,5 +228,8 @@ int	executor(t_list_of_tok **head, char **envp)
 	}
 	wait_exit_status();
 	// I should free all the memory allocated during the process
+	if (flag)
+		free(command);
+	free_string_array(argoums);
 	return (0);
 }
