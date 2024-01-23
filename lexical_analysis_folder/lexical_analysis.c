@@ -99,10 +99,11 @@ int	lexer(char *string, char **env)
 	new_string = replace_me(new_string, 39, '\t', ' ');
 	/* maybe not */
 	line_of_commands = ft_split(new_string, ' ');
+	free(new_string);
 	create_tokens(line_of_commands, &token_head, env);
 //	priority_level(&token_head);
 	update_token_types(&token_head);
-	//update_list_order(&token_head);
+	update_list_order(&token_head);
 //	printf("\n***\t\nafter the change\n");
 //	print_list_tokens(&token_head);
 //	print_list_tokeny(&token_head);

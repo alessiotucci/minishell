@@ -89,5 +89,5 @@ char	*add_spaces_around_symbols(char *cmd)
 		i++;
 	}
 	new_cmd[j] = '\0';
-	return (new_cmd);
+	return (free(cmd), new_cmd);
 }

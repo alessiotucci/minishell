@@ -131,7 +131,9 @@ int	should_swap(t_list_of_tok *head)
 			}
 		}
 		else if ((current->type == T_COMMAND || current->type == T_BUILTIN)
-			&& current->next != NULL && is_a_redirection(current->next) > 0 && what_after_filename(current->next->next->next) == 1)
+			&& current->next != NULL
+			&& is_a_redirection(current->next) > 0
+			&& what_after_filename(current->next->next->next) == 1)
 		{
 			printf("else\n");
 			// If a command node is followed by a redirection node, also return 1
@@ -150,6 +152,9 @@ t_list_of_tok	**update_list_order(t_list_of_tok **head)
 {
 	if (find_command_in_list(head) == NULL)
 		find_empty_redirection(head);
+	if ((*head)->index == 0
+		&& ((*head)->type == T_COMMAND || (*head)->type == T_BUILTIN))
+		return (head);
 	/*if (find_first_occurrence(*head, T_REDIR_APP)
 		&& find_first_occurrence(*head, T_REDIR_IN)
 		&& find_first_occurrence(*head, T_REDIR_OUT)) */
