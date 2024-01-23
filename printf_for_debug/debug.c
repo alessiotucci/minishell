@@ -18,7 +18,7 @@ const char *names[] =
 	"Flag",
 	"Builtin",
 	"Parenthesis",
-	"Dollar",
+//	"Dollar",
 	"Pipes",
 	"Redirection in",
 	"Redirection out",
@@ -42,7 +42,7 @@ const char *colors[] =
 	BG_CYAN,
 	BG_YELLOW,
 	BG_RED,
-	RESET,
+//	RESET,
 	RESET
 };
 

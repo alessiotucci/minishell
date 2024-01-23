@@ -104,8 +104,8 @@ int	lexer(char *string, char **env)
 	update_token_types(&token_head);
 	//update_list_order(&token_head);
 //	printf("\n***\t\nafter the change\n");
-	//print_list_tokens(&token_head);
-	print_list_tokeny(&token_head);
+//	print_list_tokens(&token_head);
+//	print_list_tokeny(&token_head);
 	executor(&token_head, env);
 	free_list(&token_head);
 	free_string_array(line_of_commands);

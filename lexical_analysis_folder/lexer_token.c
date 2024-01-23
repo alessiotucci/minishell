@@ -17,6 +17,7 @@ void	flag_for_echo(t_list_of_tok **head)
 	char			*flag;
 	t_list_of_tok	*current;
 	char			*new_flag;
+	int				i;
 
 	current = *head;
 	while (current != NULL)
@@ -26,7 +27,10 @@ void	flag_for_echo(t_list_of_tok **head)
 			&& my_strcmp(current->previous->token, "echo") == 0)
 		{
 			flag = current->token;
-			if (flag[0] == '-' && flag[1] == 'n' && flag[2] != '\0')
+			i = 1;
+			while (flag[i] == 'n')
+				i++;
+			if (flag[0] == '-' && flag[1] == 'n' && flag[i] == '\0')
 			{
 				new_flag = malloc(3 * sizeof(char));
 				if (new_flag == NULL)
@@ -87,8 +91,8 @@ t_type_of_tok	type_of_token(char *spitted)
 		return (T_HERE_DOC);
 	else if (is_file_appender(spitted))
 		return (T_REDIR_APP);
-	else if (is_dollar(spitted))
-		return (T_DOLLAR);
+//	else if (is_dollar(spitted))
+//		return (T_DOLLAR);
 	else if (is_logical_op(spitted))
 		return (T_LOGIC_OPERAR);
 	else if (is_builtin(spitted))

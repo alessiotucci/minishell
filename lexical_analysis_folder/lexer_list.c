@@ -206,7 +206,7 @@ t_list_of_tok	*create_list_of_tok(t_list_of_tok **head, char *cmd, char **env, i
 	}
 	else
 		new_node = create_node(0, new_cmd);
-//	printf("new cmd: {%s}\n", new_cmd);
+	//printf("new cmd: {%s}\n", new_cmd);
 	if (*head == NULL)
 		*head = new_node;
 	else

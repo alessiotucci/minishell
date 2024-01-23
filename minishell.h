@@ -83,7 +83,7 @@ typedef enum e_type_of_tok
 	T_FLAG,
 	T_BUILTIN,
 	T_PARENT,
-	T_DOLLAR,
+//	T_DOLLAR,
 	T_PIPES,
 	T_REDIR_IN,
 	T_REDIR_OUT,

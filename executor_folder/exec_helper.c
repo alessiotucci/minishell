@@ -86,6 +86,27 @@ char	**find_path_env(char **env)
 	return (ft_split(nully, ':'));
 }
 
+int	valid_for_list(t_list_of_tok *node)
+{
+	if (node->type == T_COMMAND
+		|| node->type == T_BUILTIN
+		|| node->type == T_COMMAND_ARGS
+		|| node->type == T_FLAG)
+	return (1);
+	return (0);
+}
+
+int	break_loop(t_list_of_tok *node)
+{
+	if (node->type == T_PIPES
+		|| node->type == T_REDIR_IN
+		|| node->type == T_REDIR_OUT
+		|| node->type == T_REDIR_APP
+		|| node->type == T_HERE_DOC)
+	return (1);
+	return (0);
+}
+
 /*1) Function to create argv for execve */
 char	**array_from_list(t_list_of_tok **head)
 {
@@ -102,14 +123,14 @@ char	**array_from_list(t_list_of_tok **head)
 	i = 0;
 	while (current != NULL)
 	{
-		if (current->type == T_COMMAND || current->type == T_BUILTIN || current->type == T_COMMAND_ARGS || current->type == T_FLAG)
+		if (valid_for_list(current))
 		{
 			argv[i] = ft_strdup(current->token);
 			if (!argv[i])
 				return (NULL);
 			i++;
 		}
-		else if (current->type == T_PIPES || current->type == T_REDIR_IN || current->type == T_REDIR_OUT || current->type == T_REDIR_APP || current->type == T_HERE_DOC)
+		else if (break_loop(current))
 			break ;
 		current = current->next;
 	}
