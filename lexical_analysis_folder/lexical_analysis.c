@@ -6,13 +6,11 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/22 15:49:29 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/24 17:29:39 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-
 
 int	handling_quotes(char *input)
 {
@@ -99,14 +97,13 @@ int	lexer(char *string, char **env)
 	new_string = replace_me(new_string, 39, '\t', ' ');
 	/* maybe not */
 	line_of_commands = ft_split(new_string, ' ');
-	free(new_string);
 	create_tokens(line_of_commands, &token_head, env);
 //	priority_level(&token_head);
 	update_token_types(&token_head);
-	update_list_order(&token_head);
+	//update_list_order(&token_head);
 //	printf("\n***\t\nafter the change\n");
-//	print_list_tokens(&token_head);
-//	print_list_tokeny(&token_head);
+	//print_list_tokens(&token_head);
+	//print_list_tokeny(&token_head);
 	executor(&token_head, env);
 	free_list(&token_head);
 	free_string_array(line_of_commands);

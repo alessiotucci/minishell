@@ -6,7 +6,7 @@
 /*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:13:21 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/20 17:38:23 by enricogiral      ###   ########.fr       */
+/*   Updated: 2024/01/24 17:32:54 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,30 +144,20 @@ void	try_builtin(void)
 	return ;
 }
 
-void	cleanup_resources()
-{
-	printf("cleaing of resources...\n");
-}
-
 void	handle_signal(int signal)
 {
 	printf("signal receive%d\n", signal);
-	cleanup_resources();
 	exit(1);
 }
 
 void	minishell_exit(char **arg)
 {
-	pid_t	childPid;
 	int		exit_code;
 
 	if (arg[1])
 		exit_code = ft_atoi(arg[1]);
 	else
-		exit_code = 0;
-	cleanup_resources();
-	while ((childPid = waitpid(-1, NULL, WNOHANG)) > 0)
-		printf("children process %d finished\n", childPid);
+		exit_code = g_exit_status;
 	printf("exit with code %d\n", exit_code);
 	exit(exit_code);
 }

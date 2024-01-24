@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 19:29:51 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/02 17:57:04 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/24 17:17:23 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,5 @@ char	*add_spaces_around_symbols(char *cmd)
 		i++;
 	}
 	new_cmd[j] = '\0';
-	return (free(cmd), new_cmd);
+	return (new_cmd);
 }

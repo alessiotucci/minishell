@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/22 15:25:53 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/24 17:34:50 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 			//close(stdout_copy);
 			execve(command, args_a, envp);
 			print_and_update("command not found\n", COMMAND_NOT_FOUND);
+			exit(COMMAND_NOT_FOUND);
 			//printf("%s\n", command);
 		}
 	}
@@ -192,6 +193,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 void	wait_exit_status()
 {
 	int	status;
+
 	while (waitpid(-1, &status, 0) > 0)
 	{
 		if (WIFEXITED(status))
@@ -205,7 +207,7 @@ int	executor(t_list_of_tok **head, char **envp)
 	char			**argoums;
 	t_list_of_tok	*cmd_node;
 	int				flag;
-
+	
 	flag = 0;
 	cmd_node = find_command_in_list(head);
 	while (cmd_node != NULL)
@@ -229,7 +231,9 @@ int	executor(t_list_of_tok **head, char **envp)
 	wait_exit_status();
 	// I should free all the memory allocated during the process
 	if (flag)
+	{
 		free(command);
-	free_string_array(argoums);
+		free_string_array(argoums);
+	}
 	return (0);
 }
