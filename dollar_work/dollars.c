@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 16:23:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/22 17:42:10 by atucci           ###   ########.fr       */
+/*   Updated: 2024/01/24 16:42:36 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,16 +138,16 @@ char *find_and_expand_vars(char *str, char **env)
 			var_value = expansion_dollary(var_name, env);
 			if (var_value != NULL)
 			{
-				var_name_with_dollar = malloc(strlen(var_name) + 2); // +2 for the dollar sign and null terminator
+				var_name_with_dollar = malloc(strlen(var_name) + 2);
 				var_name_with_dollar[0] = '$';
 				strcpy(var_name_with_dollar + 1, var_name);
 				new_str = replace_substr(str, var_name_with_dollar, var_value);
-				free(var_name_with_dollar);
-				free(str);
+				//free(var_name_with_dollar);
+				//free(str);
 				str = new_str;
-				free(var_value);
+				//free(var_value);
 			}
-			free(var_name);
+			//free(var_name);
 		}
 	i++;
 	}
