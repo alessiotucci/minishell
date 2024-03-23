@@ -34,10 +34,7 @@ static char	*expansion_dollar(char *dollar, char **env)
 	while (env[i] != NULL)
 	{
 		if (ft_strncmp(env[i], key, key_len) == 0 && env[i][key_len] == '=')
-		{
-			free(key);
-			return (ft_strdup(env[i] + ft_strlen(key) + 1));
-		}
+			return (free(key), ft_strdup(env[i] + key_len + 1));
 		i++;
 	}
 	return (free(key), NULL);
