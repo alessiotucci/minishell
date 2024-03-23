@@ -158,7 +158,8 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 	{
 		fix_pid = fork();
 		if (fix_pid == 0)
-		{	
+		{
+			/* OSEMA FIXED THE PIPES */
 			/*if (cmd_nod->index <= 2)
 			 if (my_strcmp(cmd_nod->token, "cat") == 0 && cmd_nod->next != NULL) // work on this edge cases
 			{
@@ -172,7 +173,8 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 			//close(stdin_copy);
 			//close(stdout_copy);
 			execve(command, args_a, envp);
-			print_and_update("command not found\n", COMMAND_NOT_FOUND, stdout_copy);
+			printf_fd(command, stdout_copy);
+			print_and_update(": command not found\n", COMMAND_NOT_FOUND, stdout_copy);
 			exit(COMMAND_NOT_FOUND);
 			//printf("%s\n", command);
 		}

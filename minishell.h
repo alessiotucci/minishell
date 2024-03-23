@@ -237,4 +237,5 @@ char			**expansion_wildcard(char *wildcard);
 /* handling errors */
 void	set_g_exit(int status);
 void	print_and_update(char *str, int status, int fd);
+void	printf_fd(char *str, int fd);
 #endif
