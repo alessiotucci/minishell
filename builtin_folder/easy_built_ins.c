@@ -32,11 +32,11 @@ void	minishell_cd(char *directory, char **env)
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 		my_setenv(env, "OLDPWD", cwd, 0);
 	if (directory == NULL)
-		return (print_and_update("cd: missing argument\n", 1));
+		return (print_and_update("cd: missing argument\n", 1, 1));
 	if (access(directory, F_OK) != 0)
-		return (print_and_update("cd: no such file or directory\n", 1));
+		return (print_and_update("cd: no such file or directory\n", 1, 1));
 	if (chdir(directory) != 0)
-		print_and_update("cd: error changing directory\n", 1);
+		print_and_update("cd: error changing directory\n", 1, 1);
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 		my_setenv(env, "PWD", cwd, 0);
 }

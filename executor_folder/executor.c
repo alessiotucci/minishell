@@ -65,7 +65,7 @@ int	find_redirect(t_list_of_tok *cmd_node)
 		if (iterator->type == T_REDIR_OUT || iterator->type == T_REDIR_APP || iterator->type == T_REDIR_IN || iterator->type == T_HERE_DOC)
 		{
 			if (iterator->next == NULL)
-				return (print_and_update("minishesh: parse error near '\\n\'\n", GENERAL_ERROR), 1);
+				return (print_and_update("minishesh: parse error near '\\n\'\n", GENERAL_ERROR, 1), 1);
 			if (iterator->next->type == T_FILE_NAME)
 				last_redirect = open_file(iterator);
 		}
@@ -172,7 +172,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 			//close(stdin_copy);
 			//close(stdout_copy);
 			execve(command, args_a, envp);
-			print_and_update("command not found\n", COMMAND_NOT_FOUND);
+			print_and_update("command not found\n", COMMAND_NOT_FOUND, stdout_copy);
 			exit(COMMAND_NOT_FOUND);
 			//printf("%s\n", command);
 		}

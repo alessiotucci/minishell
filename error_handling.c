@@ -17,8 +17,17 @@ void	set_g_exit(int status)
 	g_exit_status = status;
 }
 
-void	print_and_update(char *str, int status)
+void	printf_fd(char *str, int fd)
+{
+	while (*str != '\0')
+	{
+		write(fd, str, 1);
+		str++;
+	}
+}
+
+void	print_and_update(char *str, int status, int fd)
 {
 	set_g_exit(status);
-	printf("%s", str);
+	printf_fd(str, fd);
 }

@@ -236,5 +236,5 @@ int				valid_wildcard(const char *str);
 char			**expansion_wildcard(char *wildcard);
 /* handling errors */
 void	set_g_exit(int status);
-void	print_and_update(char *str, int status);
+void	print_and_update(char *str, int status, int fd);
 #endif
