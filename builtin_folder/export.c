@@ -16,6 +16,7 @@
 /* 8 */
 void	print_export_format(char *var, char *value)
 {
+	printf("%s HERE IS THE SEGFAULT%s\n", RED, RESET);
 	printf("declare -x %s=\"%s\"\n", var, value);
 }
 
@@ -123,6 +124,7 @@ void	handle_empty_value_case(char *arg, char ***env)
 	char	*existing_value;
 	int		k;
 
+	printf("%s\n\n\n%s", RED, RESET);
 	if (!is_valid_identifier(arg))
 		printf("export: not an identifier: %s\n", arg);
 	else
@@ -134,8 +136,8 @@ void	handle_empty_value_case(char *arg, char ***env)
 			while ((*env)[k] != NULL)
 				k++;
 			(*env)[k] = malloc(strlen(arg) + 1);
-			strcpy((*env)[k], arg);
-			printf("start ok\n");
+			strcpy((*env)[k], arg);// remember to fix it 
+			printf("HEREstart ok\n");
 			print_export_format(arg, "");
 		}
 	}
@@ -147,10 +149,14 @@ void	handle_non_null_arg(char *args[], char ***env)
 {
 	int	i;
 
+	printf("%sHANDLE_nONT_NULL_args%s\n", BG_RED, BG_RESET);
+	printf("*args[], the parameter in [0]: %s\n", args[0]);
+	printf("*args[], the parameter in [1]: %s\n", args[1]);
 	i = 1;
 	while (args[i] != NULL)
 	{
-		if (strchr(args[i], '=') != NULL)
+		printf("\t! ");
+		if (ft_strchr(args[i], '=') != NULL)
 			handle_value_case(args[i], env);
 		else
 			handle_empty_value_case(args[i], env);
@@ -162,21 +168,25 @@ void	handle_non_null_arg(char *args[], char ***env)
 /* Modified to pass a pointer to the env array to handle_non_null_arg */
 void	my_export(char *args[], char *env[])
 {
-	//int	f;
+	int	f;
 
-	//f = 0;
+	f = 0;
 	printf("args in position [1]: %s\n", args[1]);
 	if (args[1] == NULL)
 		handle_null_arg(env);
 	else
 	{
 		handle_non_null_arg(args, &env);
-		//f = 1;
+		f = 1;
+		printf("updating the var f: %d\n", f);
 	}
-	/*printf("***\n");
+	printf("%s***%s\n", YELLOW, RESET);
+	
 	if (f == 1)
-		print_string_array(env);
+	/*	print_string_array(env);
+	*/
+	printf("osema");
 	printf("***\n");
-	printf("finished execution\n");*/
+	printf("%sfinished execution%s\n", GREEN, RESET);
 }
 

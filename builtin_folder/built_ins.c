@@ -85,7 +85,7 @@ void minishell_unset(char *var_name, char *envp[])
 }
 
 
-/* If no arguments provided, print the current environment variables */
+/* If no arguments provided, print the current environment variables 
 void minishell_export(char *args[]) 
 {
 	int			i;
@@ -119,13 +119,14 @@ void minishell_export(char *args[])
 			i++;
 		}
 	}
-}
+}*/
 
 /* If no arguments provided, print the current environment variables
  * we need to double check this case
  */
 void	minishell_env(char **env)
 {
+	// you can simply this and delete
 	int	i;
 
 	i = 0;
