@@ -16,7 +16,6 @@
 /* 8 */
 void	print_export_format(char *var, char *value)
 {
-	printf("%s HERE IS THE SEGFAULT%s\n", RED, RESET);
 	printf("declare -x %s=\"%s\"\n", var, value);
 }
 
@@ -38,24 +37,29 @@ int	is_valid_identifier(char *str)
 }
 
 /* 6 */
-void	handle_null_arg(char *env[])
+void	handle_null_arg(char **env[])
 {
 	int		i;
 	char	*equal_sign;
 	char	*value;
 
+	printf("\n\t***HANDLE  WITHOUT ARGS***\n");
 	i = 0;
-	while (env[i] != NULL)
+	while (*env[i] != NULL)
 	{
-		equal_sign = ft_strchr(env[i], '=');
+		printf("Env[i]'%s', index[%d].\n", *env[i], i);
+		equal_sign = ft_strchr(*env[i], '=');
+		printf("equal_sign: %s%s%s\n", BG_YELLOW, equal_sign, BG_RESET);
 		if (equal_sign != NULL)
 		{
-			*equal_sign = '\0';
+			//*equal_sign = '\0';
 			value = equal_sign + 1;
-			print_export_format(env[i], value);
-			*equal_sign = '=';
+			printf("value: %s%s%s\n", YELLOW, value, RESET);
+			print_export_format(*env[i], value);
+			//*equal_sign = '=';
 		}
 		i++;
+		printf("\ti++: %s%d%s\n", RED, i, RESET);
 	}
 }
 
@@ -108,7 +112,7 @@ void	handle_value_case(char *arg, char ***env)
 	char	*value;
 
 	equal_sign = ft_strchr(arg, '=');
-	*equal_sign = '\0';
+	//*equal_sign = '\0';
 	value = equal_sign + 1;
 	if (!is_valid_identifier(arg))
 		printf("export: not an identifier: %s\n", arg);
@@ -124,7 +128,6 @@ void	handle_empty_value_case(char *arg, char ***env)
 	char	*existing_value;
 	int		k;
 
-	printf("%s\n\n\n%s", RED, RESET);
 	if (!is_valid_identifier(arg))
 		printf("export: not an identifier: %s\n", arg);
 	else
@@ -137,7 +140,6 @@ void	handle_empty_value_case(char *arg, char ***env)
 				k++;
 			(*env)[k] = malloc(strlen(arg) + 1);
 			strcpy((*env)[k], arg);// remember to fix it 
-			printf("HEREstart ok\n");
 			print_export_format(arg, "");
 		}
 	}
@@ -149,13 +151,9 @@ void	handle_non_null_arg(char *args[], char ***env)
 {
 	int	i;
 
-	printf("%sHANDLE_nONT_NULL_args%s\n", BG_RED, BG_RESET);
-	printf("*args[], the parameter in [0]: %s\n", args[0]);
-	printf("*args[], the parameter in [1]: %s\n", args[1]);
 	i = 1;
 	while (args[i] != NULL)
 	{
-		printf("\t! ");
 		if (ft_strchr(args[i], '=') != NULL)
 			handle_value_case(args[i], env);
 		else
@@ -173,19 +171,17 @@ void	my_export(char *args[], char *env[])
 	f = 0;
 	printf("args in position [1]: %s\n", args[1]);
 	if (args[1] == NULL)
-		handle_null_arg(env);
+		handle_null_arg(&env);// arguments are null
 	else
 	{
 		handle_non_null_arg(args, &env);
 		f = 1;
-		printf("updating the var f: %d\n", f);
 	}
 	printf("%s***%s\n", YELLOW, RESET);
 	
 	if (f == 1)
 	/*	print_string_array(env);
 	*/
-	printf("osema");
 	printf("***\n");
 	printf("%sfinished execution%s\n", GREEN, RESET);
 }
