@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 19:02:52 by atucci            #+#    #+#             */
-/*   Updated: 2024/03/29 19:16:13 by atucci           ###   ########.fr       */
+/*   Updated: 2024/03/29 19:19:36 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int	main(int ac, char *av[], char **env)
 	char **env_copy = copy_array(env, 0);
 	printf("Sorting ENV\n");
 	sort_string_array(env_copy);
-	printf("%s printing the array%s\n", RED, RESET);
+	printf("%s printing the array%s\n***\n\n", RED, RESET);
 	print_string_array(env_copy);
 	printf("Freeing the copy of ENV\n");
 }

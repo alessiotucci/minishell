@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/03/26 16:01:56 by atucci           ###   ########.fr       */
+/*   Updated: 2024/03/29 20:23:04 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,11 +146,9 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 
 	stdin_copy = dup(STDIN_FILENO);
 	stdout_copy = dup(STDOUT_FILENO);
-	//printf("executing command: (%s)\n", command);
 	piping_process(cmd_nod);
 	if (cmd_nod->file_name != NULL)
 		if (redirection_process(cmd_nod->file_name, cmd_nod->redirect_type))
-		// if (redirection_process(cmd_nod))
 			return (NULL);
 	if (cmd_nod->type == T_BUILTIN)
 		which_built_in(cmd_nod, args_a, envp);
@@ -159,24 +157,12 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 		fix_pid = fork();
 		if (fix_pid == 0)
 		{
-			/* OSEMA FIXED THE PIPES 
-			if (cmd_nod->index <= 2)
-			 if (my_strcmp(cmd_nod->token, "cat") == 0 && cmd_nod->next != NULL) // work on this edge cases
-			{
-				//penultimo comando ...
-				ft_putstr_fd("Next->next token [ ", stdout_copy);
-				ft_putstr_fd(cmd_nod->next->next->token, stdout_copy);
-				ft_putstr_fd(" ] \n", stdout_copy); 
-				//printf("closing the infile of node: (%s)\n", cmd_nod->next->next->token);
+			if (my_strcmp(cmd_nod->token, "cat") == 0 && cmd_nod->next != NULL)
 				close(cmd_nod->next->next->in_file);
-			}*/
-			//close(stdin_copy);
-			//close(stdout_copy);
 			execve(command, args_a, envp);
 			printf_fd(command, stdout_copy);
 			print_and_update(": command not found\n", COMMAND_NOT_FOUND, stdout_copy);
 			exit(COMMAND_NOT_FOUND);
-			//printf("%s\n", command);
 		}
 	}
 	restore_original_stdout(stdout_copy, cmd_nod);
