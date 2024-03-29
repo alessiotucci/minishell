@@ -6,7 +6,7 @@
 /*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 17:42:59 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/22 12:38:31 by atucci           ###   ########.fr       */
+/*   Updated: 2024/03/26 16:30:40 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define MAX_ENV_VARIABLES 100
 
 /* 8 */
-void	print_export_format(char *var, char *value)
+void	export_format(char *var, char *value)
 {
 	printf("declare -x %s=\"%s\"\n", var, value);
 }
@@ -37,29 +37,30 @@ int	is_valid_identifier(char *str)
 }
 
 /* 6 */
-void	handle_null_arg(char **env[])
+void	without_arguments(char *env[])
 {
 	int		i;
 	char	*equal_sign;
 	char	*value;
 
-	printf("\n\t***HANDLE  WITHOUT ARGS***\n");
+	//printf("\n\t***HANDLE  WITHOUT ARGS***\n");
 	i = 0;
-	while (*env[i] != NULL)
+	sort_string_array(env);
+	while (env[i] != NULL)
 	{
-		printf("Env[i]'%s', index[%d].\n", *env[i], i);
-		equal_sign = ft_strchr(*env[i], '=');
-		printf("equal_sign: %s%s%s\n", BG_YELLOW, equal_sign, BG_RESET);
+		//printf("Env[i]'%s', index[%d].\n", env[i], i);
+		equal_sign = ft_strchr(env[i], '=');
+		//printf("equal_sign: %s%s%s\n", BG_YELLOW, equal_sign, BG_RESET);
 		if (equal_sign != NULL)
 		{
 			//*equal_sign = '\0';
 			value = equal_sign + 1;
-			printf("value: %s%s%s\n", YELLOW, value, RESET);
-			print_export_format(*env[i], value);
+			//printf("value: %s%s%s\n", YELLOW, value, RESET);
+			export_format(env[i], value);
 			//*equal_sign = '=';
 		}
 		i++;
-		printf("\ti++: %s%d%s\n", RED, i, RESET);
+		//printf("\ti++: %s%d%s\n", RED, i, RESET);
 	}
 }
 
@@ -100,7 +101,7 @@ void	update_env_var(char ***env, char *key, char *value)
 		j++;
 	}
 	*env = my_setenv(*env, key, value, found);
-	print_export_format(key, value);
+	export_format(key, value);
 }
 
 
@@ -140,7 +141,7 @@ void	handle_empty_value_case(char *arg, char ***env)
 				k++;
 			(*env)[k] = malloc(strlen(arg) + 1);
 			strcpy((*env)[k], arg);// remember to fix it 
-			print_export_format(arg, "");
+			export_format(arg, "");
 		}
 	}
 }
@@ -166,12 +167,11 @@ void	handle_non_null_arg(char *args[], char ***env)
 /* Modified to pass a pointer to the env array to handle_non_null_arg */
 void	my_export(char *args[], char *env[])
 {
-	int	f;
+	int	f = 0;
 
-	f = 0;
 	printf("args in position [1]: %s\n", args[1]);
 	if (args[1] == NULL)
-		handle_null_arg(&env);// arguments are null
+		without_arguments(env);// arguments are null
 	else
 	{
 		handle_non_null_arg(args, &env);

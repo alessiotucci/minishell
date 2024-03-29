@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/03/26 12:29:08 by atucci           ###   ########.fr       */
+/*   Updated: 2024/03/26 16:01:56 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,17 +159,17 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 		fix_pid = fork();
 		if (fix_pid == 0)
 		{
-			/* OSEMA FIXED THE PIPES */
+			/* OSEMA FIXED THE PIPES 
 			if (cmd_nod->index <= 2)
 			 if (my_strcmp(cmd_nod->token, "cat") == 0 && cmd_nod->next != NULL) // work on this edge cases
 			{
-				// penultimo comando ...
+				//penultimo comando ...
 				ft_putstr_fd("Next->next token [ ", stdout_copy);
 				ft_putstr_fd(cmd_nod->next->next->token, stdout_copy);
-				ft_putstr_fd(" ] \n", stdout_copy);
+				ft_putstr_fd(" ] \n", stdout_copy); 
 				//printf("closing the infile of node: (%s)\n", cmd_nod->next->next->token);
 				close(cmd_nod->next->next->in_file);
-			} 
+			}*/
 			//close(stdin_copy);
 			//close(stdout_copy);
 			execve(command, args_a, envp);

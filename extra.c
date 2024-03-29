@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 15:08:41 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/13 12:35:42 by atucci           ###   ########.fr       */
+/*   Updated: 2024/03/26 14:30:40 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,24 @@ int	my_strcmp(const char *str1, const char *str2)
 	}
 	return (0);
 }
+/* helper function to check for null string arrays */
+int	check_null_array(char **array)
+{
+	if (array == NULL)
+	{
+		printf("%s NULL, SOMETHING IS WRONG%s\n", RED, RESET);
+		return (1);
+	}
+	return (0);
+}
 
 void	print_string_array(char **array)
 {
 	int	i;
 
 	i = 0;
+	if (check_null_array(array))
+		return ;
 	while (array[i] != NULL)
 	{
 		printf("%s\n", array[i]);
@@ -92,6 +104,8 @@ int	free_string_array(char **array)
 	int	count;
 
 	count = 0;
+	if (check_null_array(array))
+		return (1);
 	while (array[count])
 	{
 		free(array[count]);
@@ -105,6 +119,8 @@ int	lenght_string_array(char **array)
 {
 	int	count;
 	count = 0;
+	if (check_null_array(array))
+		return (-1);
 	while(array[count] != NULL)
 		count++;
 	return (count);
@@ -117,6 +133,8 @@ char	**sort_string_array(char **array)
 	int		lenght;
 	char	*temp;
 
+	if (check_null_array(array))
+		return (NULL);
 	count = 0;
 	lenght = lenght_string_array(array);
 	while (count < lenght - 1)
