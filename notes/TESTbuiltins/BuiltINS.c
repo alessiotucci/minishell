@@ -6,14 +6,14 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 19:02:52 by atucci            #+#    #+#             */
-/*   Updated: 2024/03/29 19:19:36 by atucci           ###   ########.fr       */
+/*   Updated: 2024/03/30 15:29:13 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <strings.h>
 #include <stdlib.h>
-#include  "../minishell.h"
+#include  "../../minishell.h"
 
 # define RED     "\033[1;31m"
 # define RESET   "\033[0m"
@@ -122,25 +122,55 @@ char	**copy_array(char **env, int extra_space)
 	}
 	while (i < env_count + extra_space)
 	{
-		env_copy[i] = NULL;
+		env_copy[i] = "";
 		i++;
 	}
 	env_copy[env_count + extra_space] = NULL;
 	return (env_copy);
 }
 
-
+int	which_builtin(char *node, char **args, char **env)
+{
+	(void)env;
+	if (node == NULL)
+		return (1);
+	else if (strcmp(node, "export") == 0)
+		my_export(args, env);
+	else if (strcmp(node, "unset") == 0)
+		minishell_unset(args[1], env);
+	else if (strcmp(node, "env") == 0)
+		minishell_env(env);
+	return (0);
+}
 int	main(int ac, char *av[], char **env)
 {
 	(void)ac;
 	(void)av;
 	(void)env;
+	char	*input;
+	char	**matrix;
+	printf("USAGE: 'export' 'MYVAR=23'\n");
+	printf("USAGE: 'env' \n");
+	printf("USAGE: 'unset' 'MYVAR'\n");
+
 	printf("This is a test for the builtins ENV, EXPORT, and UNSET\n");
 	printf("Creating a copy of ENV\n");
 	char **env_copy = copy_array(env, 0);
 	printf("Sorting ENV\n");
 	sort_string_array(env_copy);
-	printf("%s printing the array%s\n***\n\n", RED, RESET);
-	print_string_array(env_copy);
+	while (1)
+	{
+		input = readline(GREEN"minishelly>"RESET);
+		matrix = ft_split(input, ' ');
+		if (which_builtin(matrix[0], matrix, env_copy))
+		{
+			(printf("%sthere is some issue!!!%s\n", RED, RESET));
+			break ;
+		}
+		//printf("%s\n", input);
+		free(input);
+	}
+
 	printf("Freeing the copy of ENV\n");
+	free_string_array(env_copy);
 }
