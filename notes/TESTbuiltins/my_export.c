@@ -147,16 +147,20 @@ void	handle_empty_value_case(char *arg, char **env)
 	char	*existing_value;
 	int		k;
 
+	printf("arg: %s\n", arg);
 	if (!is_valid_identifier(arg))
 		printf("export: not an identifier: %s\n", arg);
 	else
 	{
 		existing_value = getenv(arg);
+		//TODO: FIX THIS BULLSHIT
 		if (existing_value == NULL)
 		{
 			k = 0;
 			while (env[k] != NULL)
-				k++;
+				k++; // this doesnt make sense
+			k--;
+			free(env[k]);
 			env[k] = malloc(strlen(arg) + 1);
 			strcpy(env[k], arg);
 		}
@@ -191,6 +195,9 @@ void	handle_non_null_arg(char *args[], char **env)
 /* Modified to pass a pointer to the env array to handle_non_null_arg */
 void	my_export(char *args[], char *env[])
 {
+
+	int l = lenght_string_array(env);
+	printf("the lenght  of env is %d\n", l);
 	if (args[1] == NULL)
 		without_arguments(env);// arguments are null
 	else

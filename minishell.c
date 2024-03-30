@@ -6,7 +6,7 @@
 /*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/24 17:15:02 by atucci           ###   ########.fr       */
+/*   Updated: 2024/03/30 18:22:53 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**copy_array(char **env, int extra_space)
 	}
 	while (i < env_count + extra_space)
 	{
-		env_copy[i] = NULL;
+		env_copy[i] = "";
 		i++;
 	}
 	env_copy[env_count + extra_space] = NULL;
