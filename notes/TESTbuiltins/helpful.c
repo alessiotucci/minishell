@@ -45,15 +45,15 @@ void	minishell_env(char **env)
 	int	i;
 
 	i = 0;
-	int l = lenght_string_array(env);
-	printf("the lenght  of env is %d\n", l);
-	while (i <= l - 1)
+	//int l = lenght_string_array(env);
+//	printf("the lenght  of env is %d\n", l);
+	while(env[i]) //while (i <= l - 1)
 	{
 		printf("%s \n", env[i]);
 		//printf("%d \n", i);
 		i++;
 	}
-	printf("%senv address is %p%s\n", YELLOW, env, RESET);
+//	printf("%senv address is %p%s\n", YELLOW, env, RESET);
 }
 
 void	handle_signal(int signal)

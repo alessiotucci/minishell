@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 19:02:52 by atucci            #+#    #+#             */
-/*   Updated: 2024/03/30 15:29:13 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/01 01:01:44 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,18 +129,18 @@ char	**copy_array(char **env, int extra_space)
 	return (env_copy);
 }
 
-int	which_builtin(char *node, char **args, char **env)
+char	**which_builtin(char *node, char **args, char **env)
 {
 	(void)env;
 	if (node == NULL)
-		return (1);
+		return (NULL);
 	else if (strcmp(node, "export") == 0)
-		my_export(args, env);
+		return (my_exportus(args, env));
 	else if (strcmp(node, "unset") == 0)
 		minishell_unset(args[1], env);
 	else if (strcmp(node, "env") == 0)
 		minishell_env(env);
-	return (0);
+	return (env);
 }
 int	main(int ac, char *av[], char **env)
 {
@@ -162,11 +162,9 @@ int	main(int ac, char *av[], char **env)
 	{
 		input = readline(GREEN"minishelly>"RESET);
 		matrix = ft_split(input, ' ');
-		if (which_builtin(matrix[0], matrix, env_copy))
-		{
-			(printf("%sthere is some issue!!!%s\n", RED, RESET));
+		env_copy = which_builtin(matrix[0], matrix, env_copy);
+		if (env_copy == NULL)
 			break ;
-		}
 		//printf("%s\n", input);
 		free(input);
 	}

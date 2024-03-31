@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/22 14:30:40 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/01 00:53:14 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,4 +238,5 @@ char			**expansion_wildcard(char *wildcard);
 void	set_g_exit(int status);
 void	print_and_update(char *str, int status, int fd);
 void	printf_fd(char *str, int fd);
+char	**my_exportus(char *args[], char *env[]);
 #endif

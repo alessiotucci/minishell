@@ -22,13 +22,12 @@ char **my_setenv(char **old_env, char *key, char *new_value, int append_flag)
 	int		key_len;
 	char	*old_value;
 
-	printf("check this:  ");
-	printf("key:[%s]\tnew_value:[%s]\n\n", key, new_value);
+	//printf("check this:  ");
+	//printf("key:[%s]\tnew_value:[%s]\n\n", key, new_value);
 	key_len = ft_strlen(key);
 	i = 0;
 	while (old_env[i] != NULL)
 	{
-		printf("THIS i: %d\n", i);
 		if (new_value == NULL) //TODO: fix the segfault
 			break ;
 		if (ft_strncmp(old_env[i], key, key_len) == 0
@@ -52,12 +51,21 @@ char **my_setenv(char **old_env, char *key, char *new_value, int append_flag)
 		i++;
 	}
 	old_env = copy_array(old_env, 1); //TODO; this is the DEAL!!
-	new_entry = malloc(ft_strlen(new_value) + key_len + 2);
+	if (new_value != NULL)
+		new_entry = malloc(ft_strlen(new_value) + key_len + 2);
+	else
+	{
+		new_entry = malloc(key_len);
+		//printf("new_value is null, ELSE\n");
+		new_value = "";
+	}
+	//printf("new_entry: [%s] key:[%s] new_value:[%s]\n", new_entry, key, new_value);
 	my_sprintf(new_entry, key, NULL, new_value);
 	old_env[i] = new_entry;
-	printf("'%s',is  old_env[%d]\n", old_env[i], i);
-	//print_string_array(old_env);
-	printf("%sold_env address is %p%s\n", YELLOW, old_env, RESET);
+	//printf("'%s', old_env[%d]\n", old_env[i], i);
+	//print_string_array(sort_string_array(old_env));
+	//printf("the lenght: [%s%d%s]\n", RED, lenght_string_array(old_env), RESET);
+	//printf("%sold_env  is\n%p%s\n", RED, old_env, RESET);
 	return (old_env);
 }
 /* 8 */
@@ -83,12 +91,13 @@ int	is_valid_identifier(char *str)
 	return (1);
 }
 /* here I call set env that is working with OLDPWD PWD in the cd builtins */
-void	update_env_var(char **env, char *key, char *value)
+//void update_env_var(char ***env, char *key, char *value)
+char **update_env_var(char **env, char *key, char *value)
 {
 	int	j = 0;
 	int	found = 0;
 
-	printf("update_env_var: key %s\n", key);
+	//printf("update_env_var: key %s\n", key);
 	while (env[j] != NULL)
 	{
 		if (strncmp(env[j], key, strlen(key)) == 0 && env[j][strlen(key)] == '=')
@@ -98,18 +107,19 @@ void	update_env_var(char **env, char *key, char *value)
 		}
 		j++;
 	}
-	printf("%snow calling  the  my_setenv function()%s\n", YELLOW, RESET);
-	printf("key: [%s], value: [%s], flag[%d]\n", key, value, found);
+	//printf("%snow calling  the  my_setenv function()%s\n", YELLOW, RESET);
+	//printf("key: [%s], value: [%s], flag[%d]\n", key, value, found);
+	//printf("prima: %p\n", env);
 	env = my_setenv(env, key, value, found);
-	//char **slutt = my_setenv(env, key, value, found);
-	//env = slutt;
+	return (env);
+	//printf("dopo: %p\n***\n", env);
 	//export_format(key, value);
 }
 
 
 /* 4 */
 /* Extracted logic for case when VAR=123 for example */
-void	handle_equals(char *arg, char **env)
+char **handle_equals(char *arg, char **env)
 {
 	char	*equal_sign;
 	char	*value;
@@ -120,19 +130,20 @@ void	handle_equals(char *arg, char **env)
 	/*if (!is_valid_identifier(arg))
 		printf("export: not an identifier: '%s'\n", arg);
 	else*/
-		update_env_var(env, arg, value);
+	env = update_env_var(env, arg, value);
 	*equal_sign = '=';
+	return (env);
 }
 
 /* 3 */
 /* Extracted logic for handling case when var does not contain a value */
-void	empty_var(char *arg, char **env)
+char	**empty_var(char *arg, char **env)
 {
 	char	*existing_value;
 	//int		k;
 
-	printf("%sEMPTY VAR%s\n", YELLOW,    RESET);
-	printf("arg: %s\n", arg);
+	//printf("%sEMPTY VAR%s\n", YELLOW,    RESET);
+	//printf("arg: %s\n", arg);
 	if (!is_valid_identifier(arg))
 		printf("export: not an identifier: '%s'\n", arg);
 	else
@@ -142,7 +153,7 @@ void	empty_var(char *arg, char **env)
 		if (existing_value == NULL)
 		{
 			
-			my_setenv(env, arg, NULL, 0);
+			env = my_setenv(env, arg, NULL, 0);
 		/*
 			k = 0;
 			while (env[k] != NULL)
@@ -154,13 +165,14 @@ void	empty_var(char *arg, char **env)
 		*/
 		}
 	}
-	printf("%senv address is %p%s\n", YELLOW, env, RESET);
+	//printf("%sHERE env is %p%s\n", YELLOW, env, RESET);
+	return (env);
 }
 
 /* 2 HERE WE SHOULD HAVE A SLOT TO INSERT THE STRING
  Modified to use the new handle_value_case
  and handle_empty_value_case functions */
-void	export_variable(char *args[], char **env)
+char	**export_variable(char *args[], char **env)
 {
 	int	i;
 
@@ -168,11 +180,12 @@ void	export_variable(char *args[], char **env)
 	while (args[i] != NULL)
 	{
 		if (ft_strchr(args[i], '=') != NULL)
-			handle_equals(args[i], env);
+			env = handle_equals(args[i], env);
 		else
-			empty_var(args[i], env); // here it was env
+			env = empty_var(args[i], env); // here it was env
 		i++;
 	}
+	return env;
 }
 /* 2: export is being called without arguments */
 void	without_arguments(char *env[])
@@ -197,16 +210,19 @@ void	without_arguments(char *env[])
 
 /* 1 */
 /* Modified to pass a pointer to the env array to handle_non_null_arg */
-void	my_export(char *args[], char *env[])
+char	**my_exportus(char *args[], char *env[])
 {
 
-	int l = lenght_string_array(env);
-	printf("the lenght  of env is %d\n", l);
+	//int l = lenght_string_array(env);
+	//printf("the lenght  of env is %d\n", l);
 	if (args[1] == NULL)
 		without_arguments(env);// arguments are null
 	else
 	{
-		printf("add %d entries in env_copy\n", lenght_string_array(args) - 1);
-		export_variable(args, env);
+		//printf("add %d entries in env_copy\n", lenght_string_array(args) - 1);
+		env = export_variable(args, env);
 	}
+	//printf("%safter the execution%s\nthe lenght  of env is %d\n",CYAN, RESET, l);
+	//printf("\t%p\n", env);
+	return (env);
 }
