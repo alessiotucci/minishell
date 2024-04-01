@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:51:40 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/21 20:25:12 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/01 16:18:41 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	maxishell_env(char *args[])
  function for the executor */
 #include "../minishell.h"
 
-void	*which_built_in(t_list_of_tok *node, char **args, char **env)
+char	**which_builtin(t_list_of_tok *node, char **args, char **env)
 {
 	(void)env;
 	if (node == NULL)
@@ -31,14 +31,13 @@ void	*which_built_in(t_list_of_tok *node, char **args, char **env)
 	else if (my_strcmp(node->token, "pwd") == 0)
 		minishell_pwd();
 	else if (my_strcmp(node->token, "export") == 0)
-//		minishell_export(args);
-		my_export(args, env);
+		return (my_exportus(args, env)); // this is the big deal
 	else if (my_strcmp(node->token, "unset") == 0)
 		minishell_unset(args[1], env);
 	else if (my_strcmp(node->token, "env") == 0)
 		minishell_env(env);
 	else if (my_strcmp(node->token, "exit") == 0)
 		minishell_exit(args); // what value give to this? 
-	return (NULL);
+	return (env);
 }
 

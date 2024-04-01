@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/04/01 15:47:44 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/01 16:54:09 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,12 +138,14 @@ void	restore_original_stdin(int copy, t_list_of_tok *cmd_nod)
  * then check for builtins, after perform built in, restore fd (?)
  * otherwise fork and go on with execve, after that restore fd (?)
 */
-void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *cmd_nod)
+char	**execute_command(char *command, char **args_a, char **envp, t_list_of_tok *cmd_nod)
 {
 	pid_t	fix_pid;
 	int		stdout_copy;
 	int		stdin_copy;
+	char	**updated; // we are going to return with this 
 
+	updated = envp;
 	stdin_copy = dup(STDIN_FILENO);
 	stdout_copy = dup(STDOUT_FILENO);
 	piping_process(cmd_nod);
@@ -151,7 +153,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 		if (redirection_process(cmd_nod->file_name, cmd_nod->redirect_type))
 			return (NULL);
 	if (cmd_nod->type == T_BUILTIN)
-		which_built_in(cmd_nod, args_a, envp);
+		updated = which_builtin(cmd_nod, args_a, envp);
 	else
 	{
 		fix_pid = fork();
@@ -168,7 +170,7 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 	}
 	restore_original_stdout(stdout_copy, cmd_nod);
 	restore_original_stdin(stdin_copy, cmd_nod);
-	return (NULL);
+	return (updated);
 }
 
 /*
@@ -190,7 +192,8 @@ void	wait_exit_status()
 	}
 }
 
-int	executor(t_list_of_tok **head, char **envp)
+//char	**executor(t_list_of_tok **head, char **envp)
+char	**executor(t_list_of_tok **head, char **envp)
 {
 	char			*command;
 	char			**argoums;
@@ -214,7 +217,7 @@ int	executor(t_list_of_tok **head, char **envp)
 				command = ft_strdup(cmd_node->token);
 		}
 		argoums = array_from_list(&cmd_node);
-		execute_command(command, argoums, envp, cmd_node);
+		envp = execute_command(command, argoums, envp, cmd_node);
 		cmd_node = find_command_in_list(&cmd_node->next);
 	}
 	wait_exit_status();
@@ -224,5 +227,5 @@ int	executor(t_list_of_tok **head, char **envp)
 		free(command);
 		free_string_array(argoums);
 	}
-	return (0);
+	return (envp);
 }

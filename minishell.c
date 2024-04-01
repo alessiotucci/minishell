@@ -6,7 +6,7 @@
 /*   By: enricogiraldi <enricogiraldi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:07:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/03/30 18:22:53 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/01 17:02:43 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**copy_array(char **env, int extra_space)
 	env_copy[env_count + extra_space] = NULL;
 	return (env_copy);
 }
-
+/*
 int	main(int ac, char *av[], char *envp[])
 {
 	char	*input;
@@ -72,4 +72,30 @@ int	main(int ac, char *av[], char *envp[])
 			//return (1);
 	}
 	free_string_array(env_copy);
+}*/
+
+int	main(int ac, char *av[], char *envp[])
+{
+	char	*input;
+	char	**env_copy;
+	int		g_exit_status = 0;  // define g_exit_status
+	t_list_of_tok *head;
+	(void)ac;
+	(void)av;
+	(void)g_exit_status;
+	env_copy = copy_array(envp, 0);
+	set_g_exit(0);
+	while (1)
+	{
+		handle_signal();
+		input = readline(RED"minishell% "RESET);
+		if (input && input[0])
+			add_history(input); // double check for the history
+		if (input == NULL)
+			return (0 * write(1, "\n", 1));
+		/*head =*/ lexer(input, env_copy);
+		/*env_copy =*/ executor(&head, env_copy);
+	}
+	free_string_array(env_copy);
 }
+

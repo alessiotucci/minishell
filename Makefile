@@ -6,7 +6,7 @@
 #    By: atucci <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 09:05:05 by atucci            #+#    #+#              #
-#    Updated: 2024/03/26 12:03:23 by atucci           ###   ########.fr        #
+#    Updated: 2024/04/01 16:11:58 by atucci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC = ./minishell.c \
 	./signals.c \
 	./extra.c \
 	./setenv.c \
+	./my_exportus.c \
 	./error_handling.c \
 	./builtin_folder/builtin_helper.c \
 	./builtin_folder/pwd_cd_echo.c\

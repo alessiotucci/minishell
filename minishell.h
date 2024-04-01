@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:10:19 by atucci            #+#    #+#             */
-/*   Updated: 2024/04/01 00:53:14 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/01 17:01:18 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,9 @@ typedef struct s_tree_node
 	struct s_tree_node	*parent;
 }	t_tree_node;
 
+t_list_of_tok	**lexer(char *string, char **env);
+char			**executor(t_list_of_tok **head, char **envp);
+
 /*lexer part alright*/
 int				lexer1(char *param);
 /* utils of libft, inside the extra.c */
@@ -172,7 +175,7 @@ void			set_g_exit(int status);
 // t_list_of_tok	*node_for_dollar(int level, char *spitted_cmd, char **env);
 void			token(void);
 void			parser(void);
-int				lexer(char *string, char **envp);
+//int				lexer(char *string, char **envp);
 void			try_builtin(void);
 /* found huge vulnerability */
 t_list_of_tok	**update_list_order(t_list_of_tok **head);
@@ -202,15 +205,15 @@ void			my_export(char *args[], char *env[]);
 void			minishell_env(char **env);
 void			minishell_unset(char *variable_name, char *envp[]);
 void			minishell_exit(char **args);
+char			**which_builtin(t_list_of_tok *node, char **args, char **env);
 void			*which_built_in(t_list_of_tok *node, char **args, char **env);
-
 /* DOLLAR HAS BEGUN */
 char			*expansion_dollary(char *dollar, char **env);
 char			*replace_substr(char *str, char *substr, char *replacement);
 char			*find_and_expand_vars(char *str, char **env);
 /* DOLLAR END */
 /* function for the executor */
-int				executor(t_list_of_tok **head, char **envp);
+//int				executor(t_list_of_tok **head, char **envp);
 char			**find_path_env(char **env);
 char			**array_from_list(t_list_of_tok **head);
 char			*find_path_command(char *token, char **envp);
@@ -238,5 +241,18 @@ char			**expansion_wildcard(char *wildcard);
 void	set_g_exit(int status);
 void	print_and_update(char *str, int status, int fd);
 void	printf_fd(char *str, int fd);
+/* exportus */
 char	**my_exportus(char *args[], char *env[]);
+void	without_arguments(char *env[]);
+char	**export_variable(char *args[], char **env);
+char	**empty_var(char *arg, char **env);
+char	**handle_equals(char *arg, char **env);
+char	**update_env_var(char **env, char *key, char *value);
+void	export_format(char *var, char *value);
+int		is_valid_identifier(char *str);
+char	**my_setenv(char **old_env, char *key, char *new_value, int append_flag);
+void	my_sprintf(char *buffer, char *key, char *old_value, char *new_value);
+/* last minute  modifications*/
+t_list_of_tok	**lexer(char *string, char **env);
+char			**executor(t_list_of_tok **head, char **envp);
 #endif

@@ -6,7 +6,7 @@
 /*   By: atucci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:14:09 by atucci            #+#    #+#             */
-/*   Updated: 2024/01/24 17:29:39 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/01 17:03:10 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,9 @@ void	create_tokens(char **line_of_commands, t_list_of_tok **token_head, char **e
 }
 
 /*1 The main function of the lexer, we use split and get the command line*/
-int	lexer(char *string, char **env)
+//int	lexer(char *string, char **env)
+
+t_list_of_tok	*lexer(char *string, char **env)
 {
 	char			**line_of_commands;
 	t_list_of_tok	*token_head;
@@ -90,7 +92,7 @@ int	lexer(char *string, char **env)
 
 	token_head = NULL;
 	if (handle_quotes(string) || first_check_parent(string))
-		return (1);
+		return (NULL);
 	new_string = replace_chars(string);
 	/* this is a fix ? */
 	new_string = replace_me(new_string, '"', '\t', ' ');
@@ -101,13 +103,15 @@ int	lexer(char *string, char **env)
 //	priority_level(&token_head);
 	update_token_types(&token_head);
 	//update_list_order(&token_head);
-//	printf("\n***\t\nafter the change\n");
+	//	printf("\n***\t\nafter the change\n");
 	//print_list_tokens(&token_head);
 	//print_list_tokeny(&token_head);
-	executor(&token_head, env);
-	free_list(&token_head);
-	free_string_array(line_of_commands);
-	return (0);
+	
+
+	//executor(&token_head, env);
+	//free_list(&token_head);
+	//free_string_array(line_of_commands);
+	return (token_head);
 }
 
 
