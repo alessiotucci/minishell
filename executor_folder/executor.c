@@ -6,7 +6,7 @@
 /*   By: atucci <atucci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:25:22 by atucci            #+#    #+#             */
-/*   Updated: 2024/03/29 20:23:04 by atucci           ###   ########.fr       */
+/*   Updated: 2024/04/01 15:47:44 by atucci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,8 @@ void	*execute_command(char *command, char **args_a, char **envp, t_list_of_tok *
 		fix_pid = fork();
 		if (fix_pid == 0)
 		{
-			if (my_strcmp(cmd_nod->token, "cat") == 0 && cmd_nod->next != NULL)
+			if (my_strcmp(cmd_nod->token, "cat") == 0
+				&& (cmd_nod->next != NULL && cmd_nod->next->type != T_HERE_DOC))
 				close(cmd_nod->next->next->in_file);
 			execve(command, args_a, envp);
 			printf_fd(command, stdout_copy);
